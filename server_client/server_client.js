@@ -20,8 +20,8 @@ app.get('/grpc', async (req,res) => {
   console.log('-----------------------------')
   console.log('/grpc before calling function')
 
-  res.locals.anything = 'Davey';
-  console.log(res.locals.anything)
+  // res.locals.anything = 'Davey';
+  // console.log(res.locals.anything)
   // grpcRequest();
   let output = await grpcRequest();
   console.log('Output: ', output)
