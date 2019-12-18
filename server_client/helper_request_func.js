@@ -1,8 +1,9 @@
-var PROTO_PATH = __dirname + '/../protos/helloworld.proto';
+const PROTO_PATH = __dirname + '/../protos/helloworld.proto';
 
-var grpc = require('grpc');
-var protoLoader = require('@grpc/proto-loader');
-var packageDefinition = protoLoader.loadSync(
+const grpc = require('grpc');
+const protoLoader = require('@grpc/proto-loader');
+const grpc_promise = require('grpc-promise');
+const packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
     {keepCase: true,
      longs: String,
@@ -10,17 +11,24 @@ var packageDefinition = protoLoader.loadSync(
      defaults: true,
      oneofs: true
     });
-var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+const hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
 
 function grpcRequest() {
-  var client = new hello_proto.Greeter('localhost:50051',
-                                       grpc.credentials.createInsecure());
+  const client = new hello_proto.Greeter('localhost:50051', grpc.credentials.createInsecure());
   
-  client.sayHello({name: "user"}, function (err, response) {
-    console.log('Greeting: ', response)
-  });
-}
+  grpc_promise.promisifyAll(client);
 
-grpcRequest();
+  let output;
+
+  return client.sayHello()
+    .sendMessage({name: "user"})
+    .then( res => {
+      console.log('Greeting: ', res)
+      output = res;
+      console.log(output)
+      return output
+    })
+    .catch(err => console.error(err))
+}
 
 module.exports = grpcRequest;

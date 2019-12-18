@@ -16,14 +16,16 @@ app.use(cookieParser())
 app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'))
 
 // GRPC TEST:
-app.get('/grpc', (req,res) => {
+app.get('/grpc', async (req,res) => {
   console.log('-----------------------------')
   console.log('/grpc before calling function')
 
   res.locals.anything = 'Davey';
   console.log(res.locals.anything)
-  grpcRequest();
-  res.json('message')
+  // grpcRequest();
+  let output = await grpcRequest();
+  console.log('Output: ', output)
+  res.json(output)
 })
 
 // Unknown Route:
@@ -44,4 +46,4 @@ app.use(function (err, req, res, next) {
 })
 
 
-app.listen(port, () => console.log(`👽  👽  👽  👽  👽  👽  👽  👽  👽  INVASION HAPPENING ON PORT ${port} 👽  👽  👽  👽  👽  👽  👽  👽  👽`))
+app.listen(port, () => console.log(`  👽  happening on port: ${port} `))

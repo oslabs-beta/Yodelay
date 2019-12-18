@@ -36,4 +36,4 @@ function main() {
 
 main();
 
-console.log(`💥 💥 💥 💥 💥 💥 💥 GRPC 💥 ING ON PORT ${port} 💥 💥 💥 💥 💥 💥 💥`)
+console.log(`gRPC💥 ing on port: ${port}`)
