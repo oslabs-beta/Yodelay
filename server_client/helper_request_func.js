@@ -21,7 +21,7 @@ function grpcRequest() {
   let output;
 
   return client.sayHello()
-    .sendMessage({name: "user"})
+    .sendMessage({name: "Goes"})
     .then( res => {
       console.log('Greeting: ', res)
       output = res;

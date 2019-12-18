@@ -18,7 +18,7 @@ var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
 function sayHello(call, callback) {
   console.log('------------')
   console.log('grpc server')
-  callback(null, {message: 'Hello ' + call.request.name});
+  callback(null, {message: 'Anything ' + call.request.name});
   console.log('after grpc server')
 }
 
@@ -29,7 +29,7 @@ function sayHello(call, callback) {
 function main() {
   var server = new grpc.Server();
   server.addService(hello_proto.Greeter.service, 
-    {sayHello});
+    { sayHello });
   server.bind(port, grpc.ServerCredentials.createInsecure());
   server.start();
 }
