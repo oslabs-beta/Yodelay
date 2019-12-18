@@ -8,6 +8,7 @@ import { incrementActionCreator } from '../actions';
 // import { loggedInSelector } from '../reducers/login'
 
 interface AppProps {
+  incrementActionCreator: (...arg: any[]) => any
   // loggedIn: boolean
   // isTransactionsLoading: boolean
   // activeNotifications: NotificationWithDuration[]
@@ -15,15 +16,12 @@ interface AppProps {
 }
 class App extends Component<AppProps> {
   render() {
-    // const {
-    //   loggedIn,
-    //   isTransactionsLoading,
-    //   activeNotifications,
-    //   expireNotificationsAction,
-    // } = this.props
+    const {
+      incrementActionCreator
+    } = this.props
     return (
       <>
-        <Button text='enter' onClick={ () => {}} >
+        <Button text='enter' onClick={ () => {incrementActionCreator(1)}} >
         </Button>
       </>
     )
