@@ -7,3 +7,17 @@
 //   increaseCount: 
 // });
 // export default reducers;
+
+import { combineReducers } from "redux";
+import increment, * as fromIncrement from './incrementReducer'
+
+export interface RootState {
+  increment: 
+  fromIncrement.incrementState
+}
+
+const rootReducer = combineReducers ({
+  increment
+})
+
+export default rootReducer;

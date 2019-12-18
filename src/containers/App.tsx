@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-// import { connect } from 'react-redux'
-// import { RootState } from '../reducers'
+import { connect } from 'react-redux'
+import { RootState } from '../reducers'
 import { Button } from '../components/common/Button'
+import { incrementActionCreator } from '../actions';
 // import {} from '../actions'
 // import { loggedInSelector } from '../reducers/login'
 
@@ -22,21 +23,19 @@ class App extends Component<AppProps> {
     // } = this.props
     return (
       <>
-        <Button text='enter' >
+        <Button text='enter' onClick={ () => {}} >
         </Button>
       </>
     )
   }
 }
 
-export default App;
-// export default connect(
-//   (state: RootState) => ({
-//     loggedIn: loggedInSelector(state),
-//     isTransactionsLoading: isTransactionsLoadingSelector(state),
-//     activeNotifications: activeNotificationsSelector(state),
-//   }),
-//   {
-//     expireNotificationsAction: expireNotifications,
-//   }
-// )(_App)
+
+export default connect(
+  (state: RootState) => ({
+    increment: state.increment
+  }),
+  {
+    incrementActionCreator: incrementActionCreator,
+  }
+)(App)
