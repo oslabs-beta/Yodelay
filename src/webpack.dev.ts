@@ -8,7 +8,7 @@ const config = (env: any): webpack.Configuration => {
   const NODE_ENV = env ? env.NODE_ENV : undefined;
   return {
     mode: 'development',
-    entry: './src/index.tsx',
+    entry: './index.tsx',
     output: {
       filename: 'bundle.js',
       publicPath: '/'
@@ -46,7 +46,7 @@ const config = (env: any): webpack.Configuration => {
     },
     plugins: [
       new HtmlWebPackPlugin({
-        template: './src/index.html'
+        template: './index.html'
       }),
       new webpack.DefinePlugin({
         'env.API_PORT': API_PORT
