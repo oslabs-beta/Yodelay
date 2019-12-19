@@ -1,6 +1,10 @@
 import * as path from 'path';
 import * as webpack from 'webpack';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+
+
+
 const config = (env: any): webpack.Configuration => {
   const API_PORT = env ? env.API_PORT : undefined;
   const API_HOST = env ? env.API_HOST : undefined;
@@ -33,6 +37,7 @@ const config = (env: any): webpack.Configuration => {
       ]
     },
     plugins: [
+      new CleanWebpackPlugin(),
       new HtmlWebPackPlugin({
         template: './src/index.html'
       }),
