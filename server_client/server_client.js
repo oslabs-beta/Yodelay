@@ -1,10 +1,11 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const grpcRequest = require('./helper_request_func')
+
 const app = express();
 const port = 3000;
 
-const grpcRequest = require('./helper_request_func')
 
 // Parsing!
 // parse application/json
@@ -16,15 +17,11 @@ app.use(cookieParser())
 app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'))
 
 // GRPC TEST:
-app.get('/grpc', async (req,res) => {
+app.post('/grpc', async (req,res) => {
   console.log('-----------------------------')
-  console.log('/grpc before calling function')
+  // console.log('/grpc before calling function')
 
-  // res.locals.anything = 'Davey';
-  // console.log(res.locals.anything)
-  // grpcRequest();
-  let output = await grpcRequest();
-  console.log('Output: ', output)
+  let output = await grpcRequest(req.body);
   res.json(output)
 })
 
@@ -46,4 +43,4 @@ app.use(function (err, req, res, next) {
 })
 
 
-app.listen(port, () => console.log(`  👽  happening on port: ${port} `))
+app.listen(port, () => console.log(`  👽  invasion happening on port: ${port} `))
