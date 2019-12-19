@@ -10,18 +10,16 @@ import NavbarContainer from './Navbar'
 import { Button } from '../components/common/Button'
 import { incrementActionCreator } from '../actions';
 import { countSelector } from '../reducers/test';
-// import {} from '../actions'
 // import { loggedInSelector } from '../reducers/login'
 
 // sets type for props
 interface AppProps {
-  incrementAction: typeof incrementActionCreator
-  // remove later -->  incrementAction: (...arg: any[]) => any
+  incrementAction: typeof incrementActionCreator  // remove later -->  incrementAction: (...arg: any[]) => any
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
     const {
-      incrementAction
+      incrementAction,
     } = props
     return (
       <div>
