@@ -27,6 +27,7 @@ import { Button } from '../components/common/Button';
   interface NavbarProps {
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
+
   }
 
   export const Navbar: FunctionComponent<NavbarProps> = props => {
@@ -34,10 +35,14 @@ import { Button } from '../components/common/Button';
       const inputOpenFileRef = useRef <HTMLInputElement> ();
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
+        console.log(inputOpenFileRef.current.files[0])  
+        
+        // const reader = new FileReader()
+        // console.log(reader.readAsText(inputOpenFileRef.current))
       }
       //   inputOpenFileRef
       // } = props
-      
+
       return (
         <div>
         Navbar
