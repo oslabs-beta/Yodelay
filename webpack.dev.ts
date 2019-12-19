@@ -5,7 +5,7 @@ const config = (env: any): webpack.Configuration => {
   const API_PORT = env ? env.API_PORT : undefined;
   const API_HOST = env ? env.API_HOST : undefined;
   const API_PROTOCOL = env ? env.API_PROTOCOL : undefined;
-  const NODE_ENV = env ? env.NODE_ENV : undefined;
+  const NODE_ENV = env ? env.NODE_ENV : "development";
   return {
     mode: 'development',
     entry: './src/index.tsx',
@@ -23,13 +23,6 @@ const config = (env: any): webpack.Configuration => {
           test: /\.tsx?$/,
           exclude: /node_modules/,
           loader: 'awesome-typescript-loader'
-        },
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
         },
         {
           test: /\.(sc|c)ss$/i,
