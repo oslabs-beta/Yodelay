@@ -13,19 +13,23 @@ const packageDefinition = protoLoader.loadSync(
     });
 const hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
 
-function grpcRequest() {
-  const client = new hello_proto.Greeter('localhost:50051', grpc.credentials.createInsecure());
+
+
+function grpcRequest(input) {
+  let port = input.port
+  const client = new hello_proto.Greeter(port, grpc.credentials.createInsecure());
   
   grpc_promise.promisifyAll(client);
 
+  let inputName = input.name;
   let output;
 
   return client.sayHello()
-    .sendMessage({name: "Goes"})
+    .sendMessage({name: inputName})
     .then( res => {
       console.log('Greeting: ', res)
       output = res;
-      console.log(output)
+      // console.log(output)
       return output
     })
     .catch(err => console.error(err))
