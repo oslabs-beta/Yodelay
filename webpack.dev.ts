@@ -1,5 +1,7 @@
 import * as webpack from 'webpack';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
+import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+
 
 const config = (env: any): webpack.Configuration => {
   const API_PORT = env ? env.API_PORT : undefined;
@@ -38,6 +40,8 @@ const config = (env: any): webpack.Configuration => {
       hot: true
     },
     plugins: [
+      new CleanWebpackPlugin(),
+
       new HtmlWebPackPlugin({
         template: './src/index.html'
       }),
