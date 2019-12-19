@@ -1,8 +1,8 @@
-var PROTO_PATH = __dirname + '/../protos/helloworld.proto';
+let PROTO_PATH = __dirname + '/../protos/helloworld.proto';
 const port = '0.0.0.0:50051';
-var grpc = require('grpc');
-var protoLoader = require('@grpc/proto-loader');
-var packageDefinition = protoLoader.loadSync(
+let grpc = require('grpc');
+let protoLoader = require('@grpc/proto-loader');
+let packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
     {keepCase: true,
      longs: String,
@@ -10,16 +10,16 @@ var packageDefinition = protoLoader.loadSync(
      defaults: true,
      oneofs: true
     });
-var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+let hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
 
 /**
  * Implements the SayHello RPC method.
  */
 function sayHello(call, callback) {
   console.log('------------')
-  console.log('grpc server')
-  callback(null, {message: 'Anything ' + call.request.name});
-  console.log('after grpc server')
+  // console.log('grpc server')
+  callback(null, {message: 'Hello ' + call.request.name});
+  // console.log('after grpc server')
 }
 
 /**
@@ -27,7 +27,7 @@ function sayHello(call, callback) {
  * sample server port
  */
 function main() {
-  var server = new grpc.Server();
+  let server = new grpc.Server();
   server.addService(hello_proto.Greeter.service, 
     { sayHello });
   server.bind(port, grpc.ServerCredentials.createInsecure());
@@ -36,4 +36,4 @@ function main() {
 
 main();
 
-console.log(`gRPC💥 ing on port: ${port}`)
+console.log(`gRPC💥 'n on port: ${port}`)
