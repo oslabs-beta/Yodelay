@@ -5,6 +5,8 @@
   "repository": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server_client/server_client.js",
+    "grpc": "nodemon grpc_server/grpc_server.js",
     "src-dev": "webpack-dev-server --config webpack.dev.ts",
     "src-local": "webpack-dev-server --config webpack.dev.ts --env.API_PORT=8000 --env.API_HOST=localhost --env.API_PROTOCOL=http",
     "src-build": "webpack --config webpack.prod.ts",
@@ -19,6 +21,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "express": "^4.17.1",
+    "grpc": "^1.24.2",
+    "grpc-promise": "^1.4.0",
+    "nodemon": "^2.0.2",
     "@testing-library/react": "^9.3.3",
     "@types/classnames": "^2.2.9",
     "@types/enzyme": "^3.10.3",
@@ -39,7 +46,6 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "esm": "^3.2.25",
-    "express": "^4.17.1",
     "express-http-to-https": "^1.1.4",
     "express-pino-logger": "^4.0.0",
     "immutable": "^4.0.0-rc.12",
