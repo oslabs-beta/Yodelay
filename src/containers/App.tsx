@@ -1,29 +1,26 @@
-import React, { Component } from 'react'
+import React, { FunctionComponent } from 'react'
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-// 
 import { RootState } from '../reducers'
 import { Button } from '../components/common/Button'
 import { incrementActionCreator } from '../actions';
+import { countSelector } from '../reducers/test';
 // import {} from '../actions'
 // import { loggedInSelector } from '../reducers/login'
 
 // sets type for props
 interface AppProps {
-  incrementActionCreator: (...arg: any[]) => any
-  // loggedIn: boolean
-  // isTransactionsLoading: boolean
-  // activeNotifications: NotificationWithDuration[]
-  // expireNotificationsAction: ExpireNotificationsActionCreator
+  incrementAction: typeof incrementActionCreator
+  // remove later -->  incrementAction: (...arg: any[]) => any
 }
-class App extends Component<AppProps> {
-  render() {
+export const App: FunctionComponent<AppProps> = props => {
+  {
     const {
-      incrementActionCreator
-    } = this.props
+      incrementAction
+    } = props
     return (
       <>
-        <Button text='enter' onClick={ () => {incrementActionCreator(1)}} >
+        <Button text='enter' onClick={ () => {incrementAction(1)}} >
         </Button>
       </>
     )
@@ -32,10 +29,18 @@ class App extends Component<AppProps> {
 
 // gives the app component access to state and actions from the store
 export default connect(
+
+  //using selector
   (state: RootState) => ({
-    increment: state.increment
-  }),
+      test: countSelector(state)
+    })
+    ,
+  //not using selector
+  // (state: RootState) => ({
+  //   test: state.test
+  // }),
+  
   {
-    incrementActionCreator: incrementActionCreator,
+    incrementAction: incrementActionCreator,
   }
 )(App)
