@@ -1,7 +1,7 @@
 {
-  "name": "pilea-source",
+  "name": "yodelay",
   "version": "1.0.0",
-  "description": "Pilea source code.",
+  "description": "Yodelay source code.",
   "repository": "",
   "main": "index.js",
   "scripts": {

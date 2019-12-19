@@ -1,6 +1,6 @@
 import {INCREMENT} from './actionTypes'
 
-/*****************************************action interface ************** */
+/*****************************************define types for action obj************** */
 interface incrementAction {
   type: typeof INCREMENT
   payload: number
