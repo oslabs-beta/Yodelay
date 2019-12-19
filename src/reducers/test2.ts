@@ -1,5 +1,6 @@
 import { uploadProtoAction, UPLOAD_PROTO } from '../actions'
 import {updateIn, setIn} from 'timm'
+import {RootState} from '.'
 
 export interface initialStateType {
   proto: object
@@ -19,3 +20,5 @@ export const test2: (state: initialStateType, action: uploadProtoAction ) => ini
     }
    return state 
   }
+
+  export const protoSelector: (state: RootState) => object = (state) => state.test2.proto
