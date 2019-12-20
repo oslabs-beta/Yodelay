@@ -8,7 +8,7 @@ syntax = "proto3";
 package helloworld;
 
 // The greeting service definition.
-service Greeter {
+service YodelayAPI {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
 }
