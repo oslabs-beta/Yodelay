@@ -2,6 +2,9 @@ import React, {FunctionComponent, RefObject, useRef, createRef } from 'react'
 import { connect } from 'react-redux'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Button } from '../components/common/Button';
+import {uploadProtoActionCreator} from '../actions'
+
+
 
 
 // export class MainMenu extends React.Component<MainMenuProps, {}> {
@@ -27,6 +30,7 @@ import { Button } from '../components/common/Button';
   interface NavbarProps {
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
+    uploadProtoAction?: typeof uploadProtoActionCreator
 
   }
 
@@ -36,6 +40,7 @@ import { Button } from '../components/common/Button';
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
         console.log(inputOpenFileRef.current.files[0])  
+        uploadProtoActionCreator(inputOpenFileRef.current.files[0])
         
         // const reader = new FileReader()
         // console.log(reader.readAsText(inputOpenFileRef.current))

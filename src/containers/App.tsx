@@ -12,20 +12,26 @@ import { incrementActionCreator } from '../actions';
 import { countSelector } from '../reducers/test';
 // import { loggedInSelector } from '../reducers/login'
 
+import {uploadProtoActionCreator} from '../actions'
+import {protoSelector} from '../reducers/test2'
+
+
 // sets type for props
 interface AppProps {
   incrementAction: typeof incrementActionCreator  // remove later -->  incrementAction: (...arg: any[]) => any
+  uploadProtoAction: typeof uploadProtoActionCreator
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
     const {
+      uploadProtoAction,
       incrementAction,
     } = props
     return (
       <div>
         <div style = {{display: "flex", flexDirection: "row", height: "100%", alignItems: "stretch"}}>
           <div style = {{border: "solid 1px black"}}>
-            <NavbarContainer></NavbarContainer>
+            <NavbarContainer uploadProtoAction={uploadProtoAction}></NavbarContainer>
           </div>
           
           <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
@@ -47,7 +53,8 @@ export default connect(
 
   //using selector
   (state: RootState) => ({
-      test: countSelector(state)
+      test: countSelector(state),
+      test2: protoSelector(state)
     })
     ,
   //not using selector
@@ -57,5 +64,6 @@ export default connect(
   
   {
     incrementAction: incrementActionCreator,
+    uploadProtoAction: uploadProtoActionCreator
   }
 )(App)

@@ -1,6 +1,6 @@
 import { uploadProtoAction, UPLOAD_PROTO } from '../actions'
-import {updateIn, setIn} from 'timm'
-import {RootState} from '.'
+import { setIn } from 'timm'
+import { RootState } from '.'
 
 export interface initialStateType {
   proto: object
