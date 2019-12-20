@@ -11,17 +11,18 @@ const port = 3000;
 // parse application/json
 app.use(bodyParser.json())
 // parse cookies
-app.use(cookieParser())
+// app.use(cookieParser())
 
 // Root:
 app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'))
 
-// GRPC TEST:
+// GRPC TEST: when we hit the /grpc endpoint we take in the request body and pass it as an argument
 app.post('/grpc', async (req,res) => {
   console.log('-----------------------------')
   // console.log('/grpc before calling function')
-
+  // to our grpc request function
   let output = await grpcRequest(req.body);
+  // then send response with the output that's been jsonified. 
   res.json(output)
 })
 
