@@ -21,7 +21,7 @@ let hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
  */
 function sayHello(call, callback) {
   console.log('------------')
-  // console.log('grpc server')
+  console.log('grpc server')
   callback(null, {message: 'Hello ' + call.request.name});
   // console.log('after grpc server')
 }
