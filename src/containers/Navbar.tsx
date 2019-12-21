@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Button } from '../components/common/Button';
 import {uploadProtoActionCreator} from '../actions'
-import { protoSelector } from '../reducers/test2';
+import { protoSelector } from '../reducers/uploadProto';
 import { RootState } from '../reducers';
 
 // sets type for props
@@ -11,8 +11,7 @@ import { RootState } from '../reducers';
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
     uploadProtoAction?: typeof uploadProtoActionCreator
-    f?: File
-  
+    protoFile?: File
   }
 
   export const Navbar: FunctionComponent<NavbarProps> = props => {
@@ -27,14 +26,15 @@ import { RootState } from '../reducers';
       }
       const onFileSubmit = () => {
         //f is a file type
-        const f = (inputOpenFileRef.current.files[0])
+        const protoFile = (inputOpenFileRef.current.files[0])
 
         const reader = new FileReader()
 
-        reader.onloadend = (e) => {console.log('german',e.target.result) 
+        reader.onloadend = (e) => { 
         uploadProtoAction(e.target.result)
         }
-        const file = reader.readAsText(f)
+
+        const file = reader.readAsText(protoFile)
      
       }
 
@@ -49,7 +49,7 @@ import { RootState } from '../reducers';
   }
 
   export default connect (
-  // gives the app component access to state and actions from the store
+  // gives the navbar component access to state and actions from the store
 //   export default connect(
   
     //using selector

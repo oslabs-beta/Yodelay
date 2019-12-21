@@ -1,17 +1,17 @@
 import { combineReducers } from "redux";
 // needs clarifying -- how does it recognizes increment and why does it need an alias
 import {test, testState} from './test'
-import {test2, initialStateType} from './test2'
+import {uploadProto, initialStateType} from './uploadProto'
 
 export interface RootState {
   test: testState
-  test2: initialStateType
+  uploadProto: initialStateType
 }
 
 // Turns an object whose values are different reducing functions into a single reducing function you can pass to createStore
 const rootReducer = combineReducers ({
   test,
-  test2
+  uploadProto
 })
 
 export default rootReducer;
