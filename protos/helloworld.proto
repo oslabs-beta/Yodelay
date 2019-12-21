@@ -5,7 +5,7 @@ syntax = "proto3";
 // option java_outer_classname = "HelloWorldProto";
 // option objc_class_prefix = "HLW";
 
-package helloworld;
+package helloaworld;
 
 // The greeting service definition.
 service YodelayAPI {
