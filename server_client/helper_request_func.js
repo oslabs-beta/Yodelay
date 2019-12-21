@@ -42,10 +42,16 @@ function grpcRequest(input) {
 // 
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
-  // console.log("grpcRequest input: ", input)
+  console.log("grpcRequest input: ", input)
 
-  let inputName = input.name;
-  let port = input.port
+  // here are all the fields in the message:
+  let port = input.port;
+  console.log('port: ', port)
+  let packageName = input.packageName;
+  let service = input.service;
+  let message = input.message;
+  let protoObject = input.protoObject;
+
   let output;
   // declare the package.
   const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
@@ -53,7 +59,7 @@ function grpcRequest(input) {
   grpc_promise.promisifyAll(package);
 
   return package.sayHello()
-    .sendMessage({name: inputName})
+    .sendMessage({port: port, packageName: packageName, service: service, message: message, protoObject: protoObject})
     .then( res => {
       // console.log('Greeting: ', res)
       output = res;
