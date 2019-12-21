@@ -20,11 +20,58 @@ const CONFIG_OBJECT = {
 // synchronously compiles and loads the .proto file into a definition
 // this will be moved to the front end:
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
+
+// console.log('package: ', packageDefinition)
+
+// ! this gives us the proto package name as well as any service names:
+for (let property in packageDefinition) {
+  // console.log(property)
+}
+
 // * generates a descriptor Object from the loaded API definition
-const descriptor = grpc.loadPackageDefinition(packageDefinition).helloworld;
-// console.log(descriptor);
+const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
+// this gets us the message name form the proto file:
+// console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
 
 
+
+
+function grpcRequest(input) {
+// 
+// STRING:
+// 
+// when a string is passed to the back end as a string we will then use this method:
+// it's passed to express on the req.body which we pass in as the input 
+  // console.log("grpcRequest input: ", input)
+
+  let inputName = input.name;
+  let port = input.port
+  let output;
+  // declare the package.
+  const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
+
+  grpc_promise.promisifyAll(package);
+
+  return package.sayHello()
+    .sendMessage({name: inputName})
+    .then( res => {
+      // console.log('Greeting: ', res)
+      output = res;
+      // console.log(output)
+      return output
+    })
+    .catch(err => console.error(err))
+}
+
+module.exports = grpcRequest;
+
+
+
+
+
+
+// OLD CODE:
+// 
 // 
 // JSON Object: 
 // 
@@ -61,34 +108,3 @@ const descriptor = grpc.loadPackageDefinition(packageDefinition).helloworld;
 // 
 // first we 
 // 
-
-
-function grpcRequest(input) {
-// 
-// STRING:
-// 
-// when a string is passed to the back end as a string we will then use this method:
-// it's passed to express on the req.body which we pass in as the input 
-  console.log("grpcRequest input: ", input)
-
-  let port = input.port
-  // declare the package.
-  const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
-  
-  grpc_promise.promisifyAll(package);
-
-  let inputName = input.name;
-  let output;
-
-  return package.sayHello()
-    .sendMessage({name: inputName})
-    .then( res => {
-      console.log('Greeting: ', res)
-      output = res;
-      // console.log(output)
-      return output
-    })
-    .catch(err => console.error(err))
-}
-
-module.exports = grpcRequest;
