@@ -13,15 +13,18 @@ let packageDefinition = protoLoader.loadSync(
      oneofs: true
     });
 
-// 
-let hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
+//
+
+const packageName = 'helloaworld'
+
+let hello_proto = grpc.loadPackageDefinition(packageDefinition)[packageName];
 
 /**
  * Implements the SayHello RPC method.
  */
 function sayHello(call, callback) {
   console.log('------------')
-  console.log('grpc server')
+  console.log(`Hi! I'm the gRPC server`)
   callback(null, {message: 'Hello ' + call.request.name});
   // console.log('after grpc server')
 }
