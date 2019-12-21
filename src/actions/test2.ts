@@ -2,12 +2,12 @@ export const UPLOAD_PROTO = 'UPLOAD_PROTO'
 
 export interface uploadProto {
   type: typeof UPLOAD_PROTO
-  payload: object
+  payload: File
 }
 
 export type uploadProtoAction = uploadProto
 
-export const uploadProtoActionCreator = (payloadObj: object): uploadProtoAction => {
+export const uploadProtoActionCreator = (payloadObj: File): uploadProtoAction => {
   return {
     type: UPLOAD_PROTO,
     payload: payloadObj

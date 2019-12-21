@@ -34,6 +34,8 @@ import { RootState } from '../reducers';
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
     uploadProtoAction?: typeof uploadProtoActionCreator
+    f?: File
+  
   }
 
   export const Navbar: FunctionComponent<NavbarProps> = props => {
@@ -41,22 +43,31 @@ import { RootState } from '../reducers';
       const { 
         uploadProtoAction
       } = props
+      
       const inputOpenFileRef = useRef <HTMLInputElement> ();
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
-        console.log(inputOpenFileRef.current.files)  
-        uploadProtoAction(inputOpenFileRef.current.files[0])
-        
-        // const reader = new FileReader()
-        // console.log(reader.readAsText(inputOpenFileRef.current))
       }
-      //   inputOpenFileRef
-      // } = props
+      const onFileSubmit = () => {
+        //f is a file type
+        const f = uploadProtoAction(inputOpenFileRef.current.files[0]).payload
+        console.log('cedric', f)
+        console.log("is it a blob", f instanceof Blob)
+        console.log("is it a file",f instanceof File)
+        console.log(typeof f)
+
+        const reader = new FileReader()
+        // const blob = f.slice(1, 1187)
+
+        reader.onloadend = (e) => {console.log('german',e.target.result)}
+        const file = reader.readAsText(f)
+        console.log('hello', file)
+      }
 
       return (
         <div>
         Navbar
-          <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={ () => { uploadProtoAction(inputOpenFileRef.current.files[0])}}/>
+          <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={onFileSubmit}/>
           <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
         </div>
       )
