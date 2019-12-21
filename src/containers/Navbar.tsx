@@ -6,29 +6,6 @@ import {uploadProtoActionCreator} from '../actions'
 import { protoSelector } from '../reducers/test2';
 import { RootState } from '../reducers';
 
-
-
-
-
-// export class MainMenu extends React.Component<MainMenuProps, {}> {
-//   private readonly inputOpenFileRef : RefObject<HTMLInputElement>
-//   constructor() {
-//       super({})
-//       this.inputOpenFileRef = React.createRef()
-//   }
-//   showOpenFileDlg = () => {
-//       this.inputOpenFileRef.current.click()
-//   }
-//   render() {
-//       return (
-//          <div>
-//                   <input ref={this.inputOpenFileRef} type="file" style={{display:"none"}}/>
-//                   <button onClick={this.showOpenFileDlg}>Open</Button>
-//         </div>
-//       )
-//   }
-//   }
-
 // sets type for props
   interface NavbarProps {
     inputOpenFileRef?: RefObject<HTMLInputElement>
@@ -50,18 +27,15 @@ import { RootState } from '../reducers';
       }
       const onFileSubmit = () => {
         //f is a file type
-        const f = uploadProtoAction(inputOpenFileRef.current.files[0]).payload
-        console.log('cedric', f)
-        console.log("is it a blob", f instanceof Blob)
-        console.log("is it a file",f instanceof File)
-        console.log(typeof f)
+        const f = (inputOpenFileRef.current.files[0])
 
         const reader = new FileReader()
-        // const blob = f.slice(1, 1187)
 
-        reader.onloadend = (e) => {console.log('german',e.target.result)}
+        reader.onloadend = (e) => {console.log('german',e.target.result) 
+        uploadProtoAction(e.target.result)
+        }
         const file = reader.readAsText(f)
-        console.log('hello', file)
+     
       }
 
       return (
