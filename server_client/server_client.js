@@ -17,14 +17,18 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'))
 
 // GRPC TEST: when we hit the /grpc endpoint we take in the request body and pass it as an argument
-app.post('/grpc', async (req,res) => {
+app.post('/grpc', async (req, res) => {
   console.log('-----------------------------')
-  // console.log('/grpc before calling function')
   // to our grpc request function
-  let output = await grpcRequest(req.body);
+  // console.log('/grpc req.body: ', req.body)
+  let output = await grpcRequest(req.body).catch();
+  console.log('/grpc req.body output: ', output)
+
   // then send response with the output that's been jsonified. 
   res.json(output)
 })
+
+
 
 // Unknown Route:
 app.use((req, res) =>  {
