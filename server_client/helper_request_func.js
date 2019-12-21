@@ -31,7 +31,8 @@ for (let property in packageDefinition) {
 // * generates a descriptor Object from the loaded API definition
 const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
 // this gets us the message name form the proto file:
-// console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
+// console.log('des new: ', descriptor.HelloRequest.type.field[0]);
+console.log('des new: ', descriptor.HelloRequest.type);
 
 
 
@@ -63,7 +64,7 @@ function grpcRequest(input) {
     .then( res => {
       // console.log('Greeting: ', res)
       output = res;
-      // console.log(output)
+      console.log('output', output)
       return output
     })
     .catch(err => console.error(err))
