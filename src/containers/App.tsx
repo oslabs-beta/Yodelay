@@ -10,18 +10,18 @@ import NavbarContainer from './Navbar'
 import { Button } from '../components/common/Button'
 import { incrementActionCreator } from '../actions';
 import { countSelector } from '../reducers/test';
-// import {} from '../actions'
 // import { loggedInSelector } from '../reducers/login'
+
+
 
 // sets type for props
 interface AppProps {
-  incrementAction: typeof incrementActionCreator
-  // remove later -->  incrementAction: (...arg: any[]) => any
+  incrementAction: typeof incrementActionCreator  // remove later -->  incrementAction: (...arg: any[]) => any
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
     const {
-      incrementAction
+      incrementAction,
     } = props
     return (
       <div>
@@ -32,8 +32,7 @@ export const App: FunctionComponent<AppProps> = props => {
           
           <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
             <HeaderContainer ></HeaderContainer>
-            <BodyContainer>
-            </BodyContainer>
+            <BodyContainer></BodyContainer>
             <FooterContainer></FooterContainer>
           </div>
           <Button text='enter' onClick={ () => {incrementAction(1)}} >
@@ -50,7 +49,7 @@ export default connect(
 
   //using selector
   (state: RootState) => ({
-      test: countSelector(state)
+      test: countSelector(state),
     })
     ,
   //not using selector
