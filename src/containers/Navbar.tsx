@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Button } from '../components/common/Button';
 import {uploadProtoActionCreator} from '../actions'
+import { protoSelector } from '../reducers/test2';
+import { RootState } from '../reducers';
+
 
 
 
@@ -31,16 +34,18 @@ import {uploadProtoActionCreator} from '../actions'
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
     uploadProtoAction?: typeof uploadProtoActionCreator
-
   }
 
   export const Navbar: FunctionComponent<NavbarProps> = props => {
     {
+      const { 
+        uploadProtoAction
+      } = props
       const inputOpenFileRef = useRef <HTMLInputElement> ();
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
-        console.log(inputOpenFileRef.current.files[0])  
-        uploadProtoActionCreator(inputOpenFileRef.current.files[0])
+        console.log(inputOpenFileRef.current.files)  
+        uploadProtoAction(inputOpenFileRef.current.files[0])
         
         // const reader = new FileReader()
         // console.log(reader.readAsText(inputOpenFileRef.current))
@@ -51,25 +56,23 @@ import {uploadProtoActionCreator} from '../actions'
       return (
         <div>
         Navbar
-          <input ref={inputOpenFileRef} type="file" style={{display:"none"}}/>
+          <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={ () => { uploadProtoAction(inputOpenFileRef.current.files[0])}}/>
           <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
         </div>
       )
     }
   }
 
-  export default Navbar
-
+  export default connect (
   // gives the app component access to state and actions from the store
 //   export default connect(
   
-//     //using selector
-//     (state: RootState) => ({
-//         test: countSelector(state)
-//       })
-//       ,
-    
-//     {
-//       incrementAction: incrementActionCreator,
-//     }
-//   )(App)
+    //using selector
+    (state: RootState) => ({
+        test2: protoSelector(state)
+      }),
+    {
+      uploadProtoAction: uploadProtoActionCreator,
+    }
+
+  )(Navbar)

@@ -3,7 +3,7 @@ import { setIn } from 'timm'
 import { RootState } from '.'
 
 export interface initialStateType {
-  proto: object
+  proto: any
 }
 
 
@@ -15,7 +15,8 @@ export const test2: (state: initialStateType, action: uploadProtoAction ) => ini
   state = initialState, action) => {
     switch (action.type) {
       case UPLOAD_PROTO: {
-        return setIn(state, ["proto"], state.proto = action.payload)
+        console.log('inside reducer', action.payload)
+        return setIn(state, ["proto"], action.payload)
       }
     }
    return state 
