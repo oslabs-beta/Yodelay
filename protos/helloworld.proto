@@ -15,8 +15,12 @@ service YodelayAPI {
 
 // The request message containing the user's name.
 message HelloRequest {
-  string name = 1;
-  string port = 2;
+  string port = 1;
+  string packageName = 2;
+  string service = 3;
+  string message = 4;
+  string protoObject = 5;
+
 }
 
 // The response message containing the greetings
