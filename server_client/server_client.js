@@ -4,10 +4,11 @@ const bodyParser = require('body-parser');
 const grpcRequest = require('./helper_request_func');
 
 const app = express();
+// changed to port 4000 because react hot module runs on 3000
 const port = 4000;
 
 // Parsing!
-// parse application/json
+//  parse to text (json breaks fetch request)
 app.use(bodyParser.text());
 // parse cookies
 app.use(cookieParser());
