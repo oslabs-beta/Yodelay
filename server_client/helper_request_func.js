@@ -14,21 +14,86 @@ let protoObject;
 let output;
 
 
-function parseProto(input) {
+// input
+// output: {protoFile: “the text of the photo file”, services: [{}, {}, {}], protoDescription: {}}
+
+async function parseProto(upload) {
 // MESSAGE FIELDS:
 console.log('-----Parsing Proto-----')
-console.log(input)
-let port = input.port;
+let input = JSON.parse(upload);
+// console.log('after json parse: ',input)
+port = input.port;
 // console.log('port: ', port)
-let packageName = input.packageName;
-let service = input.service;
-let message = input.message;
+packageName = input.packageName;
+service = input.service;
+message = input.message;
 // the proto object is where we are passed in the .proto file from the server_client
 // we then take this object and write it to the temp output.proto file in the proto folder:
-let protoObject = input.protoObject;
-console.log('proto obj: ', protoObject)
-let output;
+protoObject = input.protoObject;
+// console.log('proto obj: ', protoObject)
 
+let output = {};
+
+output.protoFile = protoObject;
+// console.log(output)
+
+
+// WRITE TO TEMP .PROTO
+  // now let's write our protoObject string to the output.proto file:
+fs.writeFileSync("./protos/output.proto", protoObject, 'utf8', function (err) {
+  if (err) {
+    console.log("An error occurred while writing JSON Object to File.");
+    return console.log(err);
+  }
+  console.log("JSON file has been saved.");
+});
+
+// BUILD DEFINITION AND DESCRIPTOR:
+// now we have a path for our proto:
+const PROTO_PATH = __dirname + '/../protos/output.proto';
+
+// and a config object:
+const CONFIG_OBJECT = {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  defaults: true,
+  oneofs: true
+}
+
+// now that the file is written we want to create our package definition:
+const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
+
+let protoPackageName = await Object.keys(packageDefinition)[0].split('.')[0]
+// console.log('p: ', p)
+
+// console.log('package: ', typeof(Object.keys(packageDefinition)[0].split('.')[0]))
+// console.log(packageName)
+
+output.package = protoPackageName;
+
+//  this gives us the proto package name as well as any service names:
+let services = []
+output.services = services
+
+for (let property in packageDefinition) {
+  // console.log(property)
+  services.push(property)
+}
+// console.log('output: ', output)
+output.definition = packageDefinition;
+
+// let's use the package definintion to create our descriptor:
+const descriptor = grpc.loadPackageDefinition(packageDefinition)[protoPackageName];
+console.log('descriptor: ', descriptor)
+// this gets us the message name form the proto file:
+// console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
+// console.log('des new: ', descriptor.HelloRequest.type);
+
+output.protoDescription = descriptor;
+
+console.log('-----done parsing proto-----')
+return output;
 }
 
 
@@ -107,7 +172,10 @@ function grpcRequest(serv) {
     .catch(err => console.error(err))
 }
 
-module.exports = grpcRequest;
+module.exports = { 
+  grpcRequest,
+  parseProto
+};
 
 
 
