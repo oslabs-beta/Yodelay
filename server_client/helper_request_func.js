@@ -3,12 +3,42 @@ const protoLoader = require('@grpc/proto-loader');
 const grpc_promise = require('grpc-promise');
 const fs = require('fs');
 
+// We have two helper functions, parseProto and grpcRequest
+// parseProto takes the incoming proto string, writes it to a file
+// MESSAGE FIELDS:
+let port;
+let packageName;
+let service;
+let message;
+let protoObject;
+let output;
+
+
+function parseProto(input) {
+// MESSAGE FIELDS:
+console.log('-----Parsing Proto-----')
+let port = input.port;
+// console.log('port: ', port)
+let packageName = input.packageName;
+let service = input.service;
+let message = input.message;
+// the proto object is where we are passed in the .proto file from the server_client
+// we then take this object and write it to the temp output.proto file in the proto folder:
+let protoObject = input.protoObject;
+console.log('proto obj: ', protoObject)
+let output;
+
+}
+
+
+
+
 function grpcRequest(input) {
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
-  console.log("grpcRequest input: ", input)
+  // console.log("grpcRequest input: ", input)
 
-  // here are all the fields in the message:
+// MESSAGE FIELDS:
   let port = input.port;
   // console.log('port: ', port)
   let packageName = input.packageName;
@@ -20,6 +50,7 @@ function grpcRequest(input) {
   console.log('proto obj: ', protoObject)
   let output;
 
+// WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
   fs.writeFileSync("./protos/output.proto", protoObject, 'utf8', function (err) {
       if (err) {
@@ -28,7 +59,8 @@ function grpcRequest(input) {
       }
       console.log("JSON file has been saved.");
   });
-
+  
+  // BUILD DEFINITION AND DESCRIPTOR:
   // now we have a path for our proto:
   const PROTO_PATH = __dirname + '/../protos/output.proto';
 
@@ -44,7 +76,7 @@ function grpcRequest(input) {
   // now that the file is written we want to create our package definition:
   const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
   console.log('package: ', packageDefinition)
-  // ! this gives us the proto package name as well as any service names:
+  //  this gives us the proto package name as well as any service names:
   // for (let property in packageDefinition) {
   //   // console.log(property)
   // }
@@ -53,11 +85,11 @@ function grpcRequest(input) {
   const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
   console.log('descriptor: ', descriptor)
   // this gets us the message name form the proto file:
-  // console.log('des new: ', descriptor.HelloRequest.type.field[0]);
-  // console.log('des new: ', descriptor.HelloRequest.type);
+  console.log('des new: ', descriptor.HelloRequest.type.field[0]);
+  console.log('des new: ', descriptor.HelloRequest.type);
 
 
-  // declare the package
+// DECLARE PACKAGE:
   const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
 
   grpc_promise.promisifyAll(package);
@@ -73,7 +105,10 @@ function grpcRequest(input) {
     .catch(err => console.error(err))
 }
 
-module.exports = grpcRequest;
+module.exports = {
+  grpcRequest, 
+  parseProto
+};
 
 
 
