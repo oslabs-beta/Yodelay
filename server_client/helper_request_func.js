@@ -1,46 +1,9 @@
 const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const grpc_promise = require('grpc-promise');
-// when the .proto file is local we use this method to pass it to our grpcRequest helper function
-const PROTO_PATH = __dirname + '/../protos/helloworld.proto';
-// grab the proto path:
 const fs = require('fs');
 
-const CONFIG_OBJECT = {
-  keepCase: true,
-  longs: String,
-  enums: String,
-  defaults: true,
-  oneofs: true
-}
-
-// 
-// Local File:
-// 
-// synchronously compiles and loads the .proto file into a definition
-// this will be moved to the front end:
-const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
-
-// console.log('package: ', packageDefinition)
-
-// ! this gives us the proto package name as well as any service names:
-for (let property in packageDefinition) {
-  // console.log(property)
-}
-
-// * generates a descriptor Object from the loaded API definition
-const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
-// this gets us the message name form the proto file:
-// console.log('des new: ', descriptor.HelloRequest.type.field[0]);
-// console.log('des new: ', descriptor.HelloRequest.type);
-
-
-
-
 function grpcRequest(input) {
-// 
-// STRING:
-// 
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
   console.log("grpcRequest input: ", input)
@@ -54,18 +17,47 @@ function grpcRequest(input) {
   // the proto object is where we are passed in the .proto file from the server_client
   // we then take this object and write it to the temp output.proto file in the proto folder:
   let protoObject = input.protoObject;
+  console.log('proto obj: ', protoObject)
   let output;
 
   // now let's write our protoObject string to the output.proto file:
-  fs.writeFile("./protos/output.proto", protoObject, 'utf8', function (err) {
+  fs.writeFileSync("./protos/output.proto", protoObject, 'utf8', function (err) {
       if (err) {
         console.log("An error occurred while writing JSON Object to File.");
         return console.log(err);
       }
       console.log("JSON file has been saved.");
-    });
+  });
 
-  // declare the package.
+  // now we have a path for our proto:
+  const PROTO_PATH = __dirname + '/../protos/output.proto';
+
+  // and a config object:
+  const CONFIG_OBJECT = {
+    keepCase: true,
+    longs: String,
+    enums: String,
+    defaults: true,
+    oneofs: true
+  }
+
+  // now that the file is written we want to create our package definition:
+  const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
+  console.log('package: ', packageDefinition)
+  // ! this gives us the proto package name as well as any service names:
+  // for (let property in packageDefinition) {
+  //   // console.log(property)
+  // }
+
+  // let's use the package definintion to create our descriptor:
+  const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
+  console.log('descriptor: ', descriptor)
+  // this gets us the message name form the proto file:
+  // console.log('des new: ', descriptor.HelloRequest.type.field[0]);
+  // console.log('des new: ', descriptor.HelloRequest.type);
+
+
+  // declare the package
   const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
 
   grpc_promise.promisifyAll(package);
