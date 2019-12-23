@@ -32,7 +32,7 @@ for (let property in packageDefinition) {
 const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
 // this gets us the message name form the proto file:
 // console.log('des new: ', descriptor.HelloRequest.type.field[0]);
-console.log('des new: ', descriptor.HelloRequest.type);
+// console.log('des new: ', descriptor.HelloRequest.type);
 
 
 
@@ -47,13 +47,24 @@ function grpcRequest(input) {
 
   // here are all the fields in the message:
   let port = input.port;
-  console.log('port: ', port)
+  // console.log('port: ', port)
   let packageName = input.packageName;
   let service = input.service;
   let message = input.message;
+  // the proto object is where we are passed in the .proto file from the server_client
+  // we then take this object and write it to the temp output.proto file in the proto folder:
   let protoObject = input.protoObject;
-
   let output;
+
+  // now let's write our protoObject string to the output.proto file:
+  fs.writeFile("./protos/output.proto", protoObject, 'utf8', function (err) {
+      if (err) {
+        console.log("An error occurred while writing JSON Object to File.");
+        return console.log(err);
+      }
+      console.log("JSON file has been saved.");
+    });
+
   // declare the package.
   const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
 
@@ -64,7 +75,7 @@ function grpcRequest(input) {
     .then( res => {
       // console.log('Greeting: ', res)
       output = res;
-      console.log('output', output)
+      // console.log('output', output)
       return output
     })
     .catch(err => console.error(err))
@@ -93,13 +104,7 @@ module.exports = grpcRequest;
 // BACK END:
 // 
 // Write the JSON object locally: 
-// fs.writeFile("./protos/output.proto", stringDefinition, 'utf8', function (err) {
-//   if (err) {
-//     console.log("An error occurred while writing JSON Object to File.");
-//     return console.log(err);
-//   }
-//   console.log("JSON file has been saved.");
-// });
+// 
 // File location:
 // this is the file we are going to write the proto to:
 // const inputProto = require('../protos/output.proto');
