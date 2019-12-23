@@ -17,6 +17,7 @@ let output;
 function parseProto(input) {
 // MESSAGE FIELDS:
 console.log('-----Parsing Proto-----')
+console.log(input)
 let port = input.port;
 // console.log('port: ', port)
 let packageName = input.packageName;
@@ -33,11 +34,12 @@ let output;
 
 
 
-function grpcRequest(input) {
+function grpcRequest(serv) {
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
-  // console.log("grpcRequest input: ", input)
-
+  // console.log("grpcRequest input: ", serv)
+  let input = JSON.parse(serv)
+  console.log("grpcRequest input proto object: ", input.protoObject)
 // MESSAGE FIELDS:
   let port = input.port;
   // console.log('port: ', port)
@@ -75,7 +77,7 @@ function grpcRequest(input) {
 
   // now that the file is written we want to create our package definition:
   const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
-  console.log('package: ', packageDefinition)
+  // console.log('package: ', packageDefinition)
   //  this gives us the proto package name as well as any service names:
   // for (let property in packageDefinition) {
   //   // console.log(property)
@@ -83,10 +85,10 @@ function grpcRequest(input) {
 
   // let's use the package definintion to create our descriptor:
   const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
-  console.log('descriptor: ', descriptor)
+  // console.log('descriptor: ', descriptor)
   // this gets us the message name form the proto file:
-  console.log('des new: ', descriptor.HelloRequest.type.field[0]);
-  console.log('des new: ', descriptor.HelloRequest.type);
+  console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
+  // console.log('des new: ', descriptor.HelloRequest.type);
 
 
 // DECLARE PACKAGE:
@@ -105,11 +107,7 @@ function grpcRequest(input) {
     .catch(err => console.error(err))
 }
 
-module.exports = {
-  grpcRequest, 
-  parseProto
-};
-
+module.exports = grpcRequest;
 
 
 
