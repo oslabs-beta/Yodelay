@@ -2,16 +2,39 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const grpcRequest = require('./helper_request_func');
+var cors = require('cors');
 
 const app = express();
 // changed to port 4000 because react hot module runs on 3000
 const port = 4000;
 
+// this line hackily solves the CORS errors when sending post requests to /upload
+// refactor eventually
+app.use(cors());
+
 // Parsing!
-//  parse to text (json breaks fetch request)
+//  parse to text (bodyParser.json breaks upload fetch request)
 app.use(bodyParser.text());
 // parse cookies
 app.use(cookieParser());
+
+// uncomment this flow test to see all incoming requests printed -- of great help while debugging
+
+// app.use((req, res, next) => {
+//   console.log('*************************************************************');
+//   console.log(
+//     'method:',
+//     req.method,
+//     'path',
+//     req.path,
+//     'body:',
+//     req.body,
+//     'cookies:',
+//     req.cookies
+//   );
+//   console.log('*************************************************************');
+//   next();
+// });
 
 // Root:
 app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'));
@@ -27,8 +50,11 @@ app.post('/grpc', async (req, res) => {
 
 //upload path
 app.post('/upload', (req, res) => {
-  console.log('---req.body:', req.body, '---/upload req---');
-  res.json('upload response man');
+  console.log(
+    'here is the parsed protoFile string sent to /upload',
+    JSON.parse(req.body)
+  );
+  res.json('protoFile uploaded succesfully man');
 });
 
 // Unknown Route:
