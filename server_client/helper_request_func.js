@@ -17,7 +17,7 @@ let output;
 // input
 // output: {protoFile: “the text of the photo file”, services: [{}, {}, {}], protoDescription: {}}
 
-function parseProto(upload) {
+async function parseProto(upload) {
 // MESSAGE FIELDS:
 console.log('-----Parsing Proto-----')
 let input = JSON.parse(upload);
@@ -29,7 +29,7 @@ service = input.service;
 message = input.message;
 // the proto object is where we are passed in the .proto file from the server_client
 // we then take this object and write it to the temp output.proto file in the proto folder:
-let protoObject = input.protoObject;
+protoObject = input.protoObject;
 // console.log('proto obj: ', protoObject)
 
 let output = {};
@@ -63,26 +63,36 @@ const CONFIG_OBJECT = {
 
 // now that the file is written we want to create our package definition:
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
-// console.log('package: ', packageDefinition)
+
+let protoPackageName = await Object.keys(packageDefinition)[0].split('.')[0]
+// console.log('p: ', p)
+
+// console.log('package: ', typeof(Object.keys(packageDefinition)[0].split('.')[0]))
+// console.log(packageName)
+
+output.package = protoPackageName;
+
 //  this gives us the proto package name as well as any service names:
 let services = []
 output.services = services
+
 for (let property in packageDefinition) {
   // console.log(property)
   services.push(property)
 }
 // console.log('output: ', output)
+output.definition = packageDefinition;
 
 // let's use the package definintion to create our descriptor:
-const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
-// console.log('descriptor: ', descriptor)
+const descriptor = grpc.loadPackageDefinition(packageDefinition)[protoPackageName];
+console.log('descriptor: ', descriptor)
 // this gets us the message name form the proto file:
 // console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
 // console.log('des new: ', descriptor.HelloRequest.type);
 
 output.protoDescription = descriptor;
 
-console.log('final helper output: ', output)
+console.log('-----done parsing proto-----')
 return output;
 }
 
