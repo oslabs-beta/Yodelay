@@ -48,7 +48,7 @@ import { RootState } from '../reducers';
         Navbar
           <Link to ="/">
             <Button text='Home' onClick={ () => {testClick()}} >
-              </Button>
+            </Button>
           </Link>
 
           {/* Upload Proto Button */}
