@@ -27,7 +27,7 @@ app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'))
 app.post('/upload', async (req, res) => {
   console.log('---------UPLOAD--------------')
   // to our grpc request function
-  console.log('/upload req.body: ', req.body)
+  // console.log('/upload req.body: ', req.body)
   let output = await grpcRequest(req.body).catch();
   // console.log('/upload req.body output: ', output)
 
