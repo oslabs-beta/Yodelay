@@ -23,13 +23,13 @@ app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'))
 
 // * Start GRPC Server Call: 
 // *
-// when we hit the /grpc endpoint we take in the request body and pass it as an argument
+// when we hit the /upload endpoint we take in the request body and pass it as an argument to the helper request function:
 app.post('/upload', async (req, res) => {
   console.log('---------UPLOAD--------------')
   // to our grpc request function
   console.log('/upload req.body: ', req.body)
   let output = await grpcRequest(req.body).catch();
-  console.log('/upload req.body output: ', output)
+  // console.log('/upload req.body output: ', output)
 
   // then send response with the output that's been jsonified. 
   res.json(output)
