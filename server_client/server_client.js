@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const grpcRequest = require('./helper_request_func');
+const grpcRequest = require('./helper_request_func')
 
 const app = express();
 // changed to port 4000 because react hot module runs on 3000
@@ -11,25 +11,45 @@ const port = 4000;
 //  parse to text (json breaks fetch request)
 app.use(bodyParser.text());
 // parse cookies
-app.use(cookieParser());
+// app.use(cookieParser())
 
 // Root:
-app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'));
+app.get('/', (req, res) => res.send('🍻  Yodelay World  🍻'))
 
-// GRPC TEST:
-app.post('/grpc', async (req, res) => {
-  console.log('-----------------------------');
-  // console.log('/grpc before calling function')
 
-  let output = await grpcRequest(req.body);
-  res.json(output);
-});
-
-//upload path
-app.post('/upload', (req, res) => {
+// * UPLOAD:
+// when we hit the /upload endpoint we take in the request body and pass it as an argument to the helper request function:
+app.post('/upload', async (req, res) => {
   console.log('---req.body:', req.body, '---/upload req---');
+  // to our grpc request function
+  // console.log('/upload req.body: ', req.body)
+  let output = await helperFunctions.parseProto(req.body).catch();
+  // console.log('/upload req.body output: ', output)
+  // then send response with the output that's been jsonified. 
   res.json('upload response man');
-});
+})
+
+
+// * SERVICE:
+// * Start GRPC Server Call: 
+app.post('/service', async (req, res) => {
+  console.log('---------SERVICE-------------')
+  // to our grpc request function
+  // console.log('/service req.body: ', req.body)
+  let output = await grpcRequest(req.body).catch();
+  // console.log('/service req.body output: ', output)
+  // then send response with the output that's been jsonified. 
+  res.json(output)
+})
+
+
+// *
+// * End GRPC Server Call
+
+
+
+
+
 
 // Unknown Route:
 app.use((req, res) => {
