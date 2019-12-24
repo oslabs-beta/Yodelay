@@ -7,12 +7,14 @@ import { json } from 'body-parser';
 function* sendProto({ payload: type, payload }: uploadProtoAction) {
   // yield call(fetch, '/scores', { method: 'GET', body: { score } })
   try {
-    yield call(fetch, 'http://localhost:4000/upload', {
+    const jsonProtoFile = JSON.stringify(payload);
+    yield fetch(`http://localhost:4000/upload`, {
       method: 'POST',
-      body: payload,
-      // headers: {
-      //   'Content-Type': 'text/plain'
-      // }
+      headers: {
+        Accept: 'text/plain',
+        'Content-Type': 'text/plain'
+      },
+      body: jsonProtoFile
     });
   } catch ({ error, status }) {
     console.log('error in upload saga', error, status);
