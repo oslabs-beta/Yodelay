@@ -108,7 +108,8 @@ function grpcRequest(serv) {
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
   // console.log("grpcRequest input: ", serv)
-  let input = JSON.parse(serv)
+  // let input = JSON.parse(serv)
+  let input = serv;
   console.log("grpcRequest input proto object: ", input.protoObject)
 // MESSAGE FIELDS:
   let port = input.port;
