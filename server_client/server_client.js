@@ -49,10 +49,12 @@ app.post('/upload', async (req, res) => {
     JSON.parse(req.body)
   );
 
+  const parsedReqBody = JSON.parse(req.body)
+
   // console.log('---req.body:', req.body, '---/upload req---');
   // to our grpc request function
   // console.log('/upload req.body: ', req.body)
-  let output = await parseProto(req.body);
+  let output = await parseProto(parsedReqBody);
   // console.log('/upload req.body output: ', output)
   // then send response with the output that's been jsonified.
   // this is goiing to be the protoFile, services we pull and the protoDescription:
