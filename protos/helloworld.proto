@@ -5,17 +5,22 @@ syntax = "proto3";
 // option java_outer_classname = "HelloWorldProto";
 // option objc_class_prefix = "HLW";
 
-package helloworld;
+package helloaworld;
 
 // The greeting service definition.
-service Greeter {
+service YodelayAPI {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
 }
 
 // The request message containing the user's name.
 message HelloRequest {
-  string name = 1;
+  string port = 1;
+  string packageName = 2;
+  string service = 3;
+  string message = 4;
+  string protoObject = 5;
+
 }
 
 // The response message containing the greetings

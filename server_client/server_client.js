@@ -1,8 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const grpcRequest = require('./helper_request_func');
-var cors = require('cors');
+const cors = require('cors');
+const { grpcRequest, parseProto } = require('./helper_request_func');
 
 const app = express();
 // changed to port 4000 because react hot module runs on 3000
@@ -19,7 +19,6 @@ app.use(bodyParser.text());
 app.use(cookieParser());
 
 // uncomment this flow test to see all incoming requests printed -- of great help while debugging
-
 // app.use((req, res, next) => {
 //   console.log('*************************************************************');
 //   console.log(
@@ -37,25 +36,53 @@ app.use(cookieParser());
 // });
 
 // Root:
-app.get('/', (req, res) => res.send('🍻  Yodelay World   🍻'));
+app.get('/', (req, res) => res.send('🍻  Yodelay World  🍻'));
 
-// GRPC TEST:
-app.post('/grpc', async (req, res) => {
-  console.log('-----------------------------');
-  // console.log('/grpc before calling function')
-
-  let output = await grpcRequest(req.body);
-  res.json(output);
-});
-
-//upload path
-app.post('/upload', (req, res) => {
+// * UPLOAD:
+// when we hit the /upload endpoint we take in the request body and pass it as an argument to the helper request function:
+// Input req.body
+// output: {protoFile: “the text of the photo file”, services: [{}, {}, {}], protoDescription: {}}
+app.post('/upload', async (req, res) => {
+  // was able to send the file so that a simple JSON.parse takes care of it
   console.log(
     'here is the parsed protoFile string sent to /upload',
     JSON.parse(req.body)
   );
-  res.json('protoFile uploaded succesfully man');
+
+  // console.log('---req.body:', req.body, '---/upload req---');
+  // to our grpc request function
+  // console.log('/upload req.body: ', req.body)
+  let output = await parseProto(req.body);
+  // console.log('/upload req.body output: ', output)
+  // then send response with the output that's been jsonified.
+  // this is goiing to be the protoFile, services we pull and the protoDescription:
+  res.json(output);
 });
+
+// * SERVICE:
+// * Start GRPC Server Call:
+
+app.post('/service', async (req, res) => {
+  console.log('---------SERVICE-------------');
+  // to our grpc request function
+  // console.log('/service req.body: ', req.body)
+  let output = await grpcRequest(req.body).catch();
+  // console.log('/service req.body output: ', output)
+  // then send response with the output that's been jsonified.
+  res.json(output);
+});
+
+// *
+// * End GRPC Server Call
+
+//cedric's upload path (likely to be deleted)
+// app.post('/upload', (req, res) => {
+//   console.log(
+//     'here is the parsed protoFile string sent to /upload',
+//     JSON.parse(req.body)
+//   );
+//   res.json('protoFile uploaded succesfully man');
+// });
 
 // Unknown Route:
 app.use((req, res) => {
