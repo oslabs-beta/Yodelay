@@ -20,17 +20,22 @@ let output;
 async function parseProto(upload) {
 // MESSAGE FIELDS:
 console.log('-----Parsing Proto-----')
-let input = JSON.parse(upload);
-// console.log('after json parse: ',input)
-port = input.port;
+
+// console.log('upload: ', upload)
+// port = upload.port;
 // console.log('port: ', port)
-packageName = input.packageName;
-service = input.service;
-message = input.message;
+// packageName = upload.packageName;
+// service = upload.service;
+// message = upload.message;
+
 // the proto object is where we are passed in the .proto file from the server_client
 // we then take this object and write it to the temp output.proto file in the proto folder:
-protoObject = input.protoObject;
 // console.log('proto obj: ', protoObject)
+// protoObject = upload.protoObject;
+
+// test from initial front end:
+protoObject = upload;
+// 
 
 let output = {};
 
