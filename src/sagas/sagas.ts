@@ -16,6 +16,7 @@ function* sendProto({ payload: type, payload }: uploadProtoAction) {
       },
       body: jsonProtoFile
     });
+    // todo: .then response here! send back with service and message fields filled out.
   } catch ({ error, status }) {
     console.log('error in upload saga', error, status);
   }
