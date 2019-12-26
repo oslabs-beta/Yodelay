@@ -33,7 +33,7 @@ export const App: FunctionComponent<AppProps> = props => {
             </div>
             
             <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
-              <HeaderContainer ></HeaderContainer>
+              <HeaderContainer></HeaderContainer>
               <BodyContainer></BodyContainer>
               <FooterContainer></FooterContainer>
             </div>
