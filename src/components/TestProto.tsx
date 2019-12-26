@@ -1,39 +1,27 @@
 import React, {FunctionComponent } from 'react'
 import { connect } from 'react-redux'
-import TestProto from '../components/TestProto'
-import Settings from '../components/Settings'
-import { Route } from 'react-router'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 // sets type for props
-interface BodyProps {
+interface TestProtoProps {
 
   }
-
-  export const Body: FunctionComponent<BodyProps> = props => {
+  
+  export const TestProto: FunctionComponent<TestProtoProps> = props => {
     {
     //   const {
     //     incrementAction
     //   } = props
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
-        Body
-          <Route exact path = "/"> 
-            <TestProto>
-              Test Proto
-            </TestProto>
-          </Route>
-          <Route path = "/settings"> 
-            <Settings>
-              Settings
-            </Settings>
-          </Route>
+        TestProto
         </div>
       )
     }
   }
   
 
-export default Body
+export default TestProto
 
   // gives the app component access to state and actions from the store
 //   export default connect(
