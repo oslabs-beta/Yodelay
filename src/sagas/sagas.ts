@@ -20,8 +20,8 @@ function* sendProto({ payload: type, payload }: uploadProtoAction) {
       .then(data => {
         // console.log('here is the protoObject returned when a protoFile is uploaded:', data);
         put({
-          type: 'PROTO_UPLOAD_SUCCEEDED',
-          protoObject: data
+          type: 'UPLOAD_PROTO_SUCCESSFUL',
+          payload: data
         });
       });
 
@@ -34,8 +34,8 @@ function* sendProto({ payload: type, payload }: uploadProtoAction) {
     // todo     "protoObject": "syntax = 'proto3'; package helloaworld; service YodelayAPI { rpc SayHello (HelloRequest) returns (HelloReply) {} }message HelloRequest { string port = 1; string packageName = 2; string service = 3; string message = 4; string protoObject = 5; } message HelloReply { string message = 1; }"
     // todo }
   } catch ({ error, status }) {
-    yield put({ type: 'PROTO_UPLOAD_FAILED' });
-    console.log('error in upload saga', error, status);
+    yield put({ type: 'UPLOAD_PROTO_FAILED', payload: 'error in upload saga' });
+    // console.log('error in upload saga', error, status);
   }
 }
 
