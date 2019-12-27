@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { TextInput } from '../components/common/TextInput';
 
 // sets type for props
 interface BodyProps {}
