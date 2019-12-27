@@ -63,14 +63,14 @@ app.post('/upload', async (req, res) => {
 
 // * SERVICE:
 // * Start GRPC Server Call:
-
+// front end sends back the request when they hit the /service endpoint.
 app.post('/service', async (req, res) => {
   console.log('---------SERVICE-------------');
   const parsedReqBody = JSON.parse(req.body)
   // to our grpc request function
-  console.log('/service req.body: ', req.body)
+  // console.log('/service req.body: ', req.body)
   let output = await grpcRequest(parsedReqBody).catch();
-  // console.log('/service req.body output: ', output)
+  console.log('/service req.body output: ', output)
   // then send response with the output that's been jsonified.
   res.json(output);
 });
