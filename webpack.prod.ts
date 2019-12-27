@@ -18,7 +18,7 @@ const config = (env: any): webpack.Configuration => {
       publicPath: '/'
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.jsx', '.js', '.json', '.css']
+      extensions: ['.ts', '.tsx', '.jsx', '.js', '.json', '.css', '.scss']
     },
     module: {
       rules: [
@@ -32,7 +32,7 @@ const config = (env: any): webpack.Configuration => {
         },
         {
           test: /\.(sc|c)ss$/i,
-          use: ['style-loader', 'css-loader']
+          use: ['style-loader', 'css-loader', 'sass-loader']
         }
       ]
     },
