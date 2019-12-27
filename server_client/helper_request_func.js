@@ -19,7 +19,7 @@ let output;
 
 async function parseProto(upload) {
 // MESSAGE FIELDS:
-console.log('-----Parsing Proto-----')
+console.log('-----Start Parsing Proto-----')
 
 // console.log('upload: ', upload)
 // port = upload.port;
@@ -69,6 +69,7 @@ const CONFIG_OBJECT = {
 // now that the file is written we want to create our package definition:
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
 
+// this is how you grab the .proto file package name:
 let protoPackageName = await Object.keys(packageDefinition)[0].split('.')[0]
 // console.log('p: ', p)
 
@@ -103,24 +104,37 @@ return output;
 
 
 
+// input is this object: 
+// {
+//     "port": "0.0.0.0:50051",
+//     "packageName": "helloaworld",
+//     "service": "YodelayAPI",
+//     "message": "SayHello",
+//     "protoObject": "syntax = 'proto3'; package helloaworld; service YodelayAPI { rpc SayHello (HelloRequest) returns (HelloReply) {} }message HelloRequest { string port = 1; string packageName = 2; string service = 3; string message = 4; string protoObject = 5; } message HelloReply { string message = 1; }"
+// }
+// the serice and the message are unique based on what the user chooses after we parse the orional .proto file in /upload.
+
 
 function grpcRequest(serv) {
+  console.log('------Start gRPC Request------')
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
   // console.log("grpcRequest input: ", serv)
   // let input = JSON.parse(serv)
+  // this is what is being sent to us in the req.body:
   let input = serv;
-  console.log("grpcRequest input proto object: ", input.protoObject)
+  // console.log("grpcRequest input proto object: ", input.protoObject)
 // MESSAGE FIELDS:
+// this is where we are sending the test:
   let port = input.port;
-  // console.log('port: ', port)
+  // console.log('request port: ', port)
   let packageName = input.packageName;
   let service = input.service;
   let message = input.message;
   // the proto object is where we are passed in the .proto file from the server_client
   // we then take this object and write it to the temp output.proto file in the proto folder:
   let protoObject = input.protoObject;
-  console.log('proto obj: ', protoObject)
+  // console.log('proto obj: ', protoObject)
   let output;
 
 // WRITE TO TEMP .PROTO
@@ -154,28 +168,41 @@ function grpcRequest(serv) {
   //   // console.log(property)
   // }
 
-  // let's use the package definintion to create our descriptor:
-  const descriptor = grpc.loadPackageDefinition(packageDefinition).helloaworld;
+  // this is how you grab the .proto file package name:
+let protoPackageName2 = Object.keys(packageDefinition)[0].split('.')[0]
+
+  // let's use the package definition to create our descriptor:
+  const descriptor = grpc.loadPackageDefinition(packageDefinition)[protoPackageName2];
   // console.log('descriptor: ', descriptor)
   // this gets us the message name form the proto file:
-  console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
+  // console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
   // console.log('des new: ', descriptor.HelloRequest.type);
 
+  // console.log('service: ', service)
 
 // DECLARE PACKAGE:
-  const package = new descriptor.YodelayAPI(port, grpc.credentials.createInsecure());
-
+// service was passed in by user in the 'service' variable:
+  const package = new descriptor[service](port, grpc.credentials.createInsecure());
+// console.log('grpc descriptor: ', descriptor[service])
   grpc_promise.promisifyAll(package);
 
-  return package.sayHello()
-    .sendMessage({port: port, packageName: packageName, service: service, message: message, protoObject: protoObject})
-    .then( res => {
-      // console.log('Greeting: ', res)
-      output = res;
-      // console.log('output', output)
+  // console.log('sending port to gRPC server', port)
+
+  // what rpc are we testing?
+  // console.log('message: ', message)
+
+  return package[message]()
+  .sendMessage({port: port, packageName: packageName, service: service, message: message, protoObject: protoObject})
+  .then( res => {
+    // console.log('Greeting: ', res)
+    output = res;
+    // console.log('output', output)
+      console.log('------Returning gRPC Result------')
       return output
     })
     .catch(err => console.error(err))
+
+    
 }
 
 module.exports = { 
