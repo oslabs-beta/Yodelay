@@ -6,6 +6,7 @@ import BodyContainer from './Body'
 import FooterContainer from './Footer'
 import NavbarContainer from './Navbar'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import '../scss/index.scss'
 
 import { Button } from '../components/common/Button'
 import { incrementActionCreator } from '../actions';
