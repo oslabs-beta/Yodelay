@@ -1,6 +1,6 @@
 import React, {FunctionComponent, RefObject, useRef, createRef } from 'react'
 import { connect } from 'react-redux'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import { Button } from '../components/common/Button';
 import {uploadProtoActionCreator} from '../actions'
 import { protoSelector } from '../reducers/uploadProto';
@@ -38,11 +38,27 @@ import { RootState } from '../reducers';
      
       }
 
+      //test buttons - remove later
+      const testClick = () =>{
+        alert("clicked")
+      }
+
       return (
         <div>
         Navbar
+          <Link to ="/">
+            <Button text='Home' onClick={ () => {testClick()}} >
+            </Button>
+          </Link>
+
+          {/* Upload Proto Button */}
           <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={onFileSubmit}/>
           <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
+          
+          <Link to = "/settings">
+            <Button text='Settings' onClick={ () => {testClick()}} >
+            </Button>
+          </Link>
         </div>
       )
     }
