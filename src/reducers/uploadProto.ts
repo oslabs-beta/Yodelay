@@ -15,6 +15,7 @@ export const uploadProto: (state: initialStateType, action: uploadProtoAction ) 
   state = initialState, action) => {
     switch (action.type) {
       case UPLOAD_PROTO: {
+        //setIn takes in param1) state object, param2) the key in state that is what we want to update, and param3) the value we want to change 
         return setIn(state, ["proto"], action.payload)
       }
     }

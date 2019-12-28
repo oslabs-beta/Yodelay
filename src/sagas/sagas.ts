@@ -1,13 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 // import moment from 'moment'
-import { UPLOAD_PROTO, sendProto } from '../actions/index';
+import { UPLOAD_PROTO, uploadProto } from '../actions/index';
 import { json } from 'body-parser';
 
-//UX flow: User clicks "upload proto" button > triggers uploadProto action creator > returns action object > 
-// chaining this saga middleware after uploadProto to post the file string to the server
-function* sendProto({ payload: type, payload }: sendProto) {
+//Process: User clicks "upload proto" button > triggers uploadProto action creator > dispatches action > reducer returns new state object > updates store 
+//Used payload from uploadProto action as an input for the sendProto saga middleware, enabling us to POST the file string to the express server
+
+function* sendProto({ payload }: uploadProto) {
 
   try {
+    console.log("payload:", payload, "typeof payload", typeof payload)
     const jsonProtoFile = JSON.stringify(payload);
     yield fetch(`http://localhost:4000/upload`, {
       method: 'POST',
@@ -20,6 +22,7 @@ function* sendProto({ payload: type, payload }: sendProto) {
       .then(response => response.json())
       .then(data => {
         // console.log('here is the protoObject returned when a protoFile is uploaded:', data);
+        //Q: 
         put({
           type: 'UPLOAD_PROTO_SUCCESSFUL',
           payload: data

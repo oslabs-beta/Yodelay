@@ -14,12 +14,18 @@ import { RootState } from '../reducers';
     protoFile?: File
   }
 
+  //Upon user clicking upload proto button in navbar, folder dialog window opens. User-selected file is read and its contents are passed as a payload
+
   export const Navbar: FunctionComponent<NavbarProps> = props => {
     {
       const { 
         uploadProto
       } = props
-      
+
+      //Refs allow us to access DOM nodes or React elements created in the render method
+      //Both createRef and useRef hook returns the same result. createRef  returns a new ref on every render while useRef will return the same ref obj each time
+      //
+
       const inputOpenFileRef = useRef <HTMLInputElement> ();
       
       const showOpenFileDlg = () => {
@@ -39,15 +45,20 @@ import { RootState } from '../reducers';
       }
 
       //test buttons - remove later
-      const testClick = () =>{
-        alert("clicked")
+      const testHomeClick = () =>{
+        alert("Clicked home")
       }
+
+      const testSettingsClick = () =>{
+        alert("Clicked settings")
+      }
+
 
       return (
         <div>
         Navbar
           <Link to ="/">
-            <Button text='Home' onClick={ () => {testClick()}} >
+            <Button text='Home' onClick={ () => {testHomeClick()}} >
             </Button>
           </Link>
 
@@ -56,7 +67,7 @@ import { RootState } from '../reducers';
           <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
           
           <Link to = "/settings">
-            <Button text='Settings' onClick={ () => {testClick()}} >
+            <Button text='Settings' onClick={ () => {testSettingsClick()}} >
             </Button>
           </Link>
         </div>
