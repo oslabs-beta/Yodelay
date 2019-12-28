@@ -1,8 +1,11 @@
+//Define action type
 export const UPLOAD_PROTO = 'UPLOAD_PROTO';
 export const SEND_PROTO = 'SEND_PROTO';
 export const UPLOAD_PROTO_SUCCESSFUL = 'UPLOAD_PROTO_SUCCESSFUL';
 export const UPLOAD_PROTO_FAILED = 'UPLOAD_PROTO_FAILED';
 
+//Define shape of action type
+//Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
 export interface uploadProto {
   type: typeof UPLOAD_PROTO;
   payload: string | ArrayBuffer;
@@ -23,14 +26,13 @@ export interface uploadProtoFailed {
   payload: string;
 }
 
-export type uploadProtoAction = uploadProto;
-export type sendProtoAction = sendProto;
-export type uploadProtoSuccesfulAction = uploadProtoSuccesful;
-export type uploadProtoFailedAction = uploadProtoFailed;
+//Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
+export type uploadProtoAction = uploadProto | sendProto | uploadProtoSuccesful | uploadProtoFailed;
+
 
 export const uploadProtoActionCreator = (
   payloadObj: string | ArrayBuffer
-): uploadProtoAction => {
+): uploadProto => {
   return {
     type: UPLOAD_PROTO,
     payload: payloadObj
@@ -39,7 +41,7 @@ export const uploadProtoActionCreator = (
 
 export const sendProtoActionCreator = (
   payloadObj: string | ArrayBuffer
-): sendProtoAction => {
+): sendProto => {
   return {
     type: SEND_PROTO,
     payload: payloadObj
@@ -48,7 +50,7 @@ export const sendProtoActionCreator = (
 
 export const uploadProtoSuccesfulActionCreator = (
   payloadObj: object
-): uploadProtoSuccesfulAction => {
+): uploadProtoSuccesful => {
   return {
     type: UPLOAD_PROTO_SUCCESSFUL,
     payload: payloadObj
@@ -57,7 +59,7 @@ export const uploadProtoSuccesfulActionCreator = (
 
 export const uploadProtoFailedActionCreator = (
   payloadObj: string
-): uploadProtoFailedAction => {
+): uploadProtoFailed => {
   return {
     type: UPLOAD_PROTO_FAILED,
     payload: payloadObj
