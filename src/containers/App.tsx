@@ -17,7 +17,7 @@ import { countSelector } from '../reducers/test';
 
 // sets type for props
 interface AppProps {
-  incrementAction: typeof incrementActionCreator  // remove later -->  incrementAction: (...arg: any[]) => any
+  incrementAction: typeof incrementActionCreator 
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
@@ -28,7 +28,7 @@ export const App: FunctionComponent<AppProps> = props => {
       //Wrap everything in Router so that nested containers/components have access to router
       <Router>
         <div>
-          <div style = {{display: "flex", flexDirection: "row", height: "100%", alignItems: "stretch"}}>
+          <div id = "main-view" style = {{display: "flex", flexDirection: "row", height: "100%", alignItems: "stretch"}}>
             <div style = {{border: "solid 1px black"}}>
               <NavbarContainer></NavbarContainer>
             </div>
@@ -50,12 +50,12 @@ export const App: FunctionComponent<AppProps> = props => {
 // gives the app component access to state and actions from the store
 export default connect(
 
-  //using selector
+  //if using selector
   (state: RootState) => ({
       test: countSelector(state),
     })
     ,
-  //not using selector
+  //if not using selector
   // (state: RootState) => ({
   //   test: state.test
   // }),

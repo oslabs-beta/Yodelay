@@ -10,28 +10,28 @@ import { RootState } from '../reducers';
   interface NavbarProps {
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
-    uploadProtoAction?: typeof uploadProtoActionCreator
+    uploadProto?: typeof uploadProtoActionCreator
     protoFile?: File
   }
 
   export const Navbar: FunctionComponent<NavbarProps> = props => {
     {
       const { 
-        uploadProtoAction
+        uploadProto
       } = props
       
       const inputOpenFileRef = useRef <HTMLInputElement> ();
+      
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
       }
       const onFileSubmit = () => {
-        //f is a file type
         const protoFile = (inputOpenFileRef.current.files[0])
 
         const reader = new FileReader()
 
         reader.onloadend = (e) => { 
-        uploadProtoAction(e.target.result)
+        uploadProto(e.target.result)
         }
 
         const file = reader.readAsText(protoFile)
@@ -65,15 +65,13 @@ import { RootState } from '../reducers';
   }
 
   export default connect (
-  // gives the navbar component access to state and actions from the store
-//   export default connect(
-  
+  // gives the navbar component access to state and actions from the store  
     //using selector
     (state: RootState) => ({
         test2: protoSelector(state)
       }),
     {
-      uploadProtoAction: uploadProtoActionCreator,
+      uploadProto: uploadProtoActionCreator,
     }
 
   )(Navbar)
