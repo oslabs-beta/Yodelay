@@ -1,6 +1,8 @@
 import React, {FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import {Request} from '../components/EditorRequest'
+import {Response} from '../components/EditorResponse'
 
 // sets type for props
 interface BodyProps {
@@ -14,6 +16,8 @@ interface BodyProps {
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
         Body
+        <Request></Request>
+        <Response></Response>
         </div>
       )
     }
