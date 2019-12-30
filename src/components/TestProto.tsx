@@ -31,8 +31,8 @@ interface TestProtoProps {
       const testServices = ["service1","service2","service3","service4" ]
       const testRequests = ["request1","request2","request3","request4" ]
 
-
       
+
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
         TestProto

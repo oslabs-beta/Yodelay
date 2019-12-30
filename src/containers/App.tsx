@@ -5,25 +5,29 @@ import HeaderContainer, { Header } from './Header'
 import BodyContainer from './Body'
 import FooterContainer from './Footer'
 import NavbarContainer from './Navbar'
+import { Button } from '../components/common/Button'
+import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccesfulActionCreator } from '../actions';
+import { countSelector } from '../reducers/test';
+import { protoSelector, protoObjSelector } from '../reducers/uploadProto'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import '../scss/index.scss'
 
-import { Button } from '../components/common/Button'
-import { incrementActionCreator } from '../actions';
-import { countSelector } from '../reducers/test';
 // import { loggedInSelector } from '../reducers/login'
-
-
 
 // sets type for props
 interface AppProps {
-  incrementAction: typeof incrementActionCreator 
+  incrementAction: typeof incrementActionCreator,
+  uploadProtoSuccessful: typeof uploadProtoSuccesfulActionCreator 
+ 
+  
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
     const {
       incrementAction,
     } = props
+
+  
     return (
       //Wrap everything in Router so that nested containers/components have access to router
       <Router>
@@ -53,6 +57,9 @@ export default connect(
   //if using selector
   (state: RootState) => ({
       test: countSelector(state),
+      protoContents: protoSelector(state),
+      protoObjContents: protoObjSelector(state)
+
     })
     ,
   //if not using selector
@@ -62,5 +69,7 @@ export default connect(
   
   {
     incrementAction: incrementActionCreator,
+    uploadProto: uploadProtoActionCreator,
+    uploadProtoSuccessful: uploadProtoSuccesfulActionCreator
   }
 )(App)

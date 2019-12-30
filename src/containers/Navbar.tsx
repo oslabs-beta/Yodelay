@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import { Button } from '../components/common/Button';
 import {uploadProtoActionCreator} from '../actions'
-import { protoSelector } from '../reducers/uploadProto';
+import { protoSelector, protoObjSelector } from '../reducers/uploadProto';
 import { RootState } from '../reducers';
 
 // sets type for props
@@ -76,10 +76,11 @@ import { RootState } from '../reducers';
   }
 
   export default connect (
-  // gives the navbar component access to state and actions from the store  
-    //using selector
+  // gives the navbar component access to specific state and actions from the store  
     (state: RootState) => ({
-        test2: protoSelector(state)
+        protoContents: protoSelector(state),
+        protoObjContents: protoObjSelector(state)
+
       }),
     {
       uploadProto: uploadProtoActionCreator,

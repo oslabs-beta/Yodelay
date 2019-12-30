@@ -37,4 +37,8 @@ export const uploadProto: (state: initialProtoStateType, action: uploadProtoActi
    return state 
   }
 
+  //makes the proto state and parsedProtosObj state available to connected components
   export const protoSelector: (state: RootState) => object = (state) => state.uploadProto.proto
+
+  export const protoObjSelector: (state: RootState) => object = (state) => state.uploadProto.parsedProtosObj
+

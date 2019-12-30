@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 // import moment from 'moment'
-import { UPLOAD_PROTO, uploadProto, uploadProtoSuccesfulActionCreator, uploadProtoFailedActionCreator} from '../actions/index';
+import { UPLOAD_PROTO, uploadProto, uploadProtoSuccesfulActionCreator, uploadProtoFailedActionCreator, loadServiceActionCreator} from '../actions/index';
 import { json } from 'body-parser';
 
 
@@ -27,6 +27,7 @@ function* sendProto({ payload }: uploadProto) {
     //No need to connect() to store; yield put apparently does it for us; that's how we could access the uploadProtoSuccessful action creator -- CHECK
     yield put (uploadProtoSuccesfulActionCreator(response))
 
+    yield put (loadServiceActionCreator(response.services))
   } catch ({ error, status }) {
     //error message not working right now
     const errorMessage = 'error in upload saga'
