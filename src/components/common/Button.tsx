@@ -5,6 +5,7 @@ interface ButtonProps {
   onClick?: (...arg: any[]) => any
   text: string
   value?: number
+  icon?: string
 }
 
 export const Button:
@@ -12,7 +13,8 @@ FunctionComponent<ButtonProps> = ({
   id, 
   onClick,
   text,
-  value
+  value, 
+  icon
 }) => (
-  <button id={id} onClick={onClick} value={value}>{text}</button>
+  <button id={id} onClick={onClick} value={value} style = {{background: `url${icon}`}}>{text}</button>
 )
