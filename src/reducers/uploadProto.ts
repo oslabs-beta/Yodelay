@@ -2,22 +2,25 @@ import { uploadProtoAction, UPLOAD_PROTO, UPLOAD_PROTO_SUCCESSFUL, SEND_PROTO } 
 import { setIn } from 'timm'
 import { RootState } from '.'
 
-export interface initialStateType {
+export interface initialProtoStateType {
   proto: any;
   parsedProtosObj: object
 }
 
 
-const initialState: initialStateType = {
+const initialState: initialProtoStateType = {
   proto: {},
   parsedProtosObj: {}
   // [{parsedProtoObj1}, {parsedProtoObj2}]
   
 }
 
-export const uploadProto: (state: initialStateType, action: uploadProtoAction ) => initialStateType = (
+//uploadProto is a function that takes in state and action as params; it returns an updated state object of type initialProtoStateType
+//state type is initialProtoStateType; action type is uploadProtoAction
+
+export const uploadProto: (state: initialProtoStateType, action: uploadProtoAction ) => initialProtoStateType = (
   state = initialState, action) => {
-    console.log(action.type)
+    // console.log(action.type)
     switch (action.type) {
      
       case UPLOAD_PROTO: {

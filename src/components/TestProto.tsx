@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useRef } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import {Dropdown} from '../components/common/Dropdown';
+import { DropdownMenu} from './common/DropdownMenu';
 
 
 // sets type for props
@@ -27,6 +27,12 @@ interface TestProtoProps {
         alert("Clicked dropdown")
       }
 
+      //test array of options
+      const testServices = ["service1","service2","service3","service4" ]
+      const testRequests = ["request1","request2","request3","request4" ]
+
+
+      
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
         TestProto
@@ -38,7 +44,10 @@ interface TestProtoProps {
               onChange={handleChange}
             >
             </input>
-            <Dropdown id = "dropdown-menu" onClick ={testDropdownClick} text = "dropdown menu" ></Dropdown>
+
+            <DropdownMenu id = "service-dropdown-menu" onClick ={testDropdownClick} options = {testServices} ></DropdownMenu>
+
+            <DropdownMenu id = "request-dropdown-menu" onClick ={testDropdownClick} options = {testRequests} ></DropdownMenu>
           </div>
 
           <div>
