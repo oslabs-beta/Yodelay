@@ -20,7 +20,7 @@ interface AppProps {
   incrementAction: typeof incrementActionCreator,
   uploadProtoSuccessful: typeof uploadProtoSuccesfulActionCreator 
   protoObjContents: object
-  serviceOptions: string[]
+  serviceOptions: object
   
 }
 export const App: FunctionComponent<AppProps> = props => {
@@ -44,7 +44,7 @@ export const App: FunctionComponent<AppProps> = props => {
             
             <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
               <HeaderContainer></HeaderContainer>
-              <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
+              <BodyContainer serviceOptions = {{serviceOptions}}></BodyContainer>
               <FooterContainer></FooterContainer>
             </div>
             <Button text='enter' onClick={ () => {incrementAction(1)}} >
@@ -67,11 +67,6 @@ export default connect(
       serviceOptions: serviceMenuSelector(state)
     })
     ,
-  //if not using selector
-  // (state: RootState) => ({
-  //   test: state.test
-  // }),
-  
 
   {
     incrementAction: incrementActionCreator,
@@ -80,3 +75,9 @@ export default connect(
     loadServiceOptions:loadServiceActionCreator
   }
 )(App)
+
+  //if not using selector
+  // (state: RootState) => ({
+  //   test: state.test
+  // }),
+  

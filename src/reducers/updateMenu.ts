@@ -3,13 +3,13 @@ import { RootState } from '.'
 import { loadMenuAction, LOAD_SERVICE_OPTIONS, LOAD_REQUEST_OPTIONS } from '../actions'
 
 export interface initialMenuStateType {
-    serviceOptions: string[];
-    requestOptions: string[]
+    serviceOptions: object;
+    requestOptions: object
 }
 
 const initialState: initialMenuStateType = {
-    serviceOptions: [],
-    requestOptions:[]
+    serviceOptions: {},
+    requestOptions: {}
 }
 
 export const updateMenu: (state: initialMenuStateType, action: loadMenuAction) => initialMenuStateType = (state = initialState, action) =>{

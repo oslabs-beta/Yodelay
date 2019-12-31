@@ -6,7 +6,7 @@ import { Route } from 'react-router';
 
 // sets type for props
 interface BodyProps {
-  serviceOptions: string[]
+  serviceOptions: object
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -19,7 +19,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
       <div style={{ border: 'solid 1px green', flexGrow: 2 }}>
         Body
         <Route exact path="/">
-          <TestProto serviceOptions = {serviceOptions}>Test Proto</TestProto>
+          <TestProto serviceOptions = {{serviceOptions}}>Test Proto</TestProto>
         </Route>
         <Route path="/settings">
           <Settings>Settings</Settings>

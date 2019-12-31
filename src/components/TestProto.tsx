@@ -6,7 +6,7 @@ import { DropdownMenu} from './common/DropdownMenu';
 
 // sets type for props
 interface TestProtoProps {
-  serviceOptions: string[]
+  serviceOptions: object
   }
   
   export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -22,7 +22,11 @@ interface TestProtoProps {
         );
       };
 
-      //test array of options
+      //menuOptions object holds the following content: 
+      //services: {
+      //service1: {request1: {message1Options}}
+      //service2: {request2: {message2Options}}
+      //}
       const {
         serviceOptions
       } = props
@@ -44,10 +48,12 @@ interface TestProtoProps {
             >
             </input>
 
-            <DropdownMenu id = "service-dropdown-menu" options = {serviceOptions} ></DropdownMenu>
+            {/* needs to update based on service selected by user -> 'selectValue' in dropdown menu component should be used here --> serviceOptions[selectValue]*/}
+            <DropdownMenu id = "service-dropdown-menu" menuOptions = {{serviceOptions}} ></DropdownMenu>
 
-            {/* update to request options later */}
-            <DropdownMenu id = "request-dropdown-menu" options = {testRequests} ></DropdownMenu>
+          
+          {/* this should take in 'select value' */}
+            <DropdownMenu id = "request-dropdown-menu" menuOptions = {testRequests} ></DropdownMenu>
           </div>
 
           <div>

@@ -8,19 +8,19 @@ export const LOAD_REQUEST_OPTIONS = 'LOAD_REQUEST_OPTIONS '
 //Define shape of action type
 export interface loadServiceOptions {
   type: typeof LOAD_SERVICE_OPTIONS;
-  payload: string[]
+  payload: object
 }
 
 export interface loadRequestOptions {
   type: typeof LOAD_REQUEST_OPTIONS;
-  payload: string[]
+  payload: object
 }
 
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
 export type loadMenuAction = loadServiceOptions | loadRequestOptions
 
 export const loadServiceActionCreator = (
-  payloadObj: string[]
+  payloadObj: object
 ): loadServiceOptions => {
   return {
     type: LOAD_SERVICE_OPTIONS,
@@ -29,7 +29,7 @@ export const loadServiceActionCreator = (
 };
 
 export const loadRequestActionCreator = (
-  payloadObj: string[]
+  payloadObj: object
 ): loadRequestOptions => {
   return {
     type: LOAD_REQUEST_OPTIONS,

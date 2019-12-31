@@ -28,6 +28,11 @@ function* sendProto({ payload }: uploadProto) {
     yield put (uploadProtoSuccesfulActionCreator(response))
 
     yield put (loadServiceActionCreator(response.services))
+    //services: {
+      //service1: {request1: {1messageOptions}}
+      //service2: {request2: {2messageOptions}}
+    //}
+
   } catch ({ error, status }) {
     //error message not working right now
     const errorMessage = 'error in upload saga'
