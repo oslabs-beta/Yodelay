@@ -17,11 +17,11 @@ interface HeaderProps {
 
       return (
         <div style = {{border: "solid 1px purple"}}>
-        Header
+        
         
         {/* On click, sends user back to home page */}
         <Link to ="/">
-            <Button text='Home Logo' onClick={ () => {testClick()}} >
+            <Button text='Yodelay' onClick={ () => {testClick()}} >
             </Button>
           </Link>
         </div>

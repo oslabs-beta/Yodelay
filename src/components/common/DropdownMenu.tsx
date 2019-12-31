@@ -14,6 +14,7 @@ export const DropdownMenu: FunctionComponent<DropdownMenuProps> = props => {
       //}
     //get array of services
     const servicesArr = Object.keys(menuOptions)
+    console.log(servicesArr)
     let selectValue;
     return (
       <div>
