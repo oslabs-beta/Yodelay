@@ -1,6 +1,7 @@
 import React, {FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import {Editor} from './Editor'
 
 // sets type for props
 interface TestProtoProps {
@@ -15,6 +16,7 @@ interface TestProtoProps {
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
         TestProto
+          <Editor />
         </div>
       )
     }
