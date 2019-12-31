@@ -2,32 +2,33 @@ import React, {FunctionComponent} from 'react'
 import {EditorRequest} from './EditorRequest'
 import {EditorResponse} from './EditorResponse'
 import { statement } from '@babel/template';
-import {setRequestActionCreator} from '../actions'
+import {setMessageActionCreator} from '../actions'
+import { useDispatch } from 'react-redux';
 
 
 interface editorProps {
-  setRequestAction?: typeof setRequestActionCreator
-
+  setMessageAction?: typeof setMessageActionCreator
+  data: string
 }
 
 export const Editor: FunctionComponent<editorProps> = props => {
   {
     const { 
-      setRequestAction,
+      setMessageAction,
+      data
     } = props
-
+    console.log('editor', data)
     return (
       <>
         <EditorRequest 
-          
-          newRequest={(values) => {
-            console.log('HERE', values)
-            setRequestAction(values)
+          data={data}
+          newRequest={(value) => {
+            console.log('HERE', value)
+            setMessageAction(value)
           }}
         />   
   
-        <EditorResponse>
-        </EditorResponse>
+        <EditorResponse/>
       </>
     )
   }

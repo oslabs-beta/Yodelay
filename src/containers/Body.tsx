@@ -1,28 +1,32 @@
-import React, {FunctionComponent } from 'react'
+import React, {FunctionComponent, useState } from 'react'
 import { connect } from 'react-redux'
 import TestProto from '../components/TestProto'
 import Settings from '../components/Settings'
 import { Route } from 'react-router'
-import {setRequestActionCreator} from '../actions'
-import {requestSelector} from '../reducers/uploadProto'
+import {setMessageActionCreator} from '../actions'
+import {messageSelector, dataSelector} from '../reducers/uploadProto'
 import {RootState} from '../reducers'
 
 // sets type for props
 interface BodyProps {
-  setRequestAction: typeof setRequestActionCreator
+  setMessageAction: typeof setMessageActionCreator
+  selectData: string
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
   {
     const {
-      setRequestAction
+      setMessageAction,
+      selectData,
     } = props
 
+    console.log('body', selectData)
+    
     return (
       <div style = {{border: "solid 1px green", flexGrow: 2}}>
       Body
         <Route exact path = "/"> 
-          <TestProto {...setRequestAction} >
+          <TestProto setMessageAction={setMessageAction} data={selectData} >
             Test Proto
            </TestProto>
         </Route>
@@ -45,9 +49,10 @@ export default connect (
 //     //using selector
 
     (state: RootState) => ({
-        selectRequest: requestSelector(state)
+        selectMessage: messageSelector(state),
+        selectData: dataSelector(state)
       }),
     {
-      setRequestAction: setRequestActionCreator,
+      setMessageAction: setMessageActionCreator,
     }
   )(Body)

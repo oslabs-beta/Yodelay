@@ -31,6 +31,7 @@ export const EditorResponse: FunctionComponent <ResponseProps> = props => {
                 showPrintMargin={false}
                 highlightActiveLine={true}
                 tabSize={2}
+                readOnly={true}
                 setOptions={{
                   useWorker: true,
                   displayIndentGuides: true

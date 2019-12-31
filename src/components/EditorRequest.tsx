@@ -4,6 +4,7 @@ import AceEditor from 'react-ace'
 import { Tabs } from 'antd';
 
 
+
 interface RequestProps {
   data?: string
   newRequest: (value: string) => void
@@ -13,10 +14,11 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
   {
     const { 
       data, 
-      newRequest
+      newRequest,
     } = props
-
+    console.log(data)
     const editorTabKey = `editor Tab`; 
+  
     
     return (
       <>
