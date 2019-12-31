@@ -11,6 +11,7 @@ import {RootState} from '../reducers'
 interface BodyProps {
   setMessageAction: typeof setMessageActionCreator
   selectMessage: string
+  serviceOptions: object
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -18,13 +19,14 @@ export const Body: FunctionComponent<BodyProps> = props => {
     const {
       setMessageAction,
       selectMessage,
+      serviceOptions
     } = props
     
     return (
       <div style = {{border: "solid 1px green", flexGrow: 2}}>
       Body
         <Route exact path = "/"> 
-          <TestProto setMessageAction={setMessageAction} data={selectMessage} >
+          <TestProto setMessageAction={setMessageAction} data={selectMessage} serviceOptions = {serviceOptions}>
             Test Proto
            </TestProto>
         </Route>
@@ -41,9 +43,9 @@ export const Body: FunctionComponent<BodyProps> = props => {
 
 export default connect (
 
-  // gives the app component access to state and actions from the store
+// gives the app component access to state and actions from the store
 //   export default connect(
-  
+
 //     //using selector
 
     (state: RootState) => ({
