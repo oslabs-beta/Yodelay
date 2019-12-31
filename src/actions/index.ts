@@ -2,4 +2,6 @@
 
 export * from './test'
 export * from './uploadProto'
+export * from './updateMenu'
+
 // export * from './actionTypes'

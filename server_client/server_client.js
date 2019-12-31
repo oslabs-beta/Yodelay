@@ -45,7 +45,7 @@ app.get('/', (req, res) => res.send('🍻  Yodelay World  🍻'));
 app.post('/upload', async (req, res) => {
   // was able to send the file so that a simple JSON.parse takes care of it
   console.log(
-    'here is the parsed protoFile string sent to /upload',
+    'HERE IS THE PARSED PROTOFILE STRING SENT TO /UPLOAD ENPOINT:',
     JSON.parse(req.body)
   );
 
