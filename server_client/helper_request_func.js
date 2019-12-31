@@ -13,6 +13,33 @@ let message;
 // let protoObject;
 let output;
 
+// function that takes in the parsed .proto file and writes it to local output.proto file
+// outputs: PROTO_PATH string;
+
+const protoSaver = (dotProtoFile) => {
+  fs.writeFileSync("./protos/output.proto", dotProtoFile, 'utf8', function (err) {
+    if (err) {
+      console.log("An error occurred while writing JSON Object to File.");
+      return console.log(err);
+    }
+    console.log("JSON file has been saved.");
+  });
+
+  // Full path for our proto:
+  const PROTO_PATH = __dirname + '/../protos/output.proto';
+
+  // and a config object:
+  const CONFIG_OBJECT = {
+    keepCase: true,
+    longs: String,
+    enums: String,
+    defaults: true,
+    oneofs: true
+  }
+
+  return [PROTO_PATH, CONFIG_OBJECT]
+}
+
 
 // input: .proto file
 // output: {protoFile: “the text of the proto file”, definition: {}, package: '', protoDescriptor: {}, services: [{}, {}, {}]}
@@ -31,26 +58,7 @@ output.protoFile = protoObject;
 
 // WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
-fs.writeFileSync("./protos/output.proto", protoObject, 'utf8', function (err) {
-  if (err) {
-    console.log("An error occurred while writing JSON Object to File.");
-    return console.log(err);
-  }
-  console.log("JSON file has been saved.");
-});
-
-// BUILD DEFINITION AND DESCRIPTOR:
-// now we have a path for our proto:
-const PROTO_PATH = __dirname + '/../protos/output.proto';
-
-// and a config object:
-const CONFIG_OBJECT = {
-  keepCase: true,
-  longs: String,
-  enums: String,
-  defaults: true,
-  oneofs: true
-}
+const [PROTO_PATH, CONFIG_OBJECT] = protoSaver(protoObject);
 
 // now that the file is written we want to create our package definition:
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
@@ -85,10 +93,7 @@ for (let [service, serviceValue] of Object.entries(descriptor)) {
 output.services = servicesObj;
 
 console.log('-----done parsing proto-----')
-
 console.log('output: ', output)
-console.log('output YodelayAPI: ', output.services.YodelayAPI)
-console.log('output servTWO: ', output.services.servTWO)
 
 return output;
 }
@@ -129,27 +134,8 @@ function grpcRequest(serv) {
   let output;
 
 // WRITE TO TEMP .PROTO
-  // now let's write our protoObject string to the output.proto file:
-  fs.writeFileSync("./protos/output.proto", protoObject, 'utf8', function (err) {
-      if (err) {
-        console.log("An error occurred while writing JSON Object to File.");
-        return console.log(err);
-      }
-      console.log("JSON file has been saved.");
-  });
-  
-  // BUILD DEFINITION AND DESCRIPTOR:
-  // now we have a path for our proto:
-  const PROTO_PATH = __dirname + '/../protos/output.proto';
-
-  // and a config object:
-  const CONFIG_OBJECT = {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true
-  }
+  // now let's write our protoObject string to the output.proto file and take the proto_path and config_object:
+  const [PROTO_PATH, CONFIG_OBJECT] = protoSaver(protoObject);
 
   // now that the file is written we want to create our package definition:
   const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
