@@ -3,35 +3,41 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import { Button } from '../components/common/Button';
 import {uploadProtoActionCreator} from '../actions'
-import { protoSelector } from '../reducers/uploadProto';
+import { protoSelector, protoObjSelector } from '../reducers/uploadProto';
 import { RootState } from '../reducers';
 
 // sets type for props
   interface NavbarProps {
     inputOpenFileRef?: RefObject<HTMLInputElement>
     showOpenFileDlg?: () => any
-    uploadProtoAction?: typeof uploadProtoActionCreator
+    uploadProto?: typeof uploadProtoActionCreator
     protoFile?: File
   }
+
+  //Upon user clicking upload proto button in navbar, folder dialog window opens. User-selected file is read and its contents are passed as a payload
 
   export const Navbar: FunctionComponent<NavbarProps> = props => {
     {
       const { 
-        uploadProtoAction
+        uploadProto
       } = props
-      
+
+      //Refs allow us to access DOM nodes or React elements created in the render method
+      //Both createRef and useRef hook returns the same result. createRef  returns a new ref on every render while useRef will return the same ref obj each time
+      //
+
       const inputOpenFileRef = useRef <HTMLInputElement> ();
+      
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
       }
       const onFileSubmit = () => {
-        //f is a file type
         const protoFile = (inputOpenFileRef.current.files[0])
 
         const reader = new FileReader()
 
         reader.onloadend = (e) => { 
-        uploadProtoAction(e.target.result)
+        uploadProto(e.target.result)
         }
 
         const file = reader.readAsText(protoFile)
@@ -39,15 +45,20 @@ import { RootState } from '../reducers';
       }
 
       //test buttons - remove later
-      const testClick = () =>{
-        alert("clicked")
+      const testHomeClick = () =>{
+        alert("Clicked home")
       }
+
+      const testSettingsClick = () =>{
+        alert("Clicked settings")
+      }
+
 
       return (
         <div>
         Navbar
           <Link to ="/">
-            <Button text='Home' onClick={ () => {testClick()}} >
+            <Button text='Home' onClick={ () => {testHomeClick()}} >
             </Button>
           </Link>
 
@@ -56,7 +67,7 @@ import { RootState } from '../reducers';
           <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
           
           <Link to = "/settings">
-            <Button text='Settings' onClick={ () => {testClick()}} >
+            <Button text='Settings' onClick={ () => {testSettingsClick()}} >
             </Button>
           </Link>
         </div>
@@ -65,15 +76,14 @@ import { RootState } from '../reducers';
   }
 
   export default connect (
-  // gives the navbar component access to state and actions from the store
-//   export default connect(
-  
-    //using selector
+  // gives the navbar component access to specific state and actions from the store  
     (state: RootState) => ({
-        test2: protoSelector(state)
+        protoContents: protoSelector(state),
+        protoObjContents: protoObjSelector(state)
+
       }),
     {
-      uploadProtoAction: uploadProtoActionCreator,
+      uploadProto: uploadProtoActionCreator,
     }
 
   )(Navbar)

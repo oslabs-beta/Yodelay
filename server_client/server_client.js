@@ -45,14 +45,16 @@ app.get('/', (req, res) => res.send('🍻  Yodelay World  🍻'));
 app.post('/upload', async (req, res) => {
   // was able to send the file so that a simple JSON.parse takes care of it
   console.log(
-    'here is the parsed protoFile string sent to /upload',
+    'HERE IS THE PARSED PROTOFILE STRING SENT TO /UPLOAD ENPOINT:',
     JSON.parse(req.body)
   );
+
+  const parsedReqBody = JSON.parse(req.body)
 
   // console.log('---req.body:', req.body, '---/upload req---');
   // to our grpc request function
   // console.log('/upload req.body: ', req.body)
-  let output = await parseProto(req.body);
+  let output = await parseProto(parsedReqBody);
   // console.log('/upload req.body output: ', output)
   // then send response with the output that's been jsonified.
   // this is goiing to be the protoFile, services we pull and the protoDescription:
@@ -61,13 +63,14 @@ app.post('/upload', async (req, res) => {
 
 // * SERVICE:
 // * Start GRPC Server Call:
-
+// front end sends back the request when they hit the /service endpoint.
 app.post('/service', async (req, res) => {
   console.log('---------SERVICE-------------');
+  const parsedReqBody = JSON.parse(req.body)
   // to our grpc request function
   // console.log('/service req.body: ', req.body)
-  let output = await grpcRequest(req.body).catch();
-  // console.log('/service req.body output: ', output)
+  let output = await grpcRequest(parsedReqBody).catch();
+  console.log('/service req.body output: ', output)
   // then send response with the output that's been jsonified.
   res.json(output);
 });
