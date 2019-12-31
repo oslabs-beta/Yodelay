@@ -6,11 +6,12 @@ import BodyContainer from './Body'
 import FooterContainer from './Footer'
 import NavbarContainer from './Navbar'
 import { Button } from '../components/common/Button'
-import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccesfulActionCreator } from '../actions';
+import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccesfulActionCreator, loadServiceActionCreator } from '../actions';
 import { countSelector } from '../reducers/test';
 import { protoSelector, protoObjSelector } from '../reducers/uploadProto'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import '../scss/index.scss'
+import { serviceMenuSelector } from '../reducers/updateMenu'
 
 // import { loggedInSelector } from '../reducers/login'
 
@@ -18,15 +19,19 @@ import '../scss/index.scss'
 interface AppProps {
   incrementAction: typeof incrementActionCreator,
   uploadProtoSuccessful: typeof uploadProtoSuccesfulActionCreator 
- 
+  protoObjContents: object
+  serviceOptions: string[]
   
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
     const {
       incrementAction,
+      protoObjContents, 
+      serviceOptions
     } = props
 
+    // console.log(serviceOptions)
   
     return (
       //Wrap everything in Router so that nested containers/components have access to router
@@ -39,7 +44,7 @@ export const App: FunctionComponent<AppProps> = props => {
             
             <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
               <HeaderContainer></HeaderContainer>
-              <BodyContainer></BodyContainer>
+              <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
               <FooterContainer></FooterContainer>
             </div>
             <Button text='enter' onClick={ () => {incrementAction(1)}} >
@@ -58,8 +63,8 @@ export default connect(
   (state: RootState) => ({
       test: countSelector(state),
       protoContents: protoSelector(state),
-      protoObjContents: protoObjSelector(state)
-
+      protoObjContents: protoObjSelector(state),
+      serviceOptions: serviceMenuSelector(state)
     })
     ,
   //if not using selector
@@ -67,9 +72,11 @@ export default connect(
   //   test: state.test
   // }),
   
+
   {
     incrementAction: incrementActionCreator,
     uploadProto: uploadProtoActionCreator,
-    uploadProtoSuccessful: uploadProtoSuccesfulActionCreator
+    uploadProtoSuccessful: uploadProtoSuccesfulActionCreator,
+    loadServiceOptions:loadServiceActionCreator
   }
 )(App)

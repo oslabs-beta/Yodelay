@@ -1,3 +1,4 @@
+
 //Define action type
 export const LOAD_SERVICE_OPTIONS = 'LOAD_SERVICE_OPTIONS '
 export const LOAD_REQUEST_OPTIONS = 'LOAD_REQUEST_OPTIONS '
@@ -35,5 +36,4 @@ export const loadRequestActionCreator = (
     payload: payloadObj
   };
 };
-
 

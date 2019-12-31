@@ -5,16 +5,21 @@ import Settings from '../components/Settings';
 import { Route } from 'react-router';
 
 // sets type for props
-interface BodyProps {}
+interface BodyProps {
+  serviceOptions: string[]
+}
 
 export const Body: FunctionComponent<BodyProps> = props => {
   {
+    const {
+      serviceOptions
+    } = props
 
     return (
       <div style={{ border: 'solid 1px green', flexGrow: 2 }}>
         Body
         <Route exact path="/">
-          <TestProto>Test Proto</TestProto>
+          <TestProto serviceOptions = {serviceOptions}>Test Proto</TestProto>
         </Route>
         <Route path="/settings">
           <Settings>Settings</Settings>

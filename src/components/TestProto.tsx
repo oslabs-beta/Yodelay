@@ -6,7 +6,7 @@ import { DropdownMenu} from './common/DropdownMenu';
 
 // sets type for props
 interface TestProtoProps {
-
+  serviceOptions: string[]
   }
   
   export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -22,16 +22,15 @@ interface TestProtoProps {
         );
       };
 
-      //test buttons - remove later
-      const testDropdownClick = () =>{
-        alert("Clicked dropdown")
-      }
-
       //test array of options
-      const testServices = ["service1","service2","service3","service4" ]
+      const {
+        serviceOptions
+      } = props
+
+      // const testServices = ["service1","service2","service3","service4" ]
       const testRequests = ["request1","request2","request3","request4" ]
 
-      
+
 
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
@@ -45,9 +44,10 @@ interface TestProtoProps {
             >
             </input>
 
-            <DropdownMenu id = "service-dropdown-menu" onClick ={testDropdownClick} options = {testServices} ></DropdownMenu>
+            <DropdownMenu id = "service-dropdown-menu" serviceOptions = {serviceOptions} ></DropdownMenu>
 
-            <DropdownMenu id = "request-dropdown-menu" onClick ={testDropdownClick} options = {testRequests} ></DropdownMenu>
+            {/* update to request options later */}
+            <DropdownMenu id = "request-dropdown-menu" serviceOptions = {testRequests} ></DropdownMenu>
           </div>
 
           <div>

@@ -2,27 +2,28 @@ import React, { FunctionComponent } from 'react'
 
 interface DropdownMenuProps {
   id?: string
-  onClick?: (...arg: any[]) => any
-  options?: string[]
+  serviceOptions?: string[]
+  requestOptions?: string[]
 }
 
 export const DropdownMenu:
-FunctionComponent<DropdownMenuProps> = ({
+FunctionComponent<DropdownMenuProps> = props => {
+  {
+  const {
   id, 
-  onClick,
-  options
-}) => (
+  serviceOptions
+  } = props
+  console.log(serviceOptions)
+ return (
   <div>
     <select>
-        <option>Option 1</option>
-        <option>Option 2</option>
-        <option>Option 3</option>
-        <option>Option 4</option>
-
+    {serviceOptions.map((option, i)=> <option key = {i}>{option}</option>
+    )}
     </select>
-
   </div>
-)
+ )}
+}
+  
 
 
 
