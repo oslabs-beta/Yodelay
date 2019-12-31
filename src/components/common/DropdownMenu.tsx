@@ -2,8 +2,7 @@ import React, { FunctionComponent } from 'react'
 
 interface DropdownMenuProps {
   id?: string
-  serviceOptions?: string[]
-  requestOptions?: string[]
+  options?: string[]
 }
 
 export const DropdownMenu:
@@ -11,13 +10,12 @@ FunctionComponent<DropdownMenuProps> = props => {
   {
   const {
   id, 
-  serviceOptions
+  options
   } = props
-  console.log(serviceOptions)
  return (
   <div>
     <select>
-    {serviceOptions.map((option, i)=> <option key = {i}>{option}</option>
+    {options.map((option, i)=> <option key = {i}>{option}</option>
     )}
     </select>
   </div>

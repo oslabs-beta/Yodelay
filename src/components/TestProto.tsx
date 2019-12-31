@@ -44,10 +44,10 @@ interface TestProtoProps {
             >
             </input>
 
-            <DropdownMenu id = "service-dropdown-menu" serviceOptions = {serviceOptions} ></DropdownMenu>
+            <DropdownMenu id = "service-dropdown-menu" options = {serviceOptions} ></DropdownMenu>
 
             {/* update to request options later */}
-            <DropdownMenu id = "request-dropdown-menu" serviceOptions = {testRequests} ></DropdownMenu>
+            <DropdownMenu id = "request-dropdown-menu" options = {testRequests} ></DropdownMenu>
           </div>
 
           <div>
