@@ -10,38 +10,24 @@ let port;
 let packageName;
 let service;
 let message;
-let protoObject;
+// let protoObject;
 let output;
 
 
-// input
-// output: {protoFile: “the text of the photo file”, services: [{}, {}, {}], protoDescription: {}}
+// input: .proto file
+// output: {protoFile: “the text of the proto file”, definition: {}, package: '', protoDescriptor: {}, services: [{}, {}, {}]}
 
 async function parseProto(upload) {
 // MESSAGE FIELDS:
 console.log('-----Start Parsing Proto-----')
 
-// console.log('upload: ', upload)
-// port = upload.port;
-// console.log('port: ', port)
-// packageName = upload.packageName;
-// service = upload.service;
-// message = upload.message;
-
 // the proto object is where we are passed in the .proto file from the server_client
 // we then take this object and write it to the temp output.proto file in the proto folder:
-// console.log('proto obj: ', protoObject)
-// protoObject = upload.protoObject;
-
-// test from initial front end:
-protoObject = upload;
-// 
 
 let output = {};
 
+const protoObject = upload;
 output.protoFile = protoObject;
-// console.log(output)
-
 
 // WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
@@ -68,37 +54,42 @@ const CONFIG_OBJECT = {
 
 // now that the file is written we want to create our package definition:
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
+output.definition = packageDefinition;
 
 // this is how you grab the .proto file package name:
-let protoPackageName = await Object.keys(packageDefinition)[0].split('.')[0]
-// console.log('p: ', p)
-
-// console.log('package: ', typeof(Object.keys(packageDefinition)[0].split('.')[0]))
-// console.log(packageName)
-
+const protoPackageName = await Object.keys(packageDefinition)[0].split('.')[0]
 output.package = protoPackageName;
-
-//  this gives us the proto package name as well as any service names:
-let services = []
-output.services = services
-
-for (let property in packageDefinition) {
-  // console.log(property)
-  services.push(property)
-}
-// console.log('output: ', output)
-output.definition = packageDefinition;
 
 // let's use the package definintion to create our descriptor:
 const descriptor = grpc.loadPackageDefinition(packageDefinition)[protoPackageName];
-console.log('descriptor: ', descriptor)
-// this gets us the message name form the proto file:
-// console.log('des new: ', descriptor.HelloRequest.type.field[0].name);
-// console.log('des new: ', descriptor.HelloRequest.type);
+output.protoDescriptor = descriptor;
 
-output.protoDescription = descriptor;
+// Creating the big-ass services object, which includes the various services, methods, messages, and message fields/types
+const servicesObj = {};
+for (let [service, serviceValue] of Object.entries(descriptor)) {
+  if (typeof serviceValue === 'function') {
+    servicesObj[service] = {};
+    for (let [serviceMethodName, serviceMethodValue] of Object.entries(serviceValue.service)) {
+      const messageName = serviceMethodValue.requestType.type.name;
+      const messageFieldsRawData = serviceMethodValue.requestType.type.field;
+      servicesObj[service][serviceMethodName] = {};
+      servicesObj[service][serviceMethodName][messageName] = {};
+      for (let messageInfo of messageFieldsRawData) {
+        const messageField = messageInfo.name;
+        const messageFieldType = messageInfo.type;
+        servicesObj[service][serviceMethodName][messageName][messageField] = messageFieldType
+      }
+    }
+  }
+}
+output.services = servicesObj;
 
 console.log('-----done parsing proto-----')
+
+console.log('output: ', output)
+console.log('output YodelayAPI: ', output.services.YodelayAPI)
+console.log('output servTWO: ', output.services.servTWO)
+
 return output;
 }
 
@@ -112,7 +103,7 @@ return output;
 //     "message": "SayHello",
 //     "protoObject": "syntax = 'proto3'; package helloaworld; service YodelayAPI { rpc SayHello (HelloRequest) returns (HelloReply) {} }message HelloRequest { string port = 1; string packageName = 2; string service = 3; string message = 4; string protoObject = 5; } message HelloReply { string message = 1; }"
 // }
-// the serice and the message are unique based on what the user chooses after we parse the orional .proto file in /upload.
+// the service and the message are unique based on what the user chooses after we parse the original .proto file in /upload.
 
 
 function grpcRequest(serv) {

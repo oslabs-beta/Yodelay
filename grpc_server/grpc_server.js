@@ -57,4 +57,4 @@ function main() {
 
 main();
 
-console.log(`gRPC💥 'n on port: ${port}`)
+console.log(`gRPC💥 'n on port: 0.0.0.0:50051 (${port})`)
