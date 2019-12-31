@@ -17,7 +17,7 @@ export const Editor: FunctionComponent<editorProps> = props => {
       setMessageAction,
       data
     } = props
-    console.log('editor', data)
+    
     return (
       <>
         <EditorRequest 

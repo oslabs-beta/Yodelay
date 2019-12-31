@@ -4,29 +4,27 @@ import TestProto from '../components/TestProto'
 import Settings from '../components/Settings'
 import { Route } from 'react-router'
 import {setMessageActionCreator} from '../actions'
-import {messageSelector, dataSelector} from '../reducers/uploadProto'
+import {messageSelector} from '../reducers/uploadProto'
 import {RootState} from '../reducers'
 
 // sets type for props
 interface BodyProps {
   setMessageAction: typeof setMessageActionCreator
-  selectData: string
+  selectMessage: string
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
   {
     const {
       setMessageAction,
-      selectData,
+      selectMessage,
     } = props
-
-    console.log('body', selectData)
     
     return (
       <div style = {{border: "solid 1px green", flexGrow: 2}}>
       Body
         <Route exact path = "/"> 
-          <TestProto setMessageAction={setMessageAction} data={selectData} >
+          <TestProto setMessageAction={setMessageAction} data={selectMessage} >
             Test Proto
            </TestProto>
         </Route>
@@ -50,7 +48,6 @@ export default connect (
 
     (state: RootState) => ({
         selectMessage: messageSelector(state),
-        selectData: dataSelector(state)
       }),
     {
       setMessageAction: setMessageActionCreator,

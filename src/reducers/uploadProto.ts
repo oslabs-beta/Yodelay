@@ -4,14 +4,12 @@ import { RootState } from '.'
 
 export interface initialStateType {
   proto: any
-  data: string
   messageInput: string 
 }
 
 
 const initialState: initialStateType = {
   proto: {},
-  data: "hello",
   messageInput: "hello"
 
 }
@@ -24,13 +22,12 @@ export const uploadProto: (state: initialStateType, action: uploadProtoAction | 
       }
 
       case SET_MESSAGE: {
-        // console.log(action.payload)
         return { ...state, messageInput: action.payload }
       }
     }
+
    return state 
   }
 
   export const protoSelector: (state: RootState) => object = (state) => state.uploadProto.proto
-  export const dataSelector: (state: RootState) => string = (state) => state.uploadProto.data
   export const messageSelector: (state: RootState) => string = (state) => state.uploadProto.messageInput

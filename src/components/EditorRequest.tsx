@@ -16,10 +16,9 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
       data, 
       newRequest,
     } = props
-    console.log(data)
+  
     const editorTabKey = `editor Tab`; 
   
-    
     return (
       <>
         <Tabs

@@ -17,7 +17,6 @@ interface TestProtoProps {
         data
       } = props
 
-      console.log('testproto', data)
       return (
         <div style = {{border: "solid 1px green", flexGrow: 2}}>
         TestProto
