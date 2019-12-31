@@ -1,12 +1,17 @@
 import React, {FunctionComponent, useRef } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import {setMessageActionCreator} from '../actions'
+import {Editor} from './Editor'
+
 import { DropdownMenu} from './common/DropdownMenu';
 
 
 // sets type for props
 interface TestProtoProps {
   serviceOptions: object
+  setMessageAction: typeof setMessageActionCreator
+  data: string
   }
   
   export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -28,7 +33,9 @@ interface TestProtoProps {
       //service2: {request2: {message2Options}}
       //}
       const {
-        serviceOptions
+        serviceOptions,
+        setMessageAction,
+        data
       } = props
 
       // const testServices = ["service1","service2","service3","service4" ]
@@ -49,7 +56,7 @@ interface TestProtoProps {
             </input>
 
             {/* needs to update based on service selected by user -> 'selectValue' in dropdown menu component should be used here --> serviceOptions[selectValue]*/}
-            <DropdownMenu id = "service-dropdown-menu" menuOptions = {{serviceOptions}} ></DropdownMenu>
+            <DropdownMenu id = "service-dropdown-menu" menuOptions = {serviceOptions} ></DropdownMenu>
 
           
           {/* this should take in 'select value' */}
@@ -57,6 +64,7 @@ interface TestProtoProps {
           </div>
 
           <div>
+          <Editor setMessageAction={setMessageAction} data={data} />
 
           </div>
         

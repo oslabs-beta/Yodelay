@@ -1,23 +1,24 @@
-import { uploadProtoAction, UPLOAD_PROTO, UPLOAD_PROTO_SUCCESSFUL, SEND_PROTO } from '../actions'
+import { uploadProtoAction, UPLOAD_PROTO, SET_MESSAGE, UPLOAD_PROTO_SUCCESSFUL, SEND_PROTO } from '../actions'
 import { setIn } from 'timm'
 import { RootState } from '.'
 
 export interface initialProtoStateType {
-  proto: any;
+  proto: any
+  messageInput: string 
   parsedProtosObj: object
 }
 
 
 const initialState: initialProtoStateType = {
   proto: {},
+  messageInput: "hello",
   parsedProtosObj: {}
   // [{parsedProtoObj1}, {parsedProtoObj2}]
-  
+
 }
 
 //uploadProto is a function that takes in state and action as params; it returns an updated state object of type initialProtoStateType
 //state type is initialProtoStateType; action type is uploadProtoAction
-
 export const uploadProto: (state: initialProtoStateType, action: uploadProtoAction ) => initialProtoStateType = (
   state = initialState, action) => {
     // console.log(action.type)
@@ -28,17 +29,21 @@ export const uploadProto: (state: initialProtoStateType, action: uploadProtoActi
         return setIn(state, ["proto"], action.payload)
       }
 
+      case SET_MESSAGE: {
+        return { ...state, messageInput: action.payload }
+      }
       case UPLOAD_PROTO_SUCCESSFUL: {
         //need to add in functionality to push multiple protoobj to state
         return setIn(state, ["parsedProtosObj"], action.payload)
+
         
-      }
+      } 
     }
+
    return state 
   }
 
   //makes the proto state and parsedProtosObj state available to connected components
   export const protoSelector: (state: RootState) => object = (state) => state.uploadProto.proto
-
+  export const messageSelector: (state: RootState) => string = (state) => state.uploadProto.messageInput
   export const protoObjSelector: (state: RootState) => object = (state) => state.uploadProto.parsedProtosObj
-

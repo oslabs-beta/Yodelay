@@ -3,6 +3,7 @@ export const UPLOAD_PROTO = 'UPLOAD_PROTO';
 export const SEND_PROTO = 'SEND_PROTO';
 export const UPLOAD_PROTO_SUCCESSFUL = 'UPLOAD_PROTO_SUCCESSFUL';
 export const UPLOAD_PROTO_FAILED = 'UPLOAD_PROTO_FAILED';
+export const SET_MESSAGE = 'SET_MESSAGE'
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -21,13 +22,20 @@ export interface uploadProtoSuccesful {
   payload: object;
 }
 
+export interface setMessage {
+  type: typeof SET_MESSAGE
+  payload: string
+}
+
+
+
 export interface uploadProtoFailed {
   type: typeof UPLOAD_PROTO_FAILED;
   payload: string;
 }
 
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
-export type uploadProtoAction = uploadProto | sendProto | uploadProtoSuccesful | uploadProtoFailed;
+export type uploadProtoAction = uploadProto | sendProto | uploadProtoSuccesful | uploadProtoFailed | setMessage;
 
 
 export const uploadProtoActionCreator = (
@@ -63,5 +71,12 @@ export const uploadProtoFailedActionCreator = (
   return {
     type: UPLOAD_PROTO_FAILED,
     payload: payloadObj
-  };
-};
+  }
+}
+
+export const setMessageActionCreator = (payloadObj: string): setMessage => {
+  return {
+    type: SET_MESSAGE,
+    payload: payloadObj
+  }
+}

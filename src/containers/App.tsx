@@ -44,7 +44,7 @@ export const App: FunctionComponent<AppProps> = props => {
             
             <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
               <HeaderContainer></HeaderContainer>
-              <BodyContainer serviceOptions = {{serviceOptions}}></BodyContainer>
+              <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
               <FooterContainer></FooterContainer>
             </div>
             <Button text='enter' onClick={ () => {incrementAction(1)}} >
