@@ -2,19 +2,27 @@ import { uploadProtoAction, UPLOAD_PROTO, SET_MESSAGE, UPLOAD_PROTO_SUCCESSFUL, 
 import { setIn } from 'timm'
 import { RootState } from '.'
 
+export interface typeResponse {
+    message: string
+    responseTime?: number
+}
 export interface initialProtoStateType {
   proto: any
   messageInput: string 
   parsedProtosObj: object
+  response: typeResponse
 }
 
 
 const initialState: initialProtoStateType = {
   proto: {},
-  messageInput: "hello",
-  parsedProtosObj: {}
+  messageInput: 'hello',
+  parsedProtosObj: {},
   // [{parsedProtoObj1}, {parsedProtoObj2}]
-
+  response: {
+    message: 'bye',
+    responseTime: undefined
+  }
 }
 
 //uploadProto is a function that takes in state and action as params; it returns an updated state object of type initialProtoStateType
@@ -46,4 +54,5 @@ export const uploadProto: (state: initialProtoStateType, action: uploadProtoActi
   //makes the proto state and parsedProtosObj state available to connected components
   export const protoSelector: (state: RootState) => object = (state) => state.uploadProto.proto
   export const messageSelector: (state: RootState) => string = (state) => state.uploadProto.messageInput
+  export const responseSelector: (state: RootState) => object = (state) => state.uploadProto.response
   export const protoObjSelector: (state: RootState) => object = (state) => state.uploadProto.parsedProtosObj

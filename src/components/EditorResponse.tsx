@@ -2,15 +2,21 @@ import React, {FunctionComponent} from 'react'
 // import AceEditor, {Command} from 'react-ace'
 import AceEditor from 'react-ace'
 import { Tabs } from 'antd';
+import {typeResponse} from '../reducers/uploadProto'
 
 
 interface ResponseProps {
-  data?: string
+  response: typeResponse
 }
 
 export const EditorResponse: FunctionComponent <ResponseProps> = props => {
   {
     const defaultKey = `responseTab`;
+    const {
+      response
+    } = props
+
+    console.log(response)
 
     return (
       <>
@@ -23,7 +29,7 @@ export const EditorResponse: FunctionComponent <ResponseProps> = props => {
               <AceEditor
                 mode='json'
                 name='requestInput'
-                value={props.data}
+                value={response.message}
                 theme='monokai'
                 style={{ background: "white" }}
                 fontSize={14}
