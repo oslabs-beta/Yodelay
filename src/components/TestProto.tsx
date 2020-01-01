@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {
   setMessageActionCreator,
   setServiceActionCreator,
-  setUrlActionCreator
+  setUrlActionCreator,
+  setRequestActionCreator
 } from '../actions';
 import { Editor } from './Editor';
 import { DropdownMenu } from './common/DropdownMenu';
 import { DropdownService } from './DropdownService';
+import { DropdownRequest } from './DropdownRequest';
 
 // sets type for props
 interface TestProtoProps {
@@ -18,6 +20,8 @@ interface TestProtoProps {
   service: string;
   setUrlAction: typeof setUrlActionCreator;
   url: string;
+  setRequestAction: typeof setRequestActionCreator;
+  request: string;
   serviceOptions: object;
 }
 
@@ -35,16 +39,14 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       setServiceAction,
       service,
       setUrlAction,
+      setRequestAction,
+      request,
       url
     } = props;
 
     const handleUrlChange = (e: any) => {
       setUrlAction(e.target.value);
-      console.log(url);
     };
-    
-    // const testServices = ["service1","service2","service3","service4" ]
-    const testRequests = ['request1', 'request2', 'request3', 'request4'];
 
     return (
       <div style={{ border: 'solid 1px green', flexGrow: 2 }}>
@@ -56,7 +58,6 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             onChange={handleUrlChange}
           ></input>
 
-          {/* needs to update based on service selected by user -> 'selectValue' in dropdown menu component should be used here --> serviceOptions[selectValue]*/}
           <DropdownService
             id="service-dropdown-menu"
             menuOptions={serviceOptions}
@@ -64,11 +65,13 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             value={service}
           ></DropdownService>
 
-          {/* this should take in 'select value' */}
-          <DropdownMenu
+          <DropdownRequest
             id="request-dropdown-menu"
-            menuOptions={testRequests}
-          ></DropdownMenu>
+            menuOptions={serviceOptions}
+            service={service}
+            setRequest={setRequestAction}
+            value={request}
+          ></DropdownRequest>
         </div>
         <div>
           <Editor setMessageAction={setMessageAction} data={data} />
@@ -79,17 +82,3 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
 };
 
 export default TestProto;
-
-// gives the app component access to state and actions from the store
-//   export default connect(
-
-//     //using selector
-//     (state: RootState) => ({
-//         test: countSelector(state)
-//       })
-//       ,
-
-//     {
-//       incrementAction: incrementActionCreator,
-//     }
-//   )(App)

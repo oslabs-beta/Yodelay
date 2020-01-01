@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
+import { setServiceActionCreator } from '../actions';
 interface DropdownServiceProps {
   id?: string;
   menuOptions?: object;
-  setService: any;
+  setService: typeof setServiceActionCreator;
   value: string;
 }
 export const DropdownService: FunctionComponent<
@@ -11,12 +12,7 @@ export const DropdownService: FunctionComponent<
   {
     const { id, menuOptions, setService, value } = props;
 
-    //menuOptions object holds the following content:
-    //services: {
-    //service1: {request1: {message1Options}}
-    //service2: {request2: {message2Options}}
-    //}
-    //get array of services
+    //create array of services
     const servicesArr = Object.keys(menuOptions);
 
     return (
@@ -29,7 +25,6 @@ export const DropdownService: FunctionComponent<
               setService(e.target.value);
             }
           }}
-          id="selectDd"
         >
           <option>Select Service</option>
           {servicesArr.map((menuOptions, i) => (

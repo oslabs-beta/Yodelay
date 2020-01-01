@@ -5,7 +5,8 @@ import {
   UPLOAD_PROTO_SUCCESSFUL,
   SEND_PROTO,
   SET_SERVICE,
-  SET_URL
+  SET_URL,
+  SET_REQUEST
 } from '../actions';
 import { setIn } from 'timm';
 import { RootState } from '.';
@@ -14,6 +15,7 @@ export interface initialProtoStateType {
   messageInput: string;
   serviceInput: string;
   urlInput: string;
+  requestInput: string;
   parsedProtosObj: object;
   proto: any;
 }
@@ -22,6 +24,7 @@ const initialState: initialProtoStateType = {
   messageInput: 'hello',
   serviceInput: '',
   urlInput: '',
+  requestInput: '',
   parsedProtosObj: {},
   proto: {}
   // [{parsedProtoObj1}, {parsedProtoObj2}]
@@ -48,6 +51,9 @@ export const uploadProto: (
     case SET_URL: {
       return { ...state, urlInput: action.payload };
     }
+    case SET_REQUEST: {
+      return { ...state, requestInput: action.payload };
+    }
     case UPLOAD_PROTO_SUCCESSFUL: {
       //need to add in functionality to push multiple protoobj to state
       return setIn(state, ['parsedProtosObj'], action.payload);
@@ -66,5 +72,7 @@ export const serviceSelector: (state: RootState) => string = state =>
   state.uploadProto.serviceInput;
 export const urlSelector: (state: RootState) => string = state =>
   state.uploadProto.urlInput;
+export const requestSelector: (state: RootState) => string = state =>
+  state.uploadProto.requestInput;
 export const protoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;

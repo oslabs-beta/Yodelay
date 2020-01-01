@@ -6,12 +6,14 @@ import { Route } from 'react-router';
 import {
   setMessageActionCreator,
   setServiceActionCreator,
-  setUrlActionCreator
+  setUrlActionCreator, 
+  setRequestActionCreator
 } from '../actions';
 import {
   messageSelector,
   serviceSelector,
-  urlSelector
+  urlSelector,
+  requestSelector
 } from '../reducers/uploadProto';
 import { RootState } from '../reducers';
 
@@ -23,6 +25,8 @@ interface BodyProps {
   selectService: string;
   setUrlAction: typeof setUrlActionCreator;
   selectUrl: string;
+  setRequestAction: typeof setRequestActionCreator;
+  selectRequest: string;
   serviceOptions: object;
 }
 
@@ -35,6 +39,8 @@ export const Body: FunctionComponent<BodyProps> = props => {
       selectService,
       setUrlAction,
       selectUrl,
+      setRequestAction,
+      selectRequest,
       serviceOptions
     } = props;
 
@@ -49,6 +55,8 @@ export const Body: FunctionComponent<BodyProps> = props => {
             service={selectService}
             setUrlAction={setUrlAction}
             url={selectUrl}
+            setRequestAction={setRequestAction}
+            request={selectRequest}
             serviceOptions={serviceOptions}
           >
             Test Proto
@@ -71,11 +79,13 @@ export default connect(
   (state: RootState) => ({
     selectMessage: messageSelector(state),
     selectService: serviceSelector(state),
-    selectUrl: urlSelector(state)
+    selectUrl: urlSelector(state),
+    selectRequest: requestSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
     setServiceAction: setServiceActionCreator,
-    setUrlAction: setUrlActionCreator
+    setUrlAction: setUrlActionCreator,
+    setRequestAction: setRequestActionCreator
   }
 )(Body);
