@@ -7,7 +7,8 @@ import {
   setMessageActionCreator,
   setServiceActionCreator,
   setUrlActionCreator,
-  setRequestActionCreator
+  setRequestActionCreator,
+  sendUnaryRequestActionCreator
 } from '../actions';
 import {
   messageSelector,
@@ -31,6 +32,7 @@ interface BodyProps {
   selectRequest: string;
   serviceOptions: object;
   selectResponse: typeResponse;
+  sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -45,7 +47,8 @@ export const Body: FunctionComponent<BodyProps> = props => {
       setRequestAction,
       selectRequest,
       serviceOptions,
-      selectResponse
+      selectResponse,
+      sendUnaryRequestAction
     } = props;
 
     return (
@@ -63,6 +66,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             request={selectRequest}
             serviceOptions={serviceOptions}
             response={selectResponse}
+            sendUnaryRequestAction={sendUnaryRequestAction}
           >
             Test Proto
           </TestProto>
@@ -92,6 +96,7 @@ export default connect(
     setMessageAction: setMessageActionCreator,
     setServiceAction: setServiceActionCreator,
     setUrlAction: setUrlActionCreator,
-    setRequestAction: setRequestActionCreator
+    setRequestAction: setRequestActionCreator,
+    sendUnaryRequestAction: sendUnaryRequestActionCreator
   }
 )(Body);

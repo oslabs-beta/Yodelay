@@ -1,1 +1,1 @@
-syntax = 'proto3'; package helloaworld; service YodelayAPI { rpc SayHello (HelloRequest) returns (HelloReply) {} }message HelloRequest { string url = 1; string packageName = 2; string serviceInput = 3; string requestInput = 4; string messageInput = 5; string protoFile = 6; string protoDescriptor = 7; } message HelloReply { string message = 1; }
+undefined
