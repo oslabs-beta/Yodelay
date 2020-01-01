@@ -7,7 +7,8 @@ import {
   SET_SERVICE,
   SET_URL,
   SET_REQUEST,
-  SEND_UNARY_REQUEST
+  SEND_UNARY_REQUEST,
+  DISPLAY_UNARY_RESPONSE
 } from '../actions';
 import { setIn } from 'timm';
 import { RootState } from '.';
@@ -70,6 +71,9 @@ export const uploadProto: (
     }
     case SEND_UNARY_REQUEST: {
       return { ...state };
+    }
+    case DISPLAY_UNARY_RESPONSE: {
+      return setIn(state, ['response'], action.payload);
     }
   }
 
