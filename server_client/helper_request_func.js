@@ -79,9 +79,10 @@ return output;
 
 function grpcRequest(serviceParsedReqBody) {
   console.log('------Start gRPC Request------')
+  // console.log('serviceParsedReqBody: ', serviceParsedReqBody)
 // when a string is passed to the back end as a string we will then use this method:
 // it's passed to express on the req.body which we pass in as the input 
-  console.log("grpcRequest input: ", serviceParsedReqBody)
+  // console.log("grpcRequest input: ", serviceParsedReqBody)
   // let input = JSON.parse(serviceParsedReqBody)
   // this is what is being sent to us in the req.body:
   let input = serviceParsedReqBody;
@@ -96,8 +97,9 @@ function grpcRequest(serviceParsedReqBody) {
   // service & request input from the front end drop down
   let serviceInput = input.serviceInput;
   let requestInput = input.requestInput;
-  let messageInput = input.messageInput;
-  console.log('messageInput: ', messageInput)
+  // this is the message input we are passing to the grpc server:
+  let messageInput = JSON.parse(input.messageInput);
+  // console.log('messageInput: ', messageInput)
   // the proto object is where we are passed in the .proto file from the server_client
   // we then take this object and write it to the temp output.proto file in the proto folder:
   let protoFile = input.protoFile;
@@ -134,6 +136,9 @@ function grpcRequest(serviceParsedReqBody) {
   // this is how you grab the .proto file package name:
   let protoPackageName2 = Object.keys(packageDefinition)[0].split('.')[0]
   
+  // first timestamp to be used for timing the round trip:
+  const time = process.hrtime();
+
   // let's use the package definition to create our descriptor:
   const descriptor = grpc.loadPackageDefinition(packageDefinition)[protoPackageName2];
   
@@ -155,6 +160,9 @@ function grpcRequest(serviceParsedReqBody) {
     output = res;
     // console.log('output', output)
       console.log('------Returning gRPC Result------')
+      // timestamps server call as an array
+      // index 0 is seconds and index 1 is nanoseconds
+      output.responseTime = process.hrtime(time);
       return output
     })
     .catch(err => console.error(err))
