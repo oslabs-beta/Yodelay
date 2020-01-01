@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import {setMessageActionCreator} from '../actions'
 import {Editor} from './Editor'
+import {typeResponse} from '../reducers/uploadProto'
 
 import { DropdownMenu} from './common/DropdownMenu';
 
@@ -11,7 +12,8 @@ import { DropdownMenu} from './common/DropdownMenu';
 interface TestProtoProps {
   serviceOptions: object
   setMessageAction: typeof setMessageActionCreator
-  data: string
+  data: string 
+  response: typeResponse
   }
   
   export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -35,7 +37,8 @@ interface TestProtoProps {
       const {
         serviceOptions,
         setMessageAction,
-        data
+        data,
+        response
       } = props
 
       // const testServices = ["service1","service2","service3","service4" ]
@@ -64,7 +67,7 @@ interface TestProtoProps {
           </div>
 
           <div>
-          <Editor setMessageAction={setMessageAction} data={data} />
+          <Editor setMessageAction={setMessageAction} data={data} response={response}/>
 
           </div>
         
