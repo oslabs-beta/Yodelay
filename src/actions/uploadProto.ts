@@ -3,6 +3,7 @@ export const UPLOAD_PROTO = 'UPLOAD_PROTO';
 export const SEND_PROTO = 'SEND_PROTO';
 export const UPLOAD_PROTO_SUCCESSFUL = 'UPLOAD_PROTO_SUCCESSFUL';
 export const UPLOAD_PROTO_FAILED = 'UPLOAD_PROTO_FAILED';
+export const SEND_UNARY_REQUEST = 'SEND_UNARY_REQUEST';
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const SET_SERVICE = 'SET_SERVICE';
 export const SET_URL = 'SET_URL';
@@ -23,6 +24,11 @@ export interface sendProto {
 export interface uploadProtoSuccesful {
   type: typeof UPLOAD_PROTO_SUCCESSFUL;
   payload: object;
+}
+
+export interface sendUnaryRequest {
+  type: typeof SEND_UNARY_REQUEST;
+  payload: any;
 }
 
 export interface setMessage {
@@ -59,7 +65,8 @@ export type uploadProtoAction =
   | setMessage
   | setService
   | setUrl
-  | setRequest;
+  | setRequest
+  | sendUnaryRequest;
 
 export const uploadProtoActionCreator = (
   payloadObj: string | ArrayBuffer
@@ -93,6 +100,15 @@ export const uploadProtoFailedActionCreator = (
 ): uploadProtoFailed => {
   return {
     type: UPLOAD_PROTO_FAILED,
+    payload: payloadObj
+  };
+};
+
+export const sendUnaryRequestActionCreator = (
+  payloadObj: any
+): sendUnaryRequest => {
+  return {
+    type: SEND_UNARY_REQUEST,
     payload: payloadObj
   };
 };

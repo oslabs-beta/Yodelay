@@ -6,7 +6,8 @@ import {
   SEND_PROTO,
   SET_SERVICE,
   SET_URL,
-  SET_REQUEST
+  SET_REQUEST,
+  SEND_UNARY_REQUEST
 } from '../actions';
 import { setIn } from 'timm';
 import { RootState } from '.';
@@ -67,6 +68,9 @@ export const uploadProto: (
       //need to add in functionality to push multiple protoobj to state
       return setIn(state, ['parsedProtosObj'], action.payload);
     }
+    case SEND_UNARY_REQUEST: {
+      return { ...state };
+    }
   }
 
   return state;
@@ -87,3 +91,7 @@ export const protoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;
 export const responseSelector: (state: RootState) => object = state =>
   state.uploadProto.response;
+
+// selecting all of state for the request saga
+export const stateSelector: (state: RootState) => object = state =>
+  state.uploadProto;

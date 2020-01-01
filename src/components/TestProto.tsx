@@ -5,12 +5,14 @@ import {
   setMessageActionCreator,
   setServiceActionCreator,
   setUrlActionCreator,
-  setRequestActionCreator
+  setRequestActionCreator,
+  sendUnaryRequestActionCreator
 } from '../actions';
 import { Editor } from './Editor';
 import { typeResponse } from '../reducers/uploadProto';
 import { DropdownService } from './DropdownService';
 import { DropdownRequest } from './DropdownRequest';
+import { Button } from './common/Button';
 
 // sets type for props
 interface TestProtoProps {
@@ -24,6 +26,7 @@ interface TestProtoProps {
   setRequestAction: typeof setRequestActionCreator;
   request: string;
   serviceOptions: object;
+  sendUnaryRequestAction: any;
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -43,11 +46,16 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       setUrlAction,
       setRequestAction,
       request,
-      url
+      url,
+      sendUnaryRequestAction
     } = props;
 
     const handleUrlChange = (e: any) => {
       setUrlAction(e.target.value);
+    };
+
+    const handleRequestClick = (e: any) => {
+      sendUnaryRequestAction('grpc!');
     };
 
     return (
@@ -74,6 +82,8 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             setRequest={setRequestAction}
             value={request}
           ></DropdownRequest>
+
+          <Button text="Send Request" onClick={handleRequestClick} />
         </div>
         <div>
           <Editor
