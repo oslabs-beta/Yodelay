@@ -29,5 +29,64 @@ message HelloRequest {
 // The response message containing the greetings
 message HelloReply {
   string message = 1;
+  int32 integer = 2;
+  
 }
+
+// The AGAIN request message containing the user's name.
+message HelloRequestAGAIN {
+  string portAGAIN = 1;
+  string packageNameAGAIN = 2;
+  string serviceAGAIN = 3;
+  string messageAGAIN = 4;
+  string protoObjectAGAIN = 5;
+  int32 integerAGAIN = 6;
+
+}
+
+// The AGAIN response message containing the greetings
+message HelloReplyAGAIN {
+  string messageAGAIN = 1;
+  int32 integerAGAIN = 2;
+  
+}
+
+
+// The SECOND request message containing the user's name.
+message HelloRequestTWO {
+  string portTWO = 1;
+  string packageNameTWO = 2;
+  string serviceTWO = 3;
+  string messageTWO = 4;
+  string protoObjectTWO = 5;
+  int32 integerTWO = 6;
+
+}
+
+// The SECOND response message containing the greetings
+message HelloReplyTWO {
+  string messageTWO = 1;
+  int32 integerTWO = 2;
+
+}
+
+// The SECOND AGAIN request message containing the user's name.
+message HelloRequestTWOagain {
+  string portTWOagain = 1;
+  string packageNameTWOagain = 2;
+  string serviceTWOagain = 3;
+  string messageTWOagain = 4;
+  string protoObjectTWOagain = 5;
+  int32 integerTWOagain = 6;
+
+}
+
+// The SECOND AGAIN response message containing the greetings
+message HelloReplyTWOagain {
+  string messageTWOagain = 1;
+  int32 integerTWOagain = 2;
+
+}
+
+
 
