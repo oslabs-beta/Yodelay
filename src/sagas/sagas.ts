@@ -52,9 +52,38 @@ function* sendProto({ payload }: uploadProto) {
 function* unaryRequest({ payload }: sendUnaryRequest) {
   try {
     const state = yield select(stateSelector);
-    console.log('unary request state', state);
+
+    const jsonRequestObj = JSON.stringify({
+      url: state.urlInput,
+      serviceInput: state.serviceInput,
+      messageInput: state.messageInput,
+      requestInput: state.requestInput,
+      package: state.parsedProtosObj.package,
+      protoFile: state.parsedProtosObj.protoFile,
+      protoDescriptor: state.parsedProtosObj.protoDescriptor
+    });
+
+    // console.log(
+    //   '-----jsonrequestObj in unaryRequest saga -----',
+    //   jsonRequestObj
+    // );
+
+    const data = yield fetch(`http://localhost:4000/service`, {
+      method: 'POST',
+      headers: {
+        Accept: 'text/plain',
+        'Content-Type': 'text/plain'
+      },
+      body: jsonRequestObj
+    });
+
+    const response = yield data.json();
+    console.log(
+      'here is the respone message returned when a unary request is completed:',
+      response
+    );
   } catch {
-    console.log('error in unary request')
+    console.log('error in unary request');
   }
 }
 
