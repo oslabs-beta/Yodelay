@@ -8,7 +8,7 @@ import {
   setRequestActionCreator
 } from '../actions';
 import { Editor } from './Editor';
-import { DropdownMenu } from './common/DropdownMenu';
+import { typeResponse } from '../reducers/uploadProto';
 import { DropdownService } from './DropdownService';
 import { DropdownRequest } from './DropdownRequest';
 
@@ -16,6 +16,7 @@ import { DropdownRequest } from './DropdownRequest';
 interface TestProtoProps {
   setMessageAction: typeof setMessageActionCreator;
   data: string;
+  response: typeResponse;
   setServiceAction: typeof setServiceActionCreator;
   service: string;
   setUrlAction: typeof setUrlActionCreator;
@@ -36,6 +37,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       serviceOptions,
       setMessageAction,
       data,
+      response,
       setServiceAction,
       service,
       setUrlAction,
@@ -74,7 +76,11 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
           ></DropdownRequest>
         </div>
         <div>
-          <Editor setMessageAction={setMessageAction} data={data} />
+          <Editor
+            setMessageAction={setMessageAction}
+            data={data}
+            response={response}
+          />
         </div>
       </div>
     );

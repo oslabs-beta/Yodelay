@@ -11,6 +11,10 @@ import {
 import { setIn } from 'timm';
 import { RootState } from '.';
 
+export interface typeResponse {
+  message: string;
+  responseTime?: number;
+}
 export interface initialProtoStateType {
   messageInput: string;
   serviceInput: string;
@@ -18,6 +22,7 @@ export interface initialProtoStateType {
   requestInput: string;
   parsedProtosObj: object;
   proto: any;
+  response: typeResponse;
 }
 
 const initialState: initialProtoStateType = {
@@ -25,6 +30,10 @@ const initialState: initialProtoStateType = {
   serviceInput: '',
   urlInput: '',
   requestInput: '',
+  response: {
+    message: 'bye',
+    responseTime: undefined
+  },
   parsedProtosObj: {},
   proto: {}
   // [{parsedProtoObj1}, {parsedProtoObj2}]
@@ -76,3 +85,5 @@ export const requestSelector: (state: RootState) => string = state =>
   state.uploadProto.requestInput;
 export const protoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;
+export const responseSelector: (state: RootState) => object = state =>
+  state.uploadProto.response;
