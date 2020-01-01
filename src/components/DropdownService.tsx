@@ -1,11 +1,15 @@
 import React, { FunctionComponent } from 'react';
-interface DropdownMenuProps {
+interface DropdownServiceProps {
   id?: string;
   menuOptions?: object;
+  setService: any;
+  value: string;
 }
-export const DropdownMenu: FunctionComponent<DropdownMenuProps> = props => {
+export const DropdownService: FunctionComponent<
+  DropdownServiceProps
+> = props => {
   {
-    const { id, menuOptions } = props;
+    const { id, menuOptions, setService, value } = props;
 
     //menuOptions object holds the following content:
     //services: {
@@ -14,14 +18,20 @@ export const DropdownMenu: FunctionComponent<DropdownMenuProps> = props => {
     //}
     //get array of services
     const servicesArr = Object.keys(menuOptions);
-    let selectValue;
+
     return (
       <div>
         <select
           onChange={e => {
-            selectValue = e.target.value;
+            if (e.target.value === 'Select Service') {
+              setService('');
+            } else {
+              setService(e.target.value);
+            }
           }}
+          id="selectDd"
         >
+          <option>Select Service</option>
           {servicesArr.map((menuOptions, i) => (
             <option key={i}>{menuOptions}</option>
           ))}

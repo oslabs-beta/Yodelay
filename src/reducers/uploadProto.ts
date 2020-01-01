@@ -1,10 +1,11 @@
-import { uploadProtoAction, UPLOAD_PROTO, SET_MESSAGE, UPLOAD_PROTO_SUCCESSFUL, SEND_PROTO } from '../actions'
+import { uploadProtoAction, UPLOAD_PROTO, SET_MESSAGE, UPLOAD_PROTO_SUCCESSFUL, SEND_PROTO, SET_SERVICE } from '../actions'
 import { setIn } from 'timm'
 import { RootState } from '.'
 
 export interface initialProtoStateType {
   proto: any
   messageInput: string 
+  serviceInput: string
   parsedProtosObj: object
 }
 
@@ -12,6 +13,7 @@ export interface initialProtoStateType {
 const initialState: initialProtoStateType = {
   proto: {},
   messageInput: "hello",
+  serviceInput: '',
   parsedProtosObj: {}
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 
@@ -32,11 +34,12 @@ export const uploadProto: (state: initialProtoStateType, action: uploadProtoActi
       case SET_MESSAGE: {
         return { ...state, messageInput: action.payload }
       }
+      case SET_SERVICE: {
+        return {...state, serviceInput: action.payload}
+      }
       case UPLOAD_PROTO_SUCCESSFUL: {
         //need to add in functionality to push multiple protoobj to state
         return setIn(state, ["parsedProtosObj"], action.payload)
-
-        
       } 
     }
 
@@ -46,4 +49,5 @@ export const uploadProto: (state: initialProtoStateType, action: uploadProtoActi
   //makes the proto state and parsedProtosObj state available to connected components
   export const protoSelector: (state: RootState) => object = (state) => state.uploadProto.proto
   export const messageSelector: (state: RootState) => string = (state) => state.uploadProto.messageInput
+  export const serviceSelector: (state: RootState) => string = (state) => state.uploadProto.serviceInput
   export const protoObjSelector: (state: RootState) => object = (state) => state.uploadProto.parsedProtosObj

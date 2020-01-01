@@ -3,7 +3,9 @@ export const UPLOAD_PROTO = 'UPLOAD_PROTO';
 export const SEND_PROTO = 'SEND_PROTO';
 export const UPLOAD_PROTO_SUCCESSFUL = 'UPLOAD_PROTO_SUCCESSFUL';
 export const UPLOAD_PROTO_FAILED = 'UPLOAD_PROTO_FAILED';
-export const SET_MESSAGE = 'SET_MESSAGE'
+export const SET_MESSAGE = 'SET_MESSAGE';
+export const SET_SERVICE = 'SET_SERVICE';
+export const SET_URL = 'SET_URL';
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -27,6 +29,15 @@ export interface setMessage {
   payload: string
 }
 
+export interface setService {
+  type: typeof SET_SERVICE
+  payload: string
+}
+
+export interface setUrl {
+  type: typeof SET_URL
+  payload: string
+}
 
 
 export interface uploadProtoFailed {
@@ -35,7 +46,7 @@ export interface uploadProtoFailed {
 }
 
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
-export type uploadProtoAction = uploadProto | sendProto | uploadProtoSuccesful | uploadProtoFailed | setMessage;
+export type uploadProtoAction = uploadProto | sendProto | uploadProtoSuccesful | uploadProtoFailed | setMessage | setService | setUrl;
 
 
 export const uploadProtoActionCreator = (
@@ -77,6 +88,20 @@ export const uploadProtoFailedActionCreator = (
 export const setMessageActionCreator = (payloadObj: string): setMessage => {
   return {
     type: SET_MESSAGE,
+    payload: payloadObj
+  }
+}
+
+export const setServiceActionCreator = (payloadObj: string): setService => {
+  return {
+    type: SET_SERVICE,
+    payload: payloadObj
+  }
+}
+
+export const setUrlActionCreator = (payloadObj: string): setUrl => {
+  return {
+    type: SET_URL,
     payload: payloadObj
   }
 }

@@ -1,40 +1,100 @@
-// Copyright 2015 gRPC authors.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 syntax = "proto3";
 
-option java_multiple_files = true;
-option java_package = "io.grpc.examples.helloworld";
-option java_outer_classname = "HelloWorldProto";
-option objc_class_prefix = "HLW";
+// option java_multiple_files = true;
+// option java_package = "io.grpc.examples.helloworld";
+// option java_outer_classname = "HelloWorldProto";
+// option objc_class_prefix = "HLW";
 
-package helloworld;
+package helloaworld;
 
 // The greeting service definition.
-service Greeter {
+service YodelayAPI {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloRequestAGAIN) returns (HelloReplyAGAIN) {}
+  // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
+}
 
-  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+// The SECOND greeting service definition.
+service servTWO {
+  // Sends a greeting
+  rpc SayHelloTWO (HelloRequestTWO) returns (HelloReplyTWO) {}
+  rpc SayHelloAgainTWO (HelloRequestTWOagain) returns (HelloReplyTWOagain) {}
+  // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
 }
 
 // The request message containing the user's name.
 message HelloRequest {
-  string name = 2;
+  string port = 1;
+  string packageName = 2;
+  string service = 3;
+  string message = 4;
+  string protoObject = 5;
+  int32 integer = 6;
+
 }
 
 // The response message containing the greetings
 message HelloReply {
-  string message = 2;
+  string message = 1;
+  int32 integer = 2;
+  
 }
+
+// The AGAIN request message containing the user's name.
+message HelloRequestAGAIN {
+  string portAGAIN = 1;
+  string packageNameAGAIN = 2;
+  string serviceAGAIN = 3;
+  string messageAGAIN = 4;
+  string protoObjectAGAIN = 5;
+  int32 integerAGAIN = 6;
+
+}
+
+// The AGAIN response message containing the greetings
+message HelloReplyAGAIN {
+  string messageAGAIN = 1;
+  int32 integerAGAIN = 2;
+  
+}
+
+
+// The SECOND request message containing the user's name.
+message HelloRequestTWO {
+  string portTWO = 1;
+  string packageNameTWO = 2;
+  string serviceTWO = 3;
+  string messageTWO = 4;
+  string protoObjectTWO = 5;
+  int32 integerTWO = 6;
+
+}
+
+// The SECOND response message containing the greetings
+message HelloReplyTWO {
+  string messageTWO = 1;
+  int32 integerTWO = 2;
+
+}
+
+// The SECOND AGAIN request message containing the user's name.
+message HelloRequestTWOagain {
+  string portTWOagain = 1;
+  string packageNameTWOagain = 2;
+  string serviceTWOagain = 3;
+  string messageTWOagain = 4;
+  string protoObjectTWOagain = 5;
+  int32 integerTWOagain = 6;
+
+}
+
+// The SECOND AGAIN response message containing the greetings
+message HelloReplyTWOagain {
+  string messageTWOagain = 1;
+  int32 integerTWOagain = 2;
+
+}
+
+
+
