@@ -1,94 +1,90 @@
-import React, {FunctionComponent, useRef } from 'react'
-import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import {setMessageActionCreator} from '../actions'
-import {Editor} from './Editor'
-import {typeResponse} from '../reducers/uploadProto'
-
-import { DropdownMenu} from './common/DropdownMenu';
-
+import React, { FunctionComponent } from 'react';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {
+  setMessageActionCreator,
+  setServiceActionCreator,
+  setUrlActionCreator,
+  setRequestActionCreator
+} from '../actions';
+import { Editor } from './Editor';
+import { typeResponse } from '../reducers/uploadProto';
+import { DropdownService } from './DropdownService';
+import { DropdownRequest } from './DropdownRequest';
 
 // sets type for props
 interface TestProtoProps {
-  serviceOptions: object
-  setMessageAction: typeof setMessageActionCreator
-  data: string 
-  response: typeResponse
-  }
-  
-  export const TestProto: FunctionComponent<TestProtoProps> = props => {
-    {
-      const serverInputRef = useRef<HTMLInputElement>();
+  setMessageAction: typeof setMessageActionCreator;
+  data: string;
+  response: typeResponse;
+  setServiceAction: typeof setServiceActionCreator;
+  service: string;
+  setUrlAction: typeof setUrlActionCreator;
+  url: string;
+  setRequestAction: typeof setRequestActionCreator;
+  request: string;
+  serviceOptions: object;
+}
 
-      // handle serverInput change
-      const handleChange = (e: any) => {
-        serverInputRef.current.value = e.target.value;
-        console.log(
-          'serverInputRef.current.value:',
-          serverInputRef.current.value
-        );
-      };
+export const TestProto: FunctionComponent<TestProtoProps> = props => {
+  {
+    //menuOptions object holds the following content:
+    //services: {
+    //service1: {request1: {message1Options}}
+    //service2: {request2: {message2Options}}
+    //}
+    const {
+      serviceOptions,
+      setMessageAction,
+      data,
+      response,
+      setServiceAction,
+      service,
+      setUrlAction,
+      setRequestAction,
+      request,
+      url
+    } = props;
 
-      //menuOptions object holds the following content: 
-      //services: {
-      //service1: {request1: {message1Options}}
-      //service2: {request2: {message2Options}}
-      //}
-      const {
-        serviceOptions,
-        setMessageAction,
-        data,
-        response
-      } = props
+    const handleUrlChange = (e: any) => {
+      setUrlAction(e.target.value);
+    };
 
-      // const testServices = ["service1","service2","service3","service4" ]
-      const testRequests = ["request1","request2","request3","request4" ]
-
-
-
-      return (
-        <div style = {{border: "solid 1px green", flexGrow: 2}}>
+    return (
+      <div style={{ border: 'solid 1px green', flexGrow: 2 }}>
         TestProto
-          <div id = "menu-options"> 
-            <input
-              ref={serverInputRef}
-              id="serverInput"
-              placeholder="enter server ip address"
-              onChange={handleChange}
-            >
-            </input>
+        <div id="menu-options">
+          <input
+            id="urlInput"
+            placeholder="enter server ip address"
+            onChange={handleUrlChange}
+          ></input>
 
-            {/* needs to update based on service selected by user -> 'selectValue' in dropdown menu component should be used here --> serviceOptions[selectValue]*/}
-            <DropdownMenu id = "service-dropdown-menu" menuOptions = {serviceOptions} ></DropdownMenu>
+          <DropdownService
+            id="service-dropdown-menu"
+            menuOptions={serviceOptions}
+            setService={setServiceAction}
+            value={service}
+          ></DropdownService>
 
-          
-          {/* this should take in 'select value' */}
-            <DropdownMenu id = "request-dropdown-menu" menuOptions = {testRequests} ></DropdownMenu>
-          </div>
-
-          <div>
-          <Editor setMessageAction={setMessageAction} data={data} response={response}/>
-
-          </div>
-        
+          <DropdownRequest
+            id="request-dropdown-menu"
+            menuOptions={serviceOptions}
+            service={service}
+            setRequest={setRequestAction}
+            value={request}
+          ></DropdownRequest>
         </div>
-      )
-    }
+        <div>
+          <Editor
+            setMessageAction={setMessageAction}
+            data={data}
+            response={response}
+          />
+        </div>
+      </div>
+    );
   }
-  
+};
 
-export default TestProto
-
-  // gives the app component access to state and actions from the store
-//   export default connect(
-  
-//     //using selector
-//     (state: RootState) => ({
-//         test: countSelector(state)
-//       })
-//       ,
-    
-//     {
-//       incrementAction: incrementActionCreator,
-//     }
-//   )(App)
+export default TestProto;
