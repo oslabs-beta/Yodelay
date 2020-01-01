@@ -1,34 +1,28 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { setMessageActionCreator, setServiceActionCreator } from '../actions';
+import {
+  setMessageActionCreator,
+  setServiceActionCreator,
+  setUrlActionCreator
+} from '../actions';
 import { Editor } from './Editor';
-
 import { DropdownMenu } from './common/DropdownMenu';
 import { DropdownService } from './DropdownService';
 
 // sets type for props
 interface TestProtoProps {
-  serviceOptions: object;
   setMessageAction: typeof setMessageActionCreator;
   data: string;
-  service: string;
   setServiceAction: typeof setServiceActionCreator;
+  service: string;
+  setUrlAction: typeof setUrlActionCreator;
+  url: string;
+  serviceOptions: object;
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
   {
-    const serverInputRef = useRef<HTMLInputElement>();
-
-    // handle serverInput change
-    const handleChange = (e: any) => {
-      serverInputRef.current.value = e.target.value;
-      console.log(
-        'serverInputRef.current.value:',
-        serverInputRef.current.value
-      );
-    };
-
     //menuOptions object holds the following content:
     //services: {
     //service1: {request1: {message1Options}}
@@ -39,9 +33,16 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       setMessageAction,
       data,
       setServiceAction,
-      service
+      service,
+      setUrlAction,
+      url
     } = props;
 
+    const handleUrlChange = (e: any) => {
+      setUrlAction(e.target.value);
+      console.log(url);
+    };
+    
     // const testServices = ["service1","service2","service3","service4" ]
     const testRequests = ['request1', 'request2', 'request3', 'request4'];
 
@@ -50,10 +51,9 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
         TestProto
         <div id="menu-options">
           <input
-            ref={serverInputRef}
-            id="serverInput"
+            id="urlInput"
             placeholder="enter server ip address"
-            onChange={handleChange}
+            onChange={handleUrlChange}
           ></input>
 
           {/* needs to update based on service selected by user -> 'selectValue' in dropdown menu component should be used here --> serviceOptions[selectValue]*/}

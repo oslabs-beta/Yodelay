@@ -3,16 +3,26 @@ import { connect } from 'react-redux';
 import TestProto from '../components/TestProto';
 import Settings from '../components/Settings';
 import { Route } from 'react-router';
-import { setMessageActionCreator, setServiceActionCreator } from '../actions';
-import { messageSelector, serviceSelector } from '../reducers/uploadProto';
+import {
+  setMessageActionCreator,
+  setServiceActionCreator,
+  setUrlActionCreator
+} from '../actions';
+import {
+  messageSelector,
+  serviceSelector,
+  urlSelector
+} from '../reducers/uploadProto';
 import { RootState } from '../reducers';
 
 // sets type for props
 interface BodyProps {
   setMessageAction: typeof setMessageActionCreator;
-  setServiceAction: typeof setServiceActionCreator;
   selectMessage: string;
+  setServiceAction: typeof setServiceActionCreator;
   selectService: string;
+  setUrlAction: typeof setUrlActionCreator;
+  selectUrl: string;
   serviceOptions: object;
 }
 
@@ -21,9 +31,11 @@ export const Body: FunctionComponent<BodyProps> = props => {
     const {
       setMessageAction,
       selectMessage,
-      serviceOptions,
+      setServiceAction,
       selectService,
-      setServiceAction
+      setUrlAction,
+      selectUrl,
+      serviceOptions
     } = props;
 
     return (
@@ -33,9 +45,11 @@ export const Body: FunctionComponent<BodyProps> = props => {
           <TestProto
             setMessageAction={setMessageAction}
             data={selectMessage}
-            serviceOptions={serviceOptions}
             setServiceAction={setServiceAction}
             service={selectService}
+            setUrlAction={setUrlAction}
+            url={selectUrl}
+            serviceOptions={serviceOptions}
           >
             Test Proto
           </TestProto>
@@ -56,10 +70,12 @@ export default connect(
 
   (state: RootState) => ({
     selectMessage: messageSelector(state),
-    selectService: serviceSelector(state)
+    selectService: serviceSelector(state),
+    selectUrl: urlSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
-    setServiceAction: setServiceActionCreator
+    setServiceAction: setServiceActionCreator,
+    setUrlAction: setUrlActionCreator
   }
 )(Body);
