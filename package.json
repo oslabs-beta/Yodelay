@@ -59,6 +59,7 @@
     "nodemon": "^2.0.2",
     "popper": "^1.0.1",
     "react": "^16.8.6",
+    "react-ace": "^8.0.0",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.12.18",
     "react-pivot": "^4.1.0",

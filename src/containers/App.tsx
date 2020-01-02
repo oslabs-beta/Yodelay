@@ -43,7 +43,7 @@ export const App: FunctionComponent<AppProps> = props => {
             
             <div id = "app-container">
               <HeaderContainer></HeaderContainer>
-              <BodyContainer serviceOptions = {{serviceOptions}}></BodyContainer>
+              <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
               <FooterContainer></FooterContainer>
             </div>
             {/* <Button text='enter' onClick={ () => {incrementAction(1)}} >
