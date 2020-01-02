@@ -19,12 +19,26 @@ html, body, #root, #main-view{
     background-color: $grey-navbar;
     display: flex;
     flex-direction: column;
-    width: 80px;
+    width: 50px;
+    height: 100%;
+    padding: 15px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 
 #app-container{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%
+    height: 100%;
+    margin-left: 15px
+}
+
+#testProto{
+    color: $yellow
+}
+
+#footer{
+    font-size: 12px;
 }

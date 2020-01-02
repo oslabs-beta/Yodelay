@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { setRequestActionCreator } from '../actions';
 interface DropdownRequestProps {
-  id: string;
+  className: string;
   menuOptions: any;
   service: string;
   setRequest: typeof setRequestActionCreator;
@@ -11,7 +11,7 @@ export const DropdownRequest: FunctionComponent<
   DropdownRequestProps
 > = props => {
   {
-    const { id, menuOptions, service, setRequest, value } = props;
+    const { className, menuOptions, service, setRequest, value } = props;
 
     //create array of requests
     let servicesArr: string[] = [];

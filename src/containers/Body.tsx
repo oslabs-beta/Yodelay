@@ -52,8 +52,8 @@ export const Body: FunctionComponent<BodyProps> = props => {
     } = props;
 
     return (
-      <div style={{ border: 'solid 1px green', flexGrow: 2 }}>
-        Body
+      <div>
+        
         <Route exact path="/">
           <TestProto
             setMessageAction={setMessageAction}
@@ -68,7 +68,6 @@ export const Body: FunctionComponent<BodyProps> = props => {
             response={selectResponse}
             sendUnaryRequestAction={sendUnaryRequestAction}
           >
-            Test Proto
           </TestProto>
         </Route>
         <Route path="/settings">
