@@ -60,7 +60,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
 
     return (
       <div id = "testProto">
-        TestProto
+        Test Your Proto File:
         <div className="menu-options">
           <input
             className="url-input"

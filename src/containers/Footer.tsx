@@ -12,8 +12,9 @@ interface FooterProps {
     //     incrementAction
     //   } = props
       return (
-        <div >
-        Built with 💛 by the Yodelays
+        <div id = "footer">
+        Built with 💛 by the Yodelays (v1.0 beta)
+
         </div>
       )
     }

@@ -68,7 +68,6 @@ export const Body: FunctionComponent<BodyProps> = props => {
             response={selectResponse}
             sendUnaryRequestAction={sendUnaryRequestAction}
           >
-            Test Proto
           </TestProto>
         </Route>
         <Route path="/settings">
