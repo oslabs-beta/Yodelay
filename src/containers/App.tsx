@@ -36,20 +36,19 @@ export const App: FunctionComponent<AppProps> = props => {
     return (
       //Wrap everything in Router so that nested containers/components have access to router
       <Router>
-        <div>
-          <div id = "main-view" style = {{display: "flex", flexDirection: "row", height: "100%", alignItems: "stretch"}}>
-            <div style = {{border: "solid 1px black"}}>
+        <div id = "main-view">
+            <div id = "navbar">
               <NavbarContainer></NavbarContainer>
             </div>
             
-            <div style = {{border: "solid 1px red", display: "flex", flexDirection: "column", width: "100%"}}>
+            <div id = "app-container">
               <HeaderContainer></HeaderContainer>
               <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
               <FooterContainer></FooterContainer>
             </div>
-            <Button text='enter' onClick={ () => {incrementAction(1)}} >
-            </Button>
-          </div>
+            {/* <Button text='enter' onClick={ () => {incrementAction(1)}} >
+            </Button> */}
+       
         </div>
       </Router>
     )

@@ -1,0 +1,30 @@
+@import "colours";
+
+
+
+html, body, #root, #main-view{
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $black-background;
+    color: $grey-font;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    flex-direction: row;
+}
+
+#navbar {
+    background-color: $grey-navbar;
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+}
+
+#app-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%
+}

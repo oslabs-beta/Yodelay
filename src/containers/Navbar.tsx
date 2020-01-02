@@ -58,13 +58,13 @@ import { RootState } from '../reducers';
         <div>
         Navbar
           <Link to ="/">
-            <Button text='Home' onClick={ () => {testHomeClick()}} >
+            <Button text='Home' onClick={ () => {testHomeClick()}}>
             </Button>
           </Link>
 
           {/* Upload Proto Button */}
           <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={onFileSubmit}/>
-          <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
+          <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} icon = "http://simpleicon.com/wp-content/uploads/cloud-upload-2.png"></Button>
           
           <Link to = "/settings">
             <Button text='Settings' onClick={ () => {testSettingsClick()}} >
