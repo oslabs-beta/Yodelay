@@ -1,33 +1,62 @@
 syntax = "proto3";
 
-// option java_multiple_files = true;
-// option java_package = "io.grpc.examples.helloworld";
-// option java_outer_classname = "HelloWorldProto";
-// option objc_class_prefix = "HLW";
+package demo;
 
-package helloaworld;
+// This service implements a simple guestbook
+service itIsDemoTimeYodelay {
+    // first hello world test
+    rpc YodelayWorld (Yodelay) returns (IiiOoo) {
+    }
 
-// The greeting service definition.
-service YodelayAPI {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  // rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
-  // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
+    // second calls a function that reponsed
+    rpc toLowerCase (UpperCaseRequest) returns (LowerCaseResponse) {
+    }
+
+    // // List existing posts
+    // rpc ListPosts (ListPostsRequest) returns (ListPostsResponse) {
+    // }
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string url = 1;
-  string packageName = 2;
-  string serviceInput = 3;
-  string requestInput = 4;
-  string messageInput = 5;
-  string protoFile = 6;
-  string protoDescriptor = 7;
+// first test for the hello world demo:
+message Yodelay {
+    string whenI = 1;
 }
 
-// The response message containing the greetings
-message HelloReply {
+message IiiOoo {
+    string message = 1;
+}
+
+// second test for unique array:
+message UpperCaseRequest {
+  string uppercase = 1;
+}
+
+message LowerCaseResponse {
   string message = 1;
 }
 
+
+// message UpdatePostRequest {
+//     string id = 1;
+//     string title = 2;
+//     string body = 3;
+// }
+
+// message UpdatePostResponse {
+// }
+
+
+// message ListPostsRequest {
+//     int32 page = 1;
+//     int32 page_size = 2;
+// }
+
+// message ListPostsResponse {
+//     repeated Post posts = 1;
+// }
+
+// message Post {
+//     string id = 1;
+//     string title = 2;
+//     string body = 3;
+// }
