@@ -25,6 +25,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
               mode="json"
               name="requestInput"
               value={response.message}
+              width = {"100%"}
               theme="monokai"
               style={{ background: 'white' }}
               fontSize={14}
