@@ -4,6 +4,8 @@ import AceEditor from 'react-ace';
 import { Tabs } from 'antd';
 import { typeResponse } from '../reducers/uploadProto';
 import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/theme-merbivore'
+import 'ace-builds/src-noconflict/theme-pastel_on_dark'
 import 'ace-builds/src-noconflict/mode-json'
 
 interface ResponseProps {
@@ -30,7 +32,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
               width = {"100%"}
               height={"250px"}
               theme="monokai"
-              fontSize={14}
+              fontSize={12}
               cursorStart={2}
               showGutter
               wrapEnabled

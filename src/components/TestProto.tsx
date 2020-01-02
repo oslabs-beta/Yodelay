@@ -63,27 +63,27 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
         TestProto
         <div className="menu-options">
           <input
-            id="urlInput"
+            className="url-input"
             placeholder="enter server ip address"
             onChange={handleUrlChange}
           ></input>
 
           <DropdownService
-            id="service-dropdown-menu"
+            className="service-dropdown-menu"
             menuOptions={serviceOptions}
             setService={setServiceAction}
             value={service}
           ></DropdownService>
 
           <DropdownRequest
-            id="request-dropdown-menu"
+            className="request-dropdown-menu"
             menuOptions={serviceOptions}
             service={service}
             setRequest={setRequestAction}
             value={request}
           ></DropdownRequest>
 
-          <Button text="Send Request" onClick={handleRequestClick} />
+          <Button className = "button" text="Send Request" onClick={handleRequestClick} />
         </div>
         <div>
           <Editor

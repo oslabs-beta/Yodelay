@@ -11,9 +11,9 @@ interface HeaderProps {
     {
 
       //test buttons - remove later
-      const testClick = () =>{
-        alert("clicked")
-      }
+      // const testClick = () =>{
+      //   alert("clicked")
+      // }
 
       return (
         <div id = "header-container">
@@ -21,7 +21,7 @@ interface HeaderProps {
         
         {/* On click, sends user back to home page */}
         <Link to ="/">
-            <Button className = "header-button button" text='Yodelay' onClick={ () => {testClick()}} >
+            <Button className = "header-button button" text='Yodelay 📢'  >
             </Button>
           </Link>
         </div>

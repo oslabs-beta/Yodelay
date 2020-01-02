@@ -1,5 +1,10 @@
 @import "colours";
 
+.button:hover{
+    color: $yellow;
+}
+
+
 .button{
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -16,15 +21,29 @@
 .home-button{
     height: 37px;
     width: 37px;  
-    background-image:url("http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png");
+    background-image:url("dog_logo.png");
     background-repeat:no-repeat;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .upload-proto-button{
     height: 37px;
     width: 37px;  
-    background-image:url("http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png");
+    background-image:url("upload.png");
     background-repeat:no-repeat;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 // http://simpleicon.com/wp-content/uploads/cloud-upload-2.png
@@ -32,18 +51,20 @@
 .settings-button{
     height: 37px;
     width: 37px;  
-    background-image:url("http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png");
+    background-image:url("settings.png");
     background-repeat:no-repeat;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+
 }
 
 
-.button:hover{
-    color: $yellow;
-}
 
-.button:visited{
-    color: $grey-font;
-}
 
 .header-button{
     color: $grey-font;

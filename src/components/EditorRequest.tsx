@@ -4,6 +4,9 @@ import AceEditor from 'react-ace'
 import { Tabs } from 'antd';
 
 import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/theme-cobalt'
+import 'ace-builds/src-noconflict/theme-pastel_on_dark'
+
 import 'ace-builds/src-noconflict/mode-json'
 
 
@@ -41,7 +44,7 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
               width={"100%"}
               wrapEnabled
               showGutter
-              fontSize={14}
+              fontSize={12}
               cursorStart={2}
               showPrintMargin={false}
               highlightActiveLine={false}
