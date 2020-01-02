@@ -7,7 +7,9 @@ import {
   uploadProtoFailedActionCreator,
   loadServiceActionCreator,
   SEND_UNARY_REQUEST,
-  sendUnaryRequest
+  sendUnaryRequest,
+  setMessageActionCreator,
+  displayUnaryResponseActionCreator
 } from '../actions/index';
 import { json } from 'body-parser';
 import { stateSelector } from '../reducers/uploadProto';
@@ -28,10 +30,6 @@ function* sendProto({ payload }: uploadProto) {
     });
 
     const response = yield data.json();
-    console.log(
-      'here is the protoObject returned when a protoFile is uploaded:',
-      response
-    );
 
     //No need to connect() to store; yield put apparently does it for us; that's how we could access the uploadProtoSuccessful action creator -- CHECK
     yield put(uploadProtoSuccesfulActionCreator(response));
@@ -78,6 +76,8 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
     });
 
     const response = yield data.json();
+
+    yield put(displayUnaryResponseActionCreator(response));
     console.log(
       'here is the respone message returned when a unary request is completed:',
       response
@@ -94,12 +94,3 @@ function* saga() {
 }
 
 export default saga;
-
-// todo: .then response here! send back with service and message fields filled out:
-// todo  {
-// todo     "port": "0.0.0.0:50051",
-// todo     "packageName": "WorLd",
-// todo     "service": "YodelayAPI",
-// todo     "message": "SayHello",
-// todo     "protoObject": "syntax = 'proto3'; package helloaworld; service YodelayAPI { rpc SayHello (HelloRequest) returns (HelloReply) {} }message HelloRequest { string port = 1; string packageName = 2; string service = 3; string message = 4; string protoObject = 5; } message HelloReply { string message = 1; }"
-// todo }

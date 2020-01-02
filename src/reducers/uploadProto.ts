@@ -7,14 +7,15 @@ import {
   SET_SERVICE,
   SET_URL,
   SET_REQUEST,
-  SEND_UNARY_REQUEST
+  SEND_UNARY_REQUEST,
+  DISPLAY_UNARY_RESPONSE
 } from '../actions';
 import { setIn } from 'timm';
 import { RootState } from '.';
 
 export interface typeResponse {
   message: string;
-  responseTime?: number;
+  responseTime?: number[];
 }
 export interface initialProtoStateType {
   messageInput: string;
@@ -70,6 +71,9 @@ export const uploadProto: (
     }
     case SEND_UNARY_REQUEST: {
       return { ...state };
+    }
+    case DISPLAY_UNARY_RESPONSE: {
+      return setIn(state, ['response'], action.payload);
     }
   }
 

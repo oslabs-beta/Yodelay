@@ -8,6 +8,7 @@ export const SET_MESSAGE = 'SET_MESSAGE';
 export const SET_SERVICE = 'SET_SERVICE';
 export const SET_URL = 'SET_URL';
 export const SET_REQUEST = 'SET_REQUEST';
+export const DISPLAY_UNARY_RESPONSE = 'DISPLAY_UNARY_RESPONSE';
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -29,6 +30,11 @@ export interface uploadProtoSuccesful {
 export interface sendUnaryRequest {
   type: typeof SEND_UNARY_REQUEST;
   payload: any;
+}
+
+export interface displayUnaryResponse {
+  type: typeof DISPLAY_UNARY_RESPONSE;
+  payload: object;
 }
 
 export interface setMessage {
@@ -66,7 +72,8 @@ export type uploadProtoAction =
   | setService
   | setUrl
   | setRequest
-  | sendUnaryRequest;
+  | sendUnaryRequest
+  | displayUnaryResponse;
 
 export const uploadProtoActionCreator = (
   payloadObj: string | ArrayBuffer
@@ -109,6 +116,15 @@ export const sendUnaryRequestActionCreator = (
 ): sendUnaryRequest => {
   return {
     type: SEND_UNARY_REQUEST,
+    payload: payloadObj
+  };
+};
+
+export const displayUnaryResponseActionCreator = (
+  payloadObj: any
+): displayUnaryResponse => {
+  return {
+    type: DISPLAY_UNARY_RESPONSE,
     payload: payloadObj
   };
 };
