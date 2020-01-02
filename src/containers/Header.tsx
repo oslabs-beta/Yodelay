@@ -21,7 +21,7 @@ interface HeaderProps {
         
         {/* On click, sends user back to home page */}
         <Link to ="/">
-            <Button className = "header-button button" text='Yodelay 📢'  >
+            <Button className = "header-button button" text='Yodelay.io'  >
             </Button>
           </Link>
         </div>
