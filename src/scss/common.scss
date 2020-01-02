@@ -1,1 +1,44 @@
 @import "colours";
+
+.button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    color: $disabled;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.button:hover{
+    color: $yellow;
+}
+
+.button:visited{
+    color: $grey-font;
+}
+
+.home-button{
+
+
+}
+.header-button{
+    color: $grey-font;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header-button:hover{
+    color: $yellow;
+}
+
+.testButton{
+    height: 37px;
+    width: 37px;  
+    background-image:url("../assets/Komondor-removebg-preview.png");
+    background-repeat:no-repeat;
+}

@@ -28,12 +28,12 @@ export interface initialProtoStateType {
 }
 
 const initialState: initialProtoStateType = {
-  messageInput: 'hello',
+  messageInput: 'Input message here...',
   serviceInput: '',
   urlInput: '',
   requestInput: '',
   response: {
-    message: 'bye',
+    message: 'View response here!',
     responseTime: undefined
   },
   parsedProtosObj: {},

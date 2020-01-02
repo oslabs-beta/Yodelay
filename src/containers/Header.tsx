@@ -21,7 +21,7 @@ interface HeaderProps {
         
         {/* On click, sends user back to home page */}
         <Link to ="/">
-            <Button text='Yodelay' onClick={ () => {testClick()}} >
+            <Button className = "header-button button" text='Yodelay' onClick={ () => {testClick()}} >
             </Button>
           </Link>
         </div>

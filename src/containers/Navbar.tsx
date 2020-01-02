@@ -45,29 +45,31 @@ import { RootState } from '../reducers';
       }
 
       //test buttons - remove later
-      const testHomeClick = () =>{
-        alert("Clicked home")
-      }
+      // const testHomeClick = () =>{
+      //   alert("Clicked home")
+      // }
 
-      const testSettingsClick = () =>{
-        alert("Clicked settings")
-      }
+      // const testSettingsClick = () =>{
+      //   alert("Clicked settings")
+      // }
 
 
       return (
         <div>
-        Navbar
+          
+          <button className="testButton"></button>
+          
           <Link to ="/">
-            <Button text='Home' onClick={ () => {testHomeClick()}}>
+            <Button className = "button" text='Home' >
             </Button>
           </Link>
 
           {/* Upload Proto Button */}
           <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={onFileSubmit}/>
-          <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} icon = "http://simpleicon.com/wp-content/uploads/cloud-upload-2.png"></Button>
+          <Button className="button" text='enter' onClick={showOpenFileDlg} icon = "http://simpleicon.com/wp-content/uploads/cloud-upload-2.png"></Button>
           
           <Link to = "/settings">
-            <Button text='Settings' onClick={ () => {testSettingsClick()}} >
+            <Button  className = "button" text='Settings' >
             </Button>
           </Link>
         </div>
