@@ -3,6 +3,8 @@ import React, { FunctionComponent } from 'react';
 import AceEditor from 'react-ace';
 import { Tabs } from 'antd';
 import { typeResponse } from '../reducers/uploadProto';
+import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/mode-json'
 
 interface ResponseProps {
   response: typeResponse;
@@ -26,17 +28,20 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
               name="requestInput"
               value={response.message}
               width = {"100%"}
+              height={"250px"}
               theme="monokai"
-              style={{ background: 'white' }}
               fontSize={14}
               cursorStart={2}
+              showGutter
+              wrapEnabled
               showPrintMargin={false}
-              highlightActiveLine={true}
+              highlightActiveLine={false}
               tabSize={2}
               readOnly={true}
               setOptions={{
                 useWorker: true,
-                displayIndentGuides: true
+                displayIndentGuides: false,
+                highlightGutterLine: false,
               }}
             />
           </Tabs.TabPane>
