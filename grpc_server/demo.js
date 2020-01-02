@@ -38,7 +38,36 @@ function toLowerCase(call, callback) {
     message: `When you input this uppercase string: ${value} the gRPC server runs the function and responds with this output: ${lower} <--`
   });
 };
-  // return output;
+  
+
+
+// run innerRps function n times
+function gRPCPermutations (call , callback) {
+  
+  let n = call.request.n;
+  
+  let arr = [''];
+  while (n > 0) {
+    arr = innerGRPC(arr);
+    n -= 1;
+  }
+  console.log(arr)
+  const str = JSON.stringify(arr);
+  console.log(str)
+  callback(null, {
+    message: str
+  });
+
+  function innerGRPC (arr) {
+  const g = arr.map(letter => `g${letter}`);
+  const r = arr.map(letter => `R${letter}`);
+  const p = arr.map(letter => `P${letter}`);
+  const c = arr.map(letter => `C${letter}`);
+  return [...g, ...r, ...p, ...c];
+};
+
+};
+
   
 
 function main() {
@@ -46,7 +75,8 @@ function main() {
   server.addService(demo_proto.itIsDemoTimeYodelay.service, 
     { 
       YodelayWorld, 
-      toLowerCase
+      toLowerCase,
+      gRPCPermutations
     });
   server.bind('0.0.0.0:8080', grpc.ServerCredentials.createInsecure());
   server.start();
