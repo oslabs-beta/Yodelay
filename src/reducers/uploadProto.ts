@@ -15,7 +15,7 @@ import { RootState } from '.';
 
 export interface typeResponse {
   message: string;
-  responseTime?: number;
+  responseTime?: number[];
 }
 export interface initialProtoStateType {
   messageInput: string;
