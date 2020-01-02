@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server_client/server_client.js",
-    "grpc": "nodemon grpc_server/grpc_server.js",
+    "grpc": "nodemon grpc_server/demo.js",
     "src-dev": "webpack-dev-server --config webpack.dev.ts",
     "src-local": "webpack-dev-server --config webpack.dev.ts --env.API_PORT=8000 --env.API_HOST=localhost --env.API_PROTOCOL=http",
     "src-build": "webpack --config webpack.prod.ts",
