@@ -14,13 +14,22 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
   {
     const defaultKey = `responseTab`;
     const { response } = props;
+    let responseTime = '';
+
+    if (response.responseTime !== undefined) {
+      let seconds = response.responseTime[0].toString();
+      let nanoSeconds = response.responseTime[1].toString();
+      responseTime = seconds + '.' + nanoSeconds[0] + nanoSeconds[1] + nanoSeconds[2] + 's';
+    }
 
     return (
       <>
+      {/* <p>{`This is how long it took for a response ${response.responseTime}s`} </p> */}
         <Tabs
           defaultActiveKey={defaultKey}
           tabPosition={'top'}
           style={{ width: '100%', height: 'height: calc(100vh - 181px)' }}
+          tabBarExtraContent={`${responseTime}`}
         >
           <Tabs.TabPane tab={'Response'} key={'unaryResponse'}>
             <AceEditor
