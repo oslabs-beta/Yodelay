@@ -12,12 +12,12 @@ service itIsDemoTimeYodelay {
     rpc toLowerCase (UpperCaseRequest) returns (LowerCaseResponse) {
     }
 
-    // // List existing posts
-    // rpc ListPosts (ListPostsRequest) returns (ListPostsResponse) {
-    // }
+    // List existing posts
+    rpc gRPCPermutations (PermutationRequest) returns (PermutationResponse) {
+    }
 }
 
-// first test for the hello world demo:
+// ! first test for the hello world demo:
 message Yodelay {
     string whenI = 1;
 }
@@ -26,7 +26,8 @@ message IiiOoo {
     string message = 1;
 }
 
-// second test for unique array:
+
+// ! second test for unique array:
 message UpperCaseRequest {
   string uppercase = 1;
 }
@@ -36,27 +37,12 @@ message LowerCaseResponse {
 }
 
 
-// message UpdatePostRequest {
-//     string id = 1;
-//     string title = 2;
-//     string body = 3;
-// }
+// third test:
+message PermutationRequest {
+    int32 n = 1;
+    
+}
 
-// message UpdatePostResponse {
-// }
-
-
-// message ListPostsRequest {
-//     int32 page = 1;
-//     int32 page_size = 2;
-// }
-
-// message ListPostsResponse {
-//     repeated Post posts = 1;
-// }
-
-// message Post {
-//     string id = 1;
-//     string title = 2;
-//     string body = 3;
-// }
+message PermutationResponse {
+    string message = 1;
+}
