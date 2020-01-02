@@ -4,7 +4,7 @@ import { urlencoded } from 'body-parser'
 interface ButtonProps {
   className?: string
   onClick?: (...arg: any[]) => any
-  text: string
+  text?: string
   value?: number
   icon?: string
 }
@@ -23,7 +23,9 @@ FunctionComponent<ButtonProps> = props => {
     console.log(icon)
   
   return (
-  <button className={className} onClick={onClick} value={value} style = {{backgroundImage: `url(${icon})`}}>{text}</button>
+  <button className={className} onClick={onClick} value={value}>{text}</button>
     ) 
   }
 }
+
+// style = { {backgroundImage: `url(${icon})`}}

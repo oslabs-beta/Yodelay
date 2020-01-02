@@ -16,7 +16,7 @@ interface HeaderProps {
       }
 
       return (
-        <div style = {{border: "solid 1px purple"}}>
+        <div id = "header-container">
         
         
         {/* On click, sends user back to home page */}

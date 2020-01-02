@@ -55,21 +55,19 @@ import { RootState } from '../reducers';
 
 
       return (
-        <div>
-          
-          <button className="testButton"></button>
-          
+        <div>          
           <Link to ="/">
-            <Button className = "button" text='Home' >
+            <Button className = "home-button" >
             </Button>
           </Link>
 
           {/* Upload Proto Button */}
           <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={onFileSubmit}/>
-          <Button className="button" text='enter' onClick={showOpenFileDlg} icon = "http://simpleicon.com/wp-content/uploads/cloud-upload-2.png"></Button>
+
+          <Button className="upload-proto-button" onClick={showOpenFileDlg} ></Button>
           
           <Link to = "/settings">
-            <Button  className = "button" text='Settings' >
+            <Button  className = "settings-button" >
             </Button>
           </Link>
         </div>

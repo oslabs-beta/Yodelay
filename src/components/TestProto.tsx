@@ -59,9 +59,9 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     };
 
     return (
-      <div style={{ border: 'solid 1px green', flexGrow: 2 }}>
+      <div id = "testProto">
         TestProto
-        <div id="menu-options">
+        <div className="menu-options">
           <input
             id="urlInput"
             placeholder="enter server ip address"

@@ -13,6 +13,30 @@
     cursor: pointer;
 }
 
+.home-button{
+    height: 37px;
+    width: 37px;  
+    background-image:url("http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png");
+    background-repeat:no-repeat;
+}
+
+.upload-proto-button{
+    height: 37px;
+    width: 37px;  
+    background-image:url("http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png");
+    background-repeat:no-repeat;
+}
+
+// http://simpleicon.com/wp-content/uploads/cloud-upload-2.png
+
+.settings-button{
+    height: 37px;
+    width: 37px;  
+    background-image:url("http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png");
+    background-repeat:no-repeat;
+}
+
+
 .button:hover{
     color: $yellow;
 }
@@ -21,10 +45,6 @@
     color: $grey-font;
 }
 
-.home-button{
-
-
-}
 .header-button{
     color: $grey-font;
     font-weight: 700;
@@ -34,11 +54,4 @@
 
 .header-button:hover{
     color: $yellow;
-}
-
-.testButton{
-    height: 37px;
-    width: 37px;  
-    background-image:url("../assets/Komondor-removebg-preview.png");
-    background-repeat:no-repeat;
 }
