@@ -11,17 +11,17 @@ interface HeaderProps {
     {
 
       //test buttons - remove later
-      const testClick = () =>{
-        alert("clicked")
-      }
+      // const testClick = () =>{
+      //   alert("clicked")
+      // }
 
       return (
-        <div style = {{border: "solid 1px purple"}}>
-        Header
+        <div id = "header-container">
+        
         
         {/* On click, sends user back to home page */}
         <Link to ="/">
-            <Button text='Home Logo' onClick={ () => {testClick()}} >
+            <Button className = "header-button button" text='Yodelay.io'  >
             </Button>
           </Link>
         </div>

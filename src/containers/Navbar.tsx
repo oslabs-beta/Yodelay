@@ -45,29 +45,29 @@ import { RootState } from '../reducers';
       }
 
       //test buttons - remove later
-      const testHomeClick = () =>{
-        alert("Clicked home")
-      }
+      // const testHomeClick = () =>{
+      //   alert("Clicked home")
+      // }
 
-      const testSettingsClick = () =>{
-        alert("Clicked settings")
-      }
+      // const testSettingsClick = () =>{
+      //   alert("Clicked settings")
+      // }
 
 
       return (
-        <div>
-        Navbar
+        <div>          
           <Link to ="/">
-            <Button text='Home' onClick={ () => {testHomeClick()}} >
+            <Button className = "home-button" >
             </Button>
           </Link>
 
           {/* Upload Proto Button */}
           <input ref={inputOpenFileRef} type="file" style={{display:"none"}} onChange={onFileSubmit}/>
-          <Button id='uploadProto' text='enter' onClick={showOpenFileDlg} ></Button>
+
+          <Button className="upload-proto-button" onClick={showOpenFileDlg} ></Button>
           
           <Link to = "/settings">
-            <Button text='Settings' onClick={ () => {testSettingsClick()}} >
+            <Button  className = "settings-button" >
             </Button>
           </Link>
         </div>

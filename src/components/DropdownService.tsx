@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { setServiceActionCreator } from '../actions';
 interface DropdownServiceProps {
-  id?: string;
+  className?: string;
   menuOptions?: object;
   setService: typeof setServiceActionCreator;
   value: string;
@@ -10,7 +10,7 @@ export const DropdownService: FunctionComponent<
   DropdownServiceProps
 > = props => {
   {
-    const { id, menuOptions, setService, value } = props;
+    const { className, menuOptions, setService, value } = props;
 
     //create array of services
     const servicesArr = Object.keys(menuOptions);

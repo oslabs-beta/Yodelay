@@ -3,6 +3,13 @@ import React, {FunctionComponent} from 'react'
 import AceEditor from 'react-ace'
 import { Tabs } from 'antd';
 
+import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/theme-cobalt'
+import 'ace-builds/src-noconflict/theme-pastel_on_dark'
+
+import 'ace-builds/src-noconflict/mode-json'
+
+
 
 
 interface RequestProps {
@@ -33,12 +40,14 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
               value={data}
               onChange={newRequest}
               theme='monokai'
-              style={{ background: "white" }}
+              height={"250px"}
               width={"100%"}
-              fontSize={14}
+              wrapEnabled
+              showGutter
+              fontSize={12}
               cursorStart={2}
               showPrintMargin={false}
-              highlightActiveLine={true}
+              highlightActiveLine={false}
               tabSize={2}
               setOptions={{
                 useWorker: true,

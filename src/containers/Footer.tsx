@@ -12,8 +12,9 @@ interface FooterProps {
     //     incrementAction
     //   } = props
       return (
-        <div style = {{border: "solid 1px blue"}}>
-        Footer
+        <div id = "footer">
+        Built with 💛 by the Yodelays (v1.0 beta)
+
         </div>
       )
     }

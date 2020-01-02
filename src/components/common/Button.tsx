@@ -1,20 +1,31 @@
 import React, { FunctionComponent } from 'react'
+import { urlencoded } from 'body-parser'
 
 interface ButtonProps {
-  id?: string
+  className?: string
   onClick?: (...arg: any[]) => any
-  text: string
+  text?: string
   value?: number
   icon?: string
 }
 
 export const Button:
-FunctionComponent<ButtonProps> = ({
-  id, 
-  onClick,
-  text,
-  value, 
-  icon
-}) => (
-  <button id={id} onClick={onClick} value={value} style = {{background: `url${icon}`}}>{text}</button>
-)
+FunctionComponent<ButtonProps> = props => {
+  {
+    const {
+      className, 
+      onClick,
+      text,
+      value, 
+      icon
+    } = props
+
+    console.log(icon)
+  
+  return (
+  <button className={className} onClick={onClick} value={value}>{text}</button>
+    ) 
+  }
+}
+
+// style = { {backgroundImage: `url(${icon})`}}

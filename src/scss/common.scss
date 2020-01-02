@@ -1,1 +1,78 @@
 @import "colours";
+
+.button:hover{
+    color: $yellow;
+}
+
+
+.button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    color: $disabled;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.home-button{
+    height: 37px;
+    width: 37px;  
+    background-image:url("dog_logo.png");
+    background-repeat:no-repeat;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.upload-proto-button{
+    height: 37px;
+    width: 37px;  
+    background-image:url("upload.png");
+    background-repeat:no-repeat;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+// http://simpleicon.com/wp-content/uploads/cloud-upload-2.png
+
+.settings-button{
+    height: 37px;
+    width: 37px;  
+    background-image:url("settings.png");
+    background-repeat:no-repeat;
+    background-color: Transparent;
+    border: none;
+    overflow: hidden;
+    outline:none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+
+}
+
+
+
+
+.header-button{
+    color: $grey-font;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header-button:hover{
+    color: $yellow;
+}
