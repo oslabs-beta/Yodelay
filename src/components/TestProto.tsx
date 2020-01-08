@@ -81,6 +81,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             service={service}
             setRequest={setRequestAction}
             value={request}
+            setMessageAction={setMessageAction}
           ></DropdownRequest>
 
           <Button className = "button" text="Send Request" onClick={handleRequestClick} />
