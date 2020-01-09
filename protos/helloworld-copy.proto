@@ -44,10 +44,10 @@ message HelloReply {
 // The AGAIN request message containing the user's name.
 message HelloRequestAGAIN {
   string portAGAIN = 1;
-  string packageNameAGAIN = 2;
-  string serviceAGAIN = 3;
-  string messageAGAIN = 4;
-  string protoObjectAGAIN = 5;
+  bytes bytes = 2;
+  int64 int64 = 3;
+  float float = 4;
+  bool bool = 5;
   int32 integerAGAIN = 6;
 
 }
@@ -63,11 +63,11 @@ message HelloReplyAGAIN {
 // The SECOND request message containing the user's name.
 message HelloRequestTWO {
   string portTWO = 1;
-  string packageNameTWO = 2;
-  string serviceTWO = 3;
-  string messageTWO = 4;
-  string protoObjectTWO = 5;
-  int32 integerTWO = 6;
+  double double = 2;
+  uint32 uint32 = 3;
+  uint64 uint64 = 4;
+  sint32 sint32 = 5;
+  sint64 sint64 = 6;
 
 }
 
@@ -80,10 +80,10 @@ message HelloReplyTWO {
 
 // The SECOND AGAIN request message containing the user's name.
 message HelloRequestTWOagain {
-  string portTWOagain = 1;
-  string packageNameTWOagain = 2;
-  string serviceTWOagain = 3;
-  string messageTWOagain = 4;
+  fixed32 fixed32 = 1;
+  fixed64 fixed64 = 2;
+  sfixed32 sfixed32 = 3;
+  sfixed64 sfixed64 = 4;
   string protoObjectTWOagain = 5;
   int32 integerTWOagain = 6;
 
