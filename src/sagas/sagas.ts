@@ -1,4 +1,5 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest, select, take } from 'redux-saga/effects';
+import { takeEvery, eventChannel } from 'redux-saga';
 // import moment from 'moment'
 import {
   UPLOAD_PROTO,
@@ -18,7 +19,7 @@ import { stateSelector } from '../reducers/uploadProto';
 
 function* sendProto({ payload }: uploadProto) {
   try {
-    console.log('payload:', payload, 'typeof payload', typeof payload);
+    // console.log('payload:', payload, 'typeof payload', typeof payload);
     const jsonProtoFile = JSON.stringify(payload);
     const data = yield fetch(`http://localhost:4000/upload`, {
       method: 'POST',
@@ -87,10 +88,45 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
   }
 }
 
+// Websockets/Streaming 
+
+function* createEventChannel(mySocket?: any) {
+  console.log('this is the typeof mySocket: ', typeof mySocket)
+  return eventChannel(emit => {
+    console.log('insde eventChannel')
+    mySocket.onmessage = (message: any) => {
+      console.log('message, ', message)
+      emit(message.data)
+    };
+    mySocket.onopen = function (event: any) {
+      console.log('typeof event ', typeof event)
+      mySocket.send('Websocket is now open!')
+    }
+    return () => {
+      mySocket.close();
+    };
+  });
+}
+
+function* initializeWebSocketsChannel() {
+  console.log('inside initialize')
+  const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+  const channel = yield call(createEventChannel, mySocket);
+  while (true) {
+    const { message } = yield take(channel);
+    console.log(message)
+    // yield put({type: WEBSOCKET_MESSAGE_RECEIVED, message});
+  }
+}
+
+
 function* saga() {
   console.log('saga');
   yield takeLatest(UPLOAD_PROTO, sendProto);
-  yield takeLatest(SEND_UNARY_REQUEST, unaryRequest);
+  // this needs refactoring as it is for streaming requests
+  yield takeLatest(SEND_UNARY_REQUEST, initializeWebSocketsChannel)
+  // yield takeLatest(SEND_UNARY_REQUEST, unaryRequest);
+
 }
 
 export default saga;
