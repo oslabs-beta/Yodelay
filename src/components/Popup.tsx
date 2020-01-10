@@ -26,7 +26,7 @@ export const Popup: FunctionComponent<PopupProps> = (props) => {
     return(
       <div className={popupClass}>
         <div className="modal-main">
-          {`${proto}`}
+          <pre>{proto}</pre>
           <Button onClick={handleToggle} text={'Close'}></Button>
         </div>
       </div>

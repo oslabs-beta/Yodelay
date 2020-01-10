@@ -54,7 +54,6 @@ export const uploadProto: (
   switch (action.type) {
     case UPLOAD_PROTO: {
       //setIn takes in param1) state object, param2) the key in state that is what we want to update, and param3) the value we want to change
-      // now that the proto type is set to string, we prob don't need the setIn function. 
       return setIn(state, ['proto'], action.payload);
     }
     case SET_MESSAGE: {
@@ -80,8 +79,8 @@ export const uploadProto: (
       return setIn(state, ['response'], action.payload);
     }
     case SHOW_POPUP: {
-      return setIn(state, ['showPopup'], action.payload);
-      // return { ...state, showPopup: action.payload};
+      // return setIn(state, ['showPopup'], action.payload);
+      return { ...state, showPopup: action.payload};
     }
   }
 
