@@ -48,6 +48,7 @@ function* sendProto({ payload }: uploadProto) {
   }
 }
 
+// payload is not necessary, extract all of state from state selector
 function* unaryRequest({ payload }: sendUnaryRequest) {
   try {
     const state = yield select(stateSelector);
@@ -92,15 +93,32 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
 
 function* createEventChannel(mySocket?: any) {
   console.log('this is the typeof mySocket: ', typeof mySocket)
+
+  const state = yield select(stateSelector);
+
+  const jsonRequestObj = JSON.stringify({
+    url: state.urlInput,
+    serviceInput: state.serviceInput,
+    messageInput: state.messageInput,
+    requestInput: state.requestInput,
+    package: state.parsedProtosObj.package,
+    protoFile: state.parsedProtosObj.protoFile,
+    // protoDescriptor: state.parsedProtosObj.protoDescriptor
+  });
+
+  console.log('jsonRequestObj', jsonRequestObj)
+
   return eventChannel(emit => {
-    console.log('insde eventChannel')
+
+    // listen for messages from server
     mySocket.onmessage = (message: any) => {
       console.log('message, ', message)
       emit(message.data)
     };
+    // when connection is first established
     mySocket.onopen = function (event: any) {
-      console.log('typeof event ', typeof event)
-      mySocket.send('Websocket is now open!')
+
+      mySocket.send(jsonRequestObj)
     }
     return () => {
       mySocket.close();
@@ -108,12 +126,13 @@ function* createEventChannel(mySocket?: any) {
   });
 }
 
-function* initializeWebSocketsChannel() {
-  console.log('inside initialize')
+function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
+
   const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
-  const channel = yield call(createEventChannel, mySocket);
+  const channel = yield call(createEventChannel, mySocket, payload);
   while (true) {
     const { message } = yield take(channel);
+    // dispatch actions with messages recieved from ws connection with server here
     console.log(message)
     // yield put({type: WEBSOCKET_MESSAGE_RECEIVED, message});
   }
