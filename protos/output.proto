@@ -1,39 +1,53 @@
 syntax = "proto3";
 
-package greet;
+package demo;
 
+// This service implements a simple guestbook
+service itIsDemoTimeYodelay {
+    // first hello world test
+    rpc YodelayWorld (Yodelay) returns (IiiOoo) {
+    }
 
-service GreetService {
+    // second calls a function that reponsed
+    rpc toLowerCase (UpperCaseRequest) returns (LowerCaseResponse) {
+    }
 
-    //unary API
-    rpc Greet (GreetRequest) returns (GreetResponse) {};
-    
+    // List existing posts
+    rpc gRPCPermutations (PermutationRequest) returns (PermutationResponse) {
+    }
+
     //Server streaming API
     rpc GreetManyTimes (GreetManyTimesRequest) returns ( stream GreetManyTimesResponse) {};
+}
 
-    // Client Streaming
-    rpc LongGreet (stream LongGreetRequest) returns (LongGreetResponse) {};
+// ! first test for the hello world demo:
+message Yodelay {
+    string whenI = 1;
+}
 
-    // BiDi Streaming
-    rpc GreetEveryone (stream GreetEveryoneRequest) returns ( stream GreetEveryoneResponse) {};
-
-
+message IiiOoo {
+    string message = 1;
 }
 
 
-message GreetEveryoneRequest {
-    Greeting greet = 1;
+// ! second test for unique array:
+message UpperCaseRequest {
+  string uppercase = 1;
 }
 
-message GreetEveryoneResponse { 
-    string result = 1;
-}
-message LongGreetRequest {
-    Greeting greet = 1;
+message LowerCaseResponse {
+  string message = 1;
 }
 
-message LongGreetResponse {
-    string result = 1;
+
+// third test:
+message PermutationRequest {
+    int32 n = 1;
+    
+}
+
+message PermutationResponse {
+    string message = 1;
 }
 
 message GreetManyTimesRequest {
@@ -44,16 +58,7 @@ message GreetManyTimesResponse {
      string result = 1;
 }
 
-
 message Greeting {
     string first_name = 1;
     string last_name = 2;
-}
-
-message GreetRequest {
-    Greeting greeting = 1;
-}
-
-message GreetResponse {
-    string result = 1;
 }
