@@ -72,11 +72,10 @@ function gRPCPermutations(call, callback) {
 
 // server streaming example
 function greetManyTimes(call, callback) {
-  // console.log(call)
+  console.log(call)
   let first_name = call.request.greeting.first_name
 
   // console.log(call.request)
-
   let count = 0,
     intervalID = setInterval(function () {
       // var greetManyTimesResponse = new demo_proto.GreetManyTimesResponse();
