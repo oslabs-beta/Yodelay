@@ -78,22 +78,30 @@ app.post('/service', async (req, res) => {
 });
 
 
-// websocket routes for streaming
-app.get('/websocket', function (req, res, next) {
-  console.log('get route', req.testing);
-  res.end();
-});
+// websocket routes for streaming 
 
+// starts client handshake
+// app.get('/websocket', function (req, res, next) {
+//   console.log('get route', req.testing);
+//   res.end();
+// });
+
+//Listens for messages
 app.ws('/websocket', function (ws, req) {
   ws.on('message', function (msg) {
-    console.log(msg);
+    console.log('app.ws msg: ', msg);
+    const parsedReqBody = JSON.parse(msg)
+    grpcRequest(parsedReqBody, ws)
+
+
+
   });
 
   // setInterval(() => {
   //   ws.send('I am your server, made of sockets')
   // }, 1000)
   // ws.send('I am your server, made of sockets')
-  console.log('socket', req.testing);
+  // console.log('socket', req.testing);
 });
 
 
