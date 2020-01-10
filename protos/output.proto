@@ -1,48 +1,100 @@
 syntax = "proto3";
 
-package demo;
+// option java_multiple_files = true;
+// option java_package = "io.grpc.examples.helloworld";
+// option java_outer_classname = "HelloWorldProto";
+// option objc_class_prefix = "HLW";
 
-// This service implements a simple guestbook
-service itIsDemoTimeYodelay {
-    // first hello world test
-    rpc YodelayWorld (Yodelay) returns (IiiOoo) {
-    }
+package helloaworld;
 
-    // second calls a function that reponsed
-    rpc toLowerCase (UpperCaseRequest) returns (LowerCaseResponse) {
-    }
-
-    // List existing posts
-    rpc gRPCPermutations (PermutationRequest) returns (PermutationResponse) {
-    }
+// The greeting service definition.
+service YodelayAPI {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloRequestAGAIN) returns (HelloReplyAGAIN) {}
+  // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
 }
 
-// ! first test for the hello world demo:
-message Yodelay {
-    string whenI = 1;
+// The SECOND greeting service definition.
+service servTWO {
+  // Sends a greeting
+  rpc SayHelloTWO (HelloRequestTWO) returns (HelloReplyTWO) {}
+  rpc SayHelloAgainTWO (HelloRequestTWOagain) returns (HelloReplyTWOagain) {}
+  // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
 }
 
-message IiiOoo {
-    string message = 1;
+// The request message containing the user's name.
+message HelloRequest {
+  string port = 1;
+  string packageName = 2;
+  string service = 3;
+  string message = 4;
+  string protoObject = 5;
+  int32 integer = 6;
+
 }
 
-
-// ! second test for unique array:
-message UpperCaseRequest {
-  string uppercase = 1;
-}
-
-message LowerCaseResponse {
+// The response message containing the greetings
+message HelloReply {
   string message = 1;
+  int32 integer = 2;
+  
+}
+
+// The AGAIN request message containing the user's name.
+message HelloRequestAGAIN {
+  string portAGAIN = 1;
+  bytes bytes = 2;
+  int64 int64 = 3;
+  float float = 4;
+  bool bool = 5;
+  int32 integerAGAIN = 6;
+
+}
+
+// The AGAIN response message containing the greetings
+message HelloReplyAGAIN {
+  string messageAGAIN = 1;
+  int32 integerAGAIN = 2;
+  
 }
 
 
-// third test:
-message PermutationRequest {
-    int32 n = 1;
-    
+// The SECOND request message containing the user's name.
+message HelloRequestTWO {
+  string portTWO = 1;
+  double double = 2;
+  uint32 uint32 = 3;
+  uint64 uint64 = 4;
+  sint32 sint32 = 5;
+  sint64 sint64 = 6;
+
 }
 
-message PermutationResponse {
-    string message = 1;
+// The SECOND response message containing the greetings
+message HelloReplyTWO {
+  string messageTWO = 1;
+  int32 integerTWO = 2;
+
 }
+
+// The SECOND AGAIN request message containing the user's name.
+message HelloRequestTWOagain {
+  fixed32 fixed32 = 1;
+  fixed64 fixed64 = 2;
+  sfixed32 sfixed32 = 3;
+  sfixed64 sfixed64 = 4;
+  string protoObjectTWOagain = 5;
+  int32 integerTWOagain = 6;
+
+}
+
+// The SECOND AGAIN response message containing the greetings
+message HelloReplyTWOagain {
+  string messageTWOagain = 1;
+  int32 integerTWOagain = 2;
+
+}
+
+
+

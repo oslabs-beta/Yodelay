@@ -31,16 +31,18 @@ import { RootState } from '../reducers';
       const showOpenFileDlg = () => {
         inputOpenFileRef.current.click()
       }
+      
       const onFileSubmit = () => {
         const protoFile = (inputOpenFileRef.current.files[0])
+        
 
         const reader = new FileReader()
 
-        reader.onloadend = (e) => { 
-        uploadProto(e.target.result)
+        reader.onloadend = (e) => {
+          uploadProto(e.target.result)
         }
 
-        const file = reader.readAsText(protoFile)
+        reader.readAsText(protoFile)
      
       }
 

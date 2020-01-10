@@ -6,13 +6,16 @@ import {
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
-  sendUnaryRequestActionCreator
+  sendUnaryRequestActionCreator,
+  showPopupActionCreator
 } from '../actions';
 import { Editor } from './Editor';
-import { typeResponse } from '../reducers/uploadProto';
+import { typeResponse, popupSelector } from '../reducers/uploadProto';
 import { DropdownService } from './DropdownService';
 import { DropdownRequest } from './DropdownRequest';
 import { Button } from './common/Button';
+import { Popup } from './Popup'
+
 
 // sets type for props
 interface TestProtoProps {
@@ -27,6 +30,10 @@ interface TestProtoProps {
   request: string;
   serviceOptions: object;
   sendUnaryRequestAction: any;
+  proto: object;
+  togglePopup: typeof showPopupActionCreator;
+  popupStatus: boolean;
+
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -47,7 +54,10 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       setRequestAction,
       request,
       url,
-      sendUnaryRequestAction
+      sendUnaryRequestAction,
+      proto,
+      togglePopup,
+      popupStatus
     } = props;
 
     const handleUrlChange = (e: any) => {
@@ -58,40 +68,59 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       sendUnaryRequestAction('grpc!');
     };
 
+    const handleViewClick = (e: any) => {
+      if (Object.entries(proto).length === 0 && proto.constructor === Object) {
+        alert("upload proto file")
+      } else {
+        togglePopup(!popupStatus);
+      }
+      console.log('FROM HANDLE VIEW CLICK', proto)
+      console.log('TYPEOF PROTO', typeof proto)
+      // alert(proto);
+    };
+
     return (
       <div id = "testProto">
         Test Your Proto File:
-        <div className="menu-options">
-          <input
-            className="url-input"
-            placeholder="enter server ip address"
-            onChange={handleUrlChange}
-          ></input>
+        <div id="menu-and-view-section">
+          <div className="menu-options">
+            <input
+              className="url-input"
+              placeholder="enter server ip address"
+              onChange={handleUrlChange}
+            ></input>
 
-          <DropdownService
-            className="service-dropdown-menu"
-            menuOptions={serviceOptions}
-            setService={setServiceAction}
-            value={service}
-          ></DropdownService>
+            <DropdownService
+              className="service-dropdown-menu"
+              menuOptions={serviceOptions}
+              setService={setServiceAction}
+              value={service}
+            ></DropdownService>
 
-          <DropdownRequest
-            className="request-dropdown-menu"
-            menuOptions={serviceOptions}
-            service={service}
-            setRequest={setRequestAction}
-            value={request}
-            setMessageAction={setMessageAction}
-          ></DropdownRequest>
+            <DropdownRequest
+              className="request-dropdown-menu"
+              menuOptions={serviceOptions}
+              service={service}
+              setRequest={setRequestAction}
+              value={request}
+              setMessageAction={setMessageAction}
+            ></DropdownRequest>
 
-          <Button className = "button" text="Send Request" onClick={handleRequestClick} />
+            <Button className = "button" text="Send Request" onClick={handleRequestClick} />
+          </div>
+          <div id="handleViewClick">
+            <Button className = "button" text="View Proto File" onClick={handleViewClick} />
+          </div>
         </div>
         <div>
-          <Editor
-            setMessageAction={setMessageAction}
-            data={data}
-            response={response}
-          />
+          {/* <Popup popup={popupStatus} toggle={togglePopup} proto={proto}></Popup> */}
+          <div>
+            <Editor
+              setMessageAction={setMessageAction}
+              data={data}
+              response={response}
+            />
+          </div>
         </div>
       </div>
     );

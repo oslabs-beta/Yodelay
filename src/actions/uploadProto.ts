@@ -9,6 +9,7 @@ export const SET_SERVICE = 'SET_SERVICE';
 export const SET_URL = 'SET_URL';
 export const SET_REQUEST = 'SET_REQUEST';
 export const DISPLAY_UNARY_RESPONSE = 'DISPLAY_UNARY_RESPONSE';
+export const SHOW_POPUP = 'SHOW_POPUP';
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -62,6 +63,11 @@ export interface uploadProtoFailed {
   payload: string;
 }
 
+export interface showPopup {
+  type: typeof SHOW_POPUP;
+  payload: boolean;
+}
+
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
 export type uploadProtoAction =
   | uploadProto
@@ -73,7 +79,8 @@ export type uploadProtoAction =
   | setUrl
   | setRequest
   | sendUnaryRequest
-  | displayUnaryResponse;
+  | displayUnaryResponse
+  | showPopup;
 
 export const uploadProtoActionCreator = (
   payloadObj: string | ArrayBuffer
@@ -153,6 +160,13 @@ export const setUrlActionCreator = (payloadObj: string): setUrl => {
 export const setRequestActionCreator = (payloadObj: string): setRequest => {
   return {
     type: SET_REQUEST,
+    payload: payloadObj
+  };
+};
+
+export const showPopupActionCreator = (payloadObj: boolean): showPopup => {
+  return {
+    type: SHOW_POPUP,
     payload: payloadObj
   };
 };

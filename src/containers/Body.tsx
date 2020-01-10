@@ -8,7 +8,8 @@ import {
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
-  sendUnaryRequestActionCreator
+  sendUnaryRequestActionCreator,
+  showPopupActionCreator
 } from '../actions';
 import {
   messageSelector,
@@ -16,7 +17,9 @@ import {
   urlSelector,
   requestSelector,
   responseSelector,
-  typeResponse
+  typeResponse,
+  protoSelector,
+  popupSelector
 } from '../reducers/uploadProto';
 import { RootState } from '../reducers';
 
@@ -33,6 +36,9 @@ interface BodyProps {
   serviceOptions: object;
   selectResponse: typeResponse;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
+  togglePopup?: typeof showPopupActionCreator;
+  popupStatus?: boolean;
+  proto?: typeof protoSelector;
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -48,7 +54,10 @@ export const Body: FunctionComponent<BodyProps> = props => {
       selectRequest,
       serviceOptions,
       selectResponse,
-      sendUnaryRequestAction
+      sendUnaryRequestAction,
+      togglePopup,
+      popupStatus,
+      proto
     } = props;
 
     return (
@@ -67,6 +76,9 @@ export const Body: FunctionComponent<BodyProps> = props => {
             serviceOptions={serviceOptions}
             response={selectResponse}
             sendUnaryRequestAction={sendUnaryRequestAction}
+            togglePopup={togglePopup}
+            popupStatus={popupStatus}
+            proto={proto}
           >
           </TestProto>
         </Route>
@@ -89,13 +101,16 @@ export default connect(
     selectService: serviceSelector(state),
     selectUrl: urlSelector(state),
     selectRequest: requestSelector(state),
-    selectResponse: responseSelector(state)
+    selectResponse: responseSelector(state),
+    proto: protoSelector(state),
+    popupStatus: popupSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
     setServiceAction: setServiceActionCreator,
     setUrlAction: setUrlActionCreator,
     setRequestAction: setRequestActionCreator,
-    sendUnaryRequestAction: sendUnaryRequestActionCreator
+    sendUnaryRequestAction: sendUnaryRequestActionCreator,
+    togglePopup: showPopupActionCreator,
   }
 )(Body);
