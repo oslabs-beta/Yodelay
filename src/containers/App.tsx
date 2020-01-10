@@ -7,7 +7,7 @@ import FooterContainer from './Footer'
 import NavbarContainer from './Navbar'
 import { Popup } from '../components/Popup'
 import { Button } from '../components/common/Button'
-import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccesfulActionCreator, loadServiceActionCreator, showPopupActionCreator  } from '../actions';
+import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccessfulActionCreator, loadServiceActionCreator, showPopupActionCreator  } from '../actions';
 import { countSelector } from '../reducers/test';
 import { protoSelector, protoObjSelector, popupSelector } from '../reducers/uploadProto'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
@@ -18,13 +18,13 @@ import { serviceMenuSelector } from '../reducers/updateMenu'
 
 // sets type for props
 interface AppProps {
-  incrementAction: typeof incrementActionCreator,
-  uploadProtoSuccessful: typeof uploadProtoSuccesfulActionCreator 
+  incrementAction: typeof incrementActionCreator
+  uploadProtoSuccessful: typeof uploadProtoSuccessfulActionCreator 
   protoObjContents: object
   serviceOptions: object
   togglePopup: typeof showPopupActionCreator
-  proto?: object
-  popupStatus?: boolean
+  proto: string | ArrayBuffer
+  popupStatus: boolean
   
 }
 export const App: FunctionComponent<AppProps> = props => {
@@ -71,6 +71,7 @@ export default connect(
   //if using selector
   (state: RootState) => ({
       test: countSelector(state),
+      // Do we ever use protoContents???
       protoContents: protoSelector(state),
       protoObjContents: protoObjSelector(state),
       serviceOptions: serviceMenuSelector(state),
@@ -82,7 +83,7 @@ export default connect(
   {
     incrementAction: incrementActionCreator,
     uploadProto: uploadProtoActionCreator,
-    uploadProtoSuccessful: uploadProtoSuccesfulActionCreator,
+    uploadProtoSuccessful: uploadProtoSuccessfulActionCreator,
     loadServiceOptions:loadServiceActionCreator,
     togglePopup: showPopupActionCreator,
   }

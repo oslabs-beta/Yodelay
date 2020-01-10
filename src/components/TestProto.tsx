@@ -14,8 +14,6 @@ import { typeResponse, popupSelector } from '../reducers/uploadProto';
 import { DropdownService } from './DropdownService';
 import { DropdownRequest } from './DropdownRequest';
 import { Button } from './common/Button';
-import { Popup } from './Popup'
-
 
 // sets type for props
 interface TestProtoProps {
@@ -30,7 +28,7 @@ interface TestProtoProps {
   request: string;
   serviceOptions: object;
   sendUnaryRequestAction: any;
-  proto: object;
+  proto: string | ArrayBuffer;
   togglePopup: typeof showPopupActionCreator;
   popupStatus: boolean;
 
@@ -69,14 +67,11 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     };
 
     const handleViewClick = (e: any) => {
-      if (Object.entries(proto).length === 0 && proto.constructor === Object) {
+      if (proto === '') {
         alert("upload proto file")
       } else {
         togglePopup(!popupStatus);
       }
-      console.log('FROM HANDLE VIEW CLICK', proto)
-      console.log('TYPEOF PROTO', typeof proto)
-      // alert(proto);
     };
 
     return (
@@ -113,7 +108,6 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
           </div>
         </div>
         <div>
-          {/* <Popup popup={popupStatus} toggle={togglePopup} proto={proto}></Popup> */}
           <div>
             <Editor
               setMessageAction={setMessageAction}

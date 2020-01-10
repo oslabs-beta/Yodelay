@@ -34,7 +34,6 @@ import { RootState } from '../reducers';
       
       const onFileSubmit = () => {
         const protoFile = (inputOpenFileRef.current.files[0])
-        
 
         const reader = new FileReader()
 

@@ -23,7 +23,7 @@ export interface sendProto {
   payload: string | ArrayBuffer;
 }
 
-export interface uploadProtoSuccesful {
+export interface uploadProtoSuccessful {
   type: typeof UPLOAD_PROTO_SUCCESSFUL;
   payload: object;
 }
@@ -72,7 +72,7 @@ export interface showPopup {
 export type uploadProtoAction =
   | uploadProto
   | sendProto
-  | uploadProtoSuccesful
+  | uploadProtoSuccessful
   | uploadProtoFailed
   | setMessage
   | setService
@@ -91,6 +91,7 @@ export const uploadProtoActionCreator = (
   };
 };
 
+// Do we ever use sendProtoActionCreator?
 export const sendProtoActionCreator = (
   payloadObj: string | ArrayBuffer
 ): sendProto => {
@@ -100,9 +101,9 @@ export const sendProtoActionCreator = (
   };
 };
 
-export const uploadProtoSuccesfulActionCreator = (
+export const uploadProtoSuccessfulActionCreator = (
   payloadObj: object
-): uploadProtoSuccesful => {
+): uploadProtoSuccessful => {
   return {
     type: UPLOAD_PROTO_SUCCESSFUL,
     payload: payloadObj

@@ -36,9 +36,9 @@ interface BodyProps {
   serviceOptions: object;
   selectResponse: typeResponse;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
+  proto: string | ArrayBuffer;
   togglePopup?: typeof showPopupActionCreator;
   popupStatus?: boolean;
-  proto?: typeof protoSelector;
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {

@@ -24,7 +24,7 @@ export interface initialProtoStateType {
   urlInput: string;
   requestInput: string;
   parsedProtosObj: object;
-  proto: any;
+  proto: string | ArrayBuffer;
   response: typeResponse;
   showPopup: boolean;
 }
@@ -39,7 +39,7 @@ const initialState: initialProtoStateType = {
     responseTime: undefined
   },
   parsedProtosObj: {},
-  proto: {},
+  proto: '',
   showPopup: false
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 };
@@ -54,6 +54,7 @@ export const uploadProto: (
   switch (action.type) {
     case UPLOAD_PROTO: {
       //setIn takes in param1) state object, param2) the key in state that is what we want to update, and param3) the value we want to change
+      // now that the proto type is set to string, we prob don't need the setIn function. 
       return setIn(state, ['proto'], action.payload);
     }
     case SET_MESSAGE: {
@@ -88,7 +89,7 @@ export const uploadProto: (
 };
 
 //makes the proto state and parsedProtosObj state available to connected components
-export const protoSelector: (state: RootState) => object = state =>
+export const protoSelector: (state: RootState) => string | ArrayBuffer = state =>
   state.uploadProto.proto;
 export const messageSelector: (state: RootState) => string = state =>
   state.uploadProto.messageInput;

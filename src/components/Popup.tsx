@@ -5,7 +5,7 @@ import { showPopupActionCreator } from '../actions';
 interface PopupProps {
   popup: boolean;
   toggle: typeof showPopupActionCreator;
-  proto: object;
+  proto: string | ArrayBuffer;
 }
 
 export const Popup: FunctionComponent<PopupProps> = (props) => {
@@ -21,8 +21,6 @@ export const Popup: FunctionComponent<PopupProps> = (props) => {
 
     const handleToggle = () => {
       toggle(!popup);
-      console.log('FROM POPUP: ', proto);
-      console.log('FROM POPUP- TYPEOF: ', typeof proto)
     }
 
     return(

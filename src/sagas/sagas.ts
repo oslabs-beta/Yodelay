@@ -3,7 +3,7 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import {
   UPLOAD_PROTO,
   uploadProto,
-  uploadProtoSuccesfulActionCreator,
+  uploadProtoSuccessfulActionCreator,
   uploadProtoFailedActionCreator,
   loadServiceActionCreator,
   SEND_UNARY_REQUEST,
@@ -18,7 +18,7 @@ import { stateSelector } from '../reducers/uploadProto';
 
 function* sendProto({ payload }: uploadProto) {
   try {
-    console.log('payload:', payload, 'typeof payload', typeof payload);
+    console.log('payload:', payload, 'typeof payload:', typeof payload);
     const jsonProtoFile = JSON.stringify(payload);
     const data = yield fetch(`http://localhost:4000/upload`, {
       method: 'POST',
@@ -32,7 +32,7 @@ function* sendProto({ payload }: uploadProto) {
     const response = yield data.json();
 
     //No need to connect() to store; yield put apparently does it for us; that's how we could access the uploadProtoSuccessful action creator -- CHECK
-    yield put(uploadProtoSuccesfulActionCreator(response));
+    yield put(uploadProtoSuccessfulActionCreator(response));
 
     yield put(loadServiceActionCreator(response.services));
     //services: {
@@ -62,7 +62,7 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
     });
 
     // console.log(
-    //   '-----jsonrequestObj in unaryRequest saga -----',
+    //   '-----json-requestObj in unaryRequest saga -----',
     //   jsonRequestObj
     // );
 
