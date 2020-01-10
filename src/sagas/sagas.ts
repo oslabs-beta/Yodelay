@@ -1,4 +1,5 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeLatest, select, take } from 'redux-saga/effects';
+import { takeEvery, eventChannel } from 'redux-saga';
 // import moment from 'moment'
 import {
   UPLOAD_PROTO,
@@ -18,7 +19,7 @@ import { stateSelector } from '../reducers/uploadProto';
 
 function* sendProto({ payload }: uploadProto) {
   try {
-    console.log('payload:', payload, 'typeof payload', typeof payload);
+    // console.log('payload:', payload, 'typeof payload', typeof payload);
     const jsonProtoFile = JSON.stringify(payload);
     const data = yield fetch(`http://localhost:4000/upload`, {
       method: 'POST',
@@ -47,6 +48,7 @@ function* sendProto({ payload }: uploadProto) {
   }
 }
 
+// payload is not necessary, extract all of state from state selector
 function* unaryRequest({ payload }: sendUnaryRequest) {
   try {
     const state = yield select(stateSelector);
@@ -87,10 +89,63 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
   }
 }
 
+// Websockets/Streaming 
+
+function* createEventChannel(mySocket?: any) {
+  console.log('this is the typeof mySocket: ', typeof mySocket)
+
+  const state = yield select(stateSelector);
+
+  const jsonRequestObj = JSON.stringify({
+    url: state.urlInput,
+    serviceInput: state.serviceInput,
+    messageInput: state.messageInput,
+    requestInput: state.requestInput,
+    package: state.parsedProtosObj.package,
+    protoFile: state.parsedProtosObj.protoFile,
+    // protoDescriptor: state.parsedProtosObj.protoDescriptor
+  });
+
+  console.log('jsonRequestObj', jsonRequestObj)
+
+  return eventChannel(emit => {
+
+    // listen for messages from server
+    mySocket.onmessage = (message: any) => {
+      console.log('message, ', message)
+      emit(message.data)
+    };
+    // when connection is first established
+    mySocket.onopen = function (event: any) {
+
+      mySocket.send(jsonRequestObj)
+    }
+    return () => {
+      mySocket.close();
+    };
+  });
+}
+
+function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
+
+  const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+  const channel = yield call(createEventChannel, mySocket, payload);
+  while (true) {
+    const { message } = yield take(channel);
+    // dispatch actions with messages recieved from ws connection with server here
+    console.log(message)
+    // yield put({type: WEBSOCKET_MESSAGE_RECEIVED, message});
+  }
+}
+
+
 function* saga() {
   console.log('saga');
   yield takeLatest(UPLOAD_PROTO, sendProto);
-  yield takeLatest(SEND_UNARY_REQUEST, unaryRequest);
+  // this needs refactoring as it is for streaming requests
+  yield takeLatest(SEND_UNARY_REQUEST, initializeWebSocketsChannel)
+  // yield takeLatest(SEND_UNARY_REQUEST, unaryRequest);
+
 }
 
 export default saga;

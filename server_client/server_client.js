@@ -5,6 +5,7 @@ const cors = require('cors');
 const { grpcRequest, parseProto } = require('./helper_request_func');
 
 const app = express();
+const expressWs = require('express-ws')(app);
 // changed to port 4000 because react hot module runs on 3000
 const port = 4000;
 
@@ -76,6 +77,37 @@ app.post('/service', async (req, res) => {
   res.json(output);
 });
 
+
+// websocket routes for streaming 
+
+// starts client handshake
+// app.get('/websocket', function (req, res, next) {
+//   console.log('get route', req.testing);
+//   res.end();
+// });
+
+//Listens for messages
+app.ws('/websocket', function (ws, req) {
+  ws.on('message', function (msg) {
+    console.log('app.ws msg: ', msg);
+    const parsedReqBody = JSON.parse(msg)
+    grpcRequest(parsedReqBody, ws)
+
+
+
+  });
+
+  // setInterval(() => {
+  //   ws.send('I am your server, made of sockets')
+  // }, 1000)
+  // ws.send('I am your server, made of sockets')
+  // console.log('socket', req.testing);
+});
+
+
+
+
+
 // *
 // * End GRPC Server Call
 
@@ -93,8 +125,10 @@ app.use((req, res) => {
   res.status(404).send('Page Not Found');
 });
 
+
+
 // Global error handling:
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   const defaultError = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,

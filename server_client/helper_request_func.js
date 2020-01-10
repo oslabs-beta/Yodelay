@@ -19,7 +19,7 @@ async function parseProto(uploadParsedReqBody) {
 
   // WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
-  fs.writeFileSync('./protos/output.proto', protoFile, 'utf8', function(err) {
+  fs.writeFileSync('./protos/output.proto', protoFile, 'utf8', function (err) {
     if (err) {
       console.log('An error occurred while writing JSON Object to File.');
       return console.log(err);
@@ -85,7 +85,7 @@ async function parseProto(uploadParsedReqBody) {
   return output;
 }
 
-function grpcRequest(serviceParsedReqBody) {
+function grpcRequest(serviceParsedReqBody, ws) {
   console.log('------Start gRPC Request------');
   // console.log('serviceParsedReqBody: ', serviceParsedReqBody)
   // when a string is passed to the back end as a string we will then use this method:
@@ -113,13 +113,13 @@ function grpcRequest(serviceParsedReqBody) {
   // the proto object is where we are passed in the .proto file from the server_client
   // we then take this object and write it to the temp output.proto file in the proto folder:
   let protoFile = input.protoFile;
-  let protoDescriptor = input.protoDescriptor;
+  // let protoDescriptor = input.protoDescriptor;
   // console.log('proto obj: ', protoObject)
   let output;
 
   // WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
-  fs.writeFileSync('./protos/output.proto', protoFile, 'utf8', function(err) {
+  fs.writeFileSync('./protos/output.proto', protoFile, 'utf8', function (err) {
     if (err) {
       console.log('An error occurred while writing JSON Object to File.');
       return console.log(err);
@@ -144,10 +144,9 @@ function grpcRequest(serviceParsedReqBody) {
   // console.log('package: ', packageDefinition)
 
   // this is how you grab the .proto file package name:
+  //! needs refactoring for case where package name has a "." in it
   let protoPackageName2 = Object.keys(packageDefinition)[0].split('.')[0];
 
-  // first timestamp to be used for timing the round trip:
-  const time = process.hrtime();
 
   // let's use the package definition to create our descriptor:
   const descriptor = grpc.loadPackageDefinition(packageDefinition)[
@@ -156,31 +155,61 @@ function grpcRequest(serviceParsedReqBody) {
 
   // DECLARE PACKAGE:
   // service was passed in by user in the 'service' variable:
-  const package = new descriptor[serviceInput](
+  const servicePackage = new descriptor[serviceInput](
     url,
     grpc.credentials.createInsecure()
   );
+
+  // EVENT EMITTER REQUEST
+  const call = servicePackage[requestInput](messageInput);
+
+  call.on('data', function (feature) {
+    console.log('feature received ', feature)
+    ws.send(feature.result)
+  });
+
+  call.on('end', function () {
+    console.log('this server streaming has ended')
+  });
+
+  call.on('error', function (e) {
+    // An error has occurred and the stream has been closed.
+  });
+  call.on('status', function (status) {
+    // process status
+  });
+
+
+
+  // PROMISIFY REQUEST
 
   // todo parse messageInput and pass through to the .sendmessage.
   // messageInput is an object with all of the fields in it.
   // the gRPC server is expecting the fields
   // we have to
-  grpc_promise.promisifyAll(package);
-  // console.log('gRPCPackage: ', package[requestInput])
-  // console.log(url)
-  return package[requestInput]()
-    .sendMessage(messageInput)
-    .then(res => {
-      // console.log('Greeting: ', res)
-      output = res;
-      // console.log('output', output)
-      console.log('------Returning gRPC Result------');
-      // timestamps server call as an array
-      // index 0 is seconds and index 1 is nanoseconds
-      output.responseTime = process.hrtime(time);
-      return output;
-    })
-    .catch(err => console.error(err));
+
+  //   const meta = new grpc.Metadata();
+  //   meta.add('key', 'value');
+
+  //   grpc_promise.promisifyAll(package, { metadata: meta, timeout: 1500 });
+  //   // console.log('gRPCPackage: ', package[requestInput])
+  //   // console.log(url)
+  //   // first timestamp to be used for timing the round trip:
+  //   const time = process.hrtime();
+
+  //   return package[requestInput]()
+  //     .sendMessage(messageInput)
+  //     .then(res => {
+  //       // console.log('Greeting: ', res)
+  //       output = res;
+  //       console.log('output', output)
+  //       console.log('------Returning gRPC Result------');
+  //       // timestamps server call as an array
+  //       // index 0 is seconds and index 1 is nanoseconds
+  //       output.responseTime = process.hrtime(time);
+  //       return output;
+  //     })
+  //     .catch(err => console.error(err));
 }
 
 module.exports = {
