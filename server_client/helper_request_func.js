@@ -85,7 +85,7 @@ async function parseProto(uploadParsedReqBody) {
   return output;
 }
 
-function grpcRequest(serviceParsedReqBody) {
+function grpcRequest(serviceParsedReqBody, ws) {
   console.log('------Start gRPC Request------');
   // console.log('serviceParsedReqBody: ', serviceParsedReqBody)
   // when a string is passed to the back end as a string we will then use this method:
@@ -113,7 +113,7 @@ function grpcRequest(serviceParsedReqBody) {
   // the proto object is where we are passed in the .proto file from the server_client
   // we then take this object and write it to the temp output.proto file in the proto folder:
   let protoFile = input.protoFile;
-  let protoDescriptor = input.protoDescriptor;
+  // let protoDescriptor = input.protoDescriptor;
   // console.log('proto obj: ', protoObject)
   let output;
 
@@ -165,6 +165,7 @@ function grpcRequest(serviceParsedReqBody) {
 
   call.on('data', function (feature) {
     console.log('feature received ', feature)
+    ws.send(feature.result)
   });
 
   call.on('end', function () {
