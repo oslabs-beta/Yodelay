@@ -1,17 +1,25 @@
-import React, { FunctionComponent } from 'react';
-import { setRequestActionCreator } from '../actions';
+import React, { FunctionComponent } from "react";
+import { setRequestActionCreator } from "../actions";
+import { typeRequest } from "../reducers/uploadProto";
+
 interface DropdownRequestProps {
+  parsedProtoObj: any;
   className: string;
   menuOptions: any;
   service: string;
   setRequest: typeof setRequestActionCreator;
-  value: string;
+  value: typeRequest;
 }
-export const DropdownRequest: FunctionComponent<
-  DropdownRequestProps
-> = props => {
+export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props => {
   {
-    const { className, menuOptions, service, setRequest, value } = props;
+    const {
+      parsedProtoObj,
+      className,
+      menuOptions,
+      service,
+      setRequest,
+      value
+    } = props;
 
     //create array of requests
     let servicesArr: string[] = [];
@@ -23,10 +31,23 @@ export const DropdownRequest: FunctionComponent<
       <div>
         <select
           onChange={e => {
-            if (e.target.value === 'Select Request') {
-              setRequest('');
+            if (e.target.value === "Select Request") {
+              setRequest({ methodName: "", streamType: "" });
             } else {
-              setRequest(e.target.value);
+              let requestSelected = e.target.value;
+              //update state w/ requestSelected and streamType
+              let streamType =
+                parsedProtoObj["services"][`${service}`][`${requestSelected}`]
+                  .type;
+
+              // console.log(
+              //   "this is service obj:",
+              //   parsedProtoObj["services"][`${service}`][`${requestSelected}`]
+              // );
+              setRequest({
+                methodName: requestSelected,
+                streamType: streamType
+              });
             }
           }}
         >
