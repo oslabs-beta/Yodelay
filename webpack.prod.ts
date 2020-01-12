@@ -51,7 +51,7 @@ const config = (env: any): webpack.Configuration => {
           : JSON.stringify('8000'),
         'env.API_HOST': API_HOST
           ? JSON.stringify(API_HOST)
-          : JSON.stringify('localhost'),
+          : JSON.stringify('www.yodelay.io'),
         'env.API_PROTOCOL': API_PROTOCOL
           ? JSON.stringify(API_PROTOCOL)
           : JSON.stringify('http'),
