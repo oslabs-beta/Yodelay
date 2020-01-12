@@ -6,9 +6,7 @@ interface DropdownServiceProps {
   setService: typeof setServiceActionCreator;
   value: string;
 }
-export const DropdownService: FunctionComponent<
-  DropdownServiceProps
-> = props => {
+export const DropdownService: FunctionComponent< DropdownServiceProps> = props => {
   {
     const { className, menuOptions, setService, value } = props;
 

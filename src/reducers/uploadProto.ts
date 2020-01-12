@@ -8,7 +8,8 @@ import {
   SET_URL,
   SET_REQUEST,
   SEND_UNARY_REQUEST,
-  DISPLAY_UNARY_RESPONSE
+  DISPLAY_UNARY_RESPONSE,
+  SHOW_POPUP
 } from '../actions';
 import { setIn } from 'timm';
 import { RootState } from '.';
@@ -23,8 +24,9 @@ export interface initialProtoStateType {
   urlInput: string;
   requestInput: string;
   parsedProtosObj: object;
-  proto: any;
+  proto: string | ArrayBuffer;
   response: typeResponse;
+  showPopup: boolean;
 }
 
 const initialState: initialProtoStateType = {
@@ -37,7 +39,8 @@ const initialState: initialProtoStateType = {
     responseTime: undefined
   },
   parsedProtosObj: {},
-  proto: {}
+  proto: '',
+  showPopup: false
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 };
 
@@ -75,13 +78,17 @@ export const uploadProto: (
     case DISPLAY_UNARY_RESPONSE: {
       return setIn(state, ['response'], action.payload);
     }
+    case SHOW_POPUP: {
+      // return setIn(state, ['showPopup'], action.payload);
+      return { ...state, showPopup: action.payload};
+    }
   }
 
   return state;
 };
 
 //makes the proto state and parsedProtosObj state available to connected components
-export const protoSelector: (state: RootState) => object = state =>
+export const protoSelector: (state: RootState) => string | ArrayBuffer = state =>
   state.uploadProto.proto;
 export const messageSelector: (state: RootState) => string = state =>
   state.uploadProto.messageInput;
@@ -95,6 +102,8 @@ export const protoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;
 export const responseSelector: (state: RootState) => object = state =>
   state.uploadProto.response;
+  export const popupSelector: (state: RootState) => boolean = state =>
+  state.uploadProto.showPopup;
 
 // selecting all of state for the request saga
 export const stateSelector: (state: RootState) => object = state =>
