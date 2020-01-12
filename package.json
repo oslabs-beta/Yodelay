@@ -48,6 +48,7 @@
     "express": "^4.17.1",
     "express-http-to-https": "^1.1.4",
     "express-pino-logger": "^4.0.0",
+    "express-ws": "^4.0.0",
     "file-loader": "^5.0.2",
     "grpc": "^1.24.2",
     "grpc-promise": "^1.4.0",
