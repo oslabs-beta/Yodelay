@@ -1,0 +1,10 @@
+{
+    "AWSEBDockerrunVersion": "1",
+        "Image": {
+            "Name": "Yodelay-env.ppg2m8icyf.us-east-1.elasticbeanstalk.com:<VERSION>",
+            "Update": "true"
+        },
+        "Ports": [{
+            "ContainerPort": "4000"
+        }]
+    }
