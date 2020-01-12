@@ -1,21 +1,22 @@
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { FunctionComponent } from "react";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
   setMessageActionCreator,
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
   sendUnaryRequestActionCreator
-} from '../actions';
-import { Editor } from './Editor';
-import { typeResponse } from '../reducers/uploadProto';
-import { DropdownService } from './DropdownService';
-import { DropdownRequest } from './DropdownRequest';
-import { Button } from './common/Button';
+} from "../actions";
+import { Editor } from "./Editor";
+import { typeResponse, typeRequest } from "../reducers/uploadProto";
+import { DropdownService } from "./DropdownService";
+import { DropdownRequest } from "./DropdownRequest";
+import { Button } from "./common/Button";
 
 // sets type for props
 interface TestProtoProps {
+  parsedProtoObj: object;
   setMessageAction: typeof setMessageActionCreator;
   data: string;
   response: typeResponse;
@@ -24,7 +25,7 @@ interface TestProtoProps {
   setUrlAction: typeof setUrlActionCreator;
   url: string;
   setRequestAction: typeof setRequestActionCreator;
-  request: string;
+  request: typeRequest;
   serviceOptions: object;
   sendUnaryRequestAction: any;
 }
@@ -37,6 +38,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     //service2: {request2: {message2Options}}
     //}
     const {
+      parsedProtoObj,
       serviceOptions,
       setMessageAction,
       data,
@@ -55,11 +57,11 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     };
 
     const handleRequestClick = (e: any) => {
-      sendUnaryRequestAction('grpc!');
+      sendUnaryRequestAction("grpc!");
     };
 
     return (
-      <div id = "testProto">
+      <div id="testProto">
         Test Your Proto File:
         <div className="menu-options">
           <input
@@ -81,9 +83,14 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             service={service}
             setRequest={setRequestAction}
             value={request}
+            parsedProtoObj={parsedProtoObj}
           ></DropdownRequest>
 
-          <Button className = "button" text="Send Request" onClick={handleRequestClick} />
+          <Button
+            className="button"
+            text="Send Request"
+            onClick={handleRequestClick}
+          />
         </div>
         <div>
           <Editor
