@@ -2,6 +2,8 @@ import React, {FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Button } from '../components/common/Button'
+import GitHubButton from 'react-github-btn'
+
 
 // sets type for props
 interface HeaderProps {
@@ -23,6 +25,8 @@ interface HeaderProps {
         <Link to ="/">
             <Button className = "header-button button" text='Yodelay.io'  >
             </Button>
+            
+            {/* <GitHubButton href="https://github.com/oslabs-beta/Yodelay" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star oslabs-beta/Yodelay on GitHub">Star</GitHubButton> */}
           </Link>
         </div>
       )
