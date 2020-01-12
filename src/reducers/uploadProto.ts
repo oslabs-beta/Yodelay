@@ -9,34 +9,53 @@ import {
   SET_REQUEST,
   SEND_UNARY_REQUEST,
   DISPLAY_UNARY_RESPONSE
-} from '../actions';
-import { setIn } from 'timm';
-import { RootState } from '.';
+} from "../actions";
+import { setIn } from "timm";
+import { RootState } from ".";
 
 export interface typeResponse {
-  message: string;
+  message: string; //change to [], could impact editor
   responseTime?: number[];
 }
+
+export interface typeRequest {
+  methodName: string;
+  streamType: string;
+}
+
 export interface initialProtoStateType {
-  messageInput: string;
-  serviceInput: string;
-  urlInput: string;
-  requestInput: string;
+  //obj containing pased proto file, incl. services, request methods, etc.
   parsedProtosObj: object;
-  proto: any;
+  //from here onwards, we capture the user's selections
+  urlInput: string;
+  serviceInput: string;
+  // requestInput: string;
+  requestInput: typeRequest;
+  //request message
+  messageInput: string;
+  //response obj
   response: typeResponse;
+  //array of response stream
+  responseStream: typeResponse[];
+  //ignore this
+  proto: any;
 }
 
 const initialState: initialProtoStateType = {
-  messageInput: 'Input message here...',
-  serviceInput: '',
-  urlInput: '',
-  requestInput: '',
+  parsedProtosObj: {},
+  urlInput: "",
+  serviceInput: "",
+  // requestInput: "",
+  requestInput: {
+    methodName: "",
+    streamType: ""
+  },
+  messageInput: "Input message here...",
   response: {
-    message: 'View response here!',
+    message: "View response here!",
     responseTime: undefined
   },
-  parsedProtosObj: {},
+  responseStream: [],
   proto: {}
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 };
@@ -51,7 +70,7 @@ export const uploadProto: (
   switch (action.type) {
     case UPLOAD_PROTO: {
       //setIn takes in param1) state object, param2) the key in state that is what we want to update, and param3) the value we want to change
-      return setIn(state, ['proto'], action.payload);
+      return setIn(state, ["proto"], action.payload);
     }
     case SET_MESSAGE: {
       return { ...state, messageInput: action.payload };
@@ -63,17 +82,17 @@ export const uploadProto: (
       return { ...state, urlInput: action.payload };
     }
     case SET_REQUEST: {
-      return { ...state, requestInput: action.payload };
+      return setIn(state, ["requestInput"], action.payload);
     }
     case UPLOAD_PROTO_SUCCESSFUL: {
       //need to add in functionality to push multiple protoobj to state
-      return setIn(state, ['parsedProtosObj'], action.payload);
+      return setIn(state, ["parsedProtosObj"], action.payload);
     }
     case SEND_UNARY_REQUEST: {
       return { ...state };
     }
     case DISPLAY_UNARY_RESPONSE: {
-      return setIn(state, ['response'], action.payload);
+      return setIn(state, ["response"], action.payload);
     }
   }
 
@@ -89,9 +108,9 @@ export const serviceSelector: (state: RootState) => string = state =>
   state.uploadProto.serviceInput;
 export const urlSelector: (state: RootState) => string = state =>
   state.uploadProto.urlInput;
-export const requestSelector: (state: RootState) => string = state =>
+export const requestSelector: (state: RootState) => object = state =>
   state.uploadProto.requestInput;
-export const protoObjSelector: (state: RootState) => object = state =>
+export const parsedProtoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;
 export const responseSelector: (state: RootState) => object = state =>
   state.uploadProto.response;
