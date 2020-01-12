@@ -1,14 +1,14 @@
 //Define action type
-export const UPLOAD_PROTO = 'UPLOAD_PROTO';
-export const SEND_PROTO = 'SEND_PROTO';
-export const UPLOAD_PROTO_SUCCESSFUL = 'UPLOAD_PROTO_SUCCESSFUL';
-export const UPLOAD_PROTO_FAILED = 'UPLOAD_PROTO_FAILED';
-export const SEND_UNARY_REQUEST = 'SEND_UNARY_REQUEST';
-export const SET_MESSAGE = 'SET_MESSAGE';
-export const SET_SERVICE = 'SET_SERVICE';
-export const SET_URL = 'SET_URL';
-export const SET_REQUEST = 'SET_REQUEST';
-export const DISPLAY_UNARY_RESPONSE = 'DISPLAY_UNARY_RESPONSE';
+export const UPLOAD_PROTO = "UPLOAD_PROTO";
+export const SEND_PROTO = "SEND_PROTO";
+export const UPLOAD_PROTO_SUCCESSFUL = "UPLOAD_PROTO_SUCCESSFUL";
+export const UPLOAD_PROTO_FAILED = "UPLOAD_PROTO_FAILED";
+export const SEND_UNARY_REQUEST = "SEND_UNARY_REQUEST";
+export const SET_MESSAGE = "SET_MESSAGE";
+export const SET_SERVICE = "SET_SERVICE";
+export const SET_URL = "SET_URL";
+export const SET_REQUEST = "SET_REQUEST";
+export const DISPLAY_UNARY_RESPONSE = "DISPLAY_UNARY_RESPONSE";
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -54,7 +54,7 @@ export interface setUrl {
 
 export interface setRequest {
   type: typeof SET_REQUEST;
-  payload: string;
+  payload: object;
 }
 
 export interface uploadProtoFailed {
@@ -150,7 +150,7 @@ export const setUrlActionCreator = (payloadObj: string): setUrl => {
   };
 };
 
-export const setRequestActionCreator = (payloadObj: string): setRequest => {
+export const setRequestActionCreator = (payloadObj: object): setRequest => {
   return {
     type: SET_REQUEST,
     payload: payloadObj
