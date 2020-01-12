@@ -1,27 +1,30 @@
-import React, { FunctionComponent, useState } from 'react';
-import { connect } from 'react-redux';
-import TestProto from '../components/TestProto';
-import Settings from '../components/Settings';
-import { Route } from 'react-router';
+import React, { FunctionComponent, useState } from "react";
+import { connect } from "react-redux";
+import TestProto from "../components/TestProto";
+import Settings from "../components/Settings";
+import { Route } from "react-router";
 import {
   setMessageActionCreator,
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
   sendUnaryRequestActionCreator
-} from '../actions';
+} from "../actions";
 import {
   messageSelector,
   serviceSelector,
   urlSelector,
   requestSelector,
   responseSelector,
-  typeResponse
-} from '../reducers/uploadProto';
-import { RootState } from '../reducers';
+  typeResponse,
+  typeRequest,
+  parsedProtoObjSelector
+} from "../reducers/uploadProto";
+import { RootState } from "../reducers";
 
 // sets type for props
 interface BodyProps {
+  parsedProtoObj: object;
   setMessageAction: typeof setMessageActionCreator;
   selectMessage: string;
   setServiceAction: typeof setServiceActionCreator;
@@ -29,7 +32,7 @@ interface BodyProps {
   setUrlAction: typeof setUrlActionCreator;
   selectUrl: string;
   setRequestAction: typeof setRequestActionCreator;
-  selectRequest: string;
+  selectRequest: typeRequest;
   serviceOptions: object;
   selectResponse: typeResponse;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
@@ -38,6 +41,7 @@ interface BodyProps {
 export const Body: FunctionComponent<BodyProps> = props => {
   {
     const {
+      parsedProtoObj,
       setMessageAction,
       selectMessage,
       setServiceAction,
@@ -53,9 +57,9 @@ export const Body: FunctionComponent<BodyProps> = props => {
 
     return (
       <div>
-        
         <Route exact path="/">
           <TestProto
+            parsedProtoObj={parsedProtoObj}
             setMessageAction={setMessageAction}
             data={selectMessage}
             setServiceAction={setServiceAction}
@@ -67,8 +71,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             serviceOptions={serviceOptions}
             response={selectResponse}
             sendUnaryRequestAction={sendUnaryRequestAction}
-          >
-          </TestProto>
+          ></TestProto>
         </Route>
         <Route path="/settings">
           <Settings>Settings</Settings>
@@ -85,6 +88,7 @@ export default connect(
   //     //using selector
 
   (state: RootState) => ({
+    parsedProtoObj: parsedProtoObjSelector(state),
     selectMessage: messageSelector(state),
     selectService: serviceSelector(state),
     selectUrl: urlSelector(state),
