@@ -20,7 +20,7 @@ function* sendProto({ payload }: uploadProto) {
   try {
     console.log('payload:', payload, 'typeof payload', typeof payload);
     const jsonProtoFile = JSON.stringify(payload);
-    const data = yield fetch(`http://localhost:4000/upload`, {
+    const data = yield fetch(`http://www.yodelay.io/upload`, {
       method: 'POST',
       headers: {
         Accept: 'text/plain',
@@ -66,7 +66,7 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
     //   jsonRequestObj
     // );
 
-    const data = yield fetch(`http://localhost:4000/service`, {
+    const data = yield fetch(`http://www.yodelay.io/service`, {
       method: 'POST',
       headers: {
         Accept: 'text/plain',
