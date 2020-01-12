@@ -94,5 +94,5 @@ app.use(function(err, req, res, next) {
   res.status(newErrObj.status).json(newErrObj.message);
 });
 app.listen(port, () =>
-  console.log(`  :alien:  invasion happening on port: ${port} `)
+  console.log(`  Server running on port: ${port} `)
 );
