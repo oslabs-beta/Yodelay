@@ -95,7 +95,7 @@ function* createEventChannel(mySocket?: any) {
     // listen for messages from server
     mySocket.onmessage = (message: any) => {
       console.log("message, ", message);
-      emit(message.data);
+      emit(message);
     };
     // when connection is first established
     mySocket.onopen = function(event: any) {
@@ -110,10 +110,15 @@ function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
   const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
   const channel = yield call(createEventChannel, mySocket, payload);
   while (true) {
-    const { message } = yield take(channel);
+    let message = yield take(channel);
+    console.log("-----------", message);
     // dispatch actions with messages recieved from ws connection with server here
-    console.log(message);
-    // yield put({type: WEBSOCKET_MESSAGE_RECEIVED, message});
+    yield put(
+      displayUnaryResponseActionCreator({
+        message: message.data,
+        responseTime: message.timeStamp
+      })
+    );
   }
 }
 function* saga() {

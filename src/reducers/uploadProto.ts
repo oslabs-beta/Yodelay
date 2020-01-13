@@ -15,7 +15,7 @@ import { RootState } from ".";
 
 export interface typeResponse {
   message: string; //change to [], could impact editor
-  responseTime?: number[];
+  responseTime?: number;
 }
 
 export interface typeRequest {
@@ -92,7 +92,17 @@ export const uploadProto: (
       return { ...state };
     }
     case DISPLAY_UNARY_RESPONSE: {
-      return setIn(state, ["response"], action.payload);
+      console.log(
+        "+++++++++",
+        action.payload.message,
+        action.payload.responseTime
+      );
+      return setIn(state, ["responseStream"], action.payload);
+
+      // return {
+      //   ...state,
+      //   responseStream: state.responseStream.push(action.payload)
+      // };
     }
   }
 

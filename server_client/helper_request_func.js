@@ -149,7 +149,8 @@ function grpcRequest(serviceParsedReqBody, ws) {
   // console.log('descriptor: ', descriptor[serviceInput])
   console.log(
     "packageDefinition",
-    packageDefinition[packageDefinitionName][requestInput].requestStream
+    packageDefinition[packageDefinitionName][requestInput.methodName]
+      .requestStream
   );
   // console.log('packageDefinition: ', packageDefinition)
   // DECLARE PACKAGE:
@@ -159,33 +160,48 @@ function grpcRequest(serviceParsedReqBody, ws) {
     grpc.credentials.createInsecure()
   );
   // need to figure out if it's unary or streaming
-  // UNARY
-  // servicePackage[requestInput](messageInput, function (err, feature) {
-  //   if (err) {
-  //     console.log(err)
-  //   }
-  //   else {
-  //     // console.log(feature.message)
-  //     ws.send(feature.message)
-  //   }
-  // });
-  // STREAMING
-  const call = servicePackage[requestInput](messageInput);
-  console.log("msginput", messageInput);
-  // call.write({ greet: messageInput })
-  call.on("data", function(feature) {
-    console.log("feature received ", feature);
-    ws.send(feature.result);
-  });
-  call.on("end", function() {
-    console.log("this server streaming has ended");
-  });
-  call.on("error", function(e) {
-    // An error has occurred and the stream has been closed.
-  });
-  call.on("status", function(status) {
-    // process status
-  });
+  if (requestInput.streamType === "unary") {
+    // UNARY
+    servicePackage[requestInput.methodName](messageInput, function(
+      err,
+      feature
+    ) {
+      if (err) {
+        console.log(err);
+        ws.send(err);
+      } else {
+        ws.send(feature.message);
+        console.log(feature.message);
+      }
+      ws.close();
+      ws.onclose = function() {
+        console.log(ws.readyState);
+      };
+    });
+  } else if (requestInput.streamType === "serverStreaming") {
+    // STREAMING
+    const call = servicePackage[requestInput.methodName](messageInput);
+    console.log("msginput", messageInput);
+    // call.write({ greet: messageInput })
+    call.on("data", function(feature) {
+      console.log("feature received ", feature);
+      ws.send(feature.result);
+    });
+    call.on("end", function() {
+      console.log("this server streaming has ended");
+      ws.close();
+      ws.onclose = function() {
+        console.log(ws.readyState);
+      };
+    });
+    call.on("error", function(e) {
+      // An error has occurred and the stream has been closed.
+      ws.close();
+      ws.onclose = function() {
+        console.log(ws.readyState);
+      };
+    });
+  }
   // PROMISIFY REQUEST
   // todo parse messageInput and pass through to the .sendmessage.
   // messageInput is an object with all of the fields in it.

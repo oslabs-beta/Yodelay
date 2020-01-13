@@ -1,3 +1,5 @@
+import { typeResponse } from "../reducers/uploadProto";
+
 //Define action type
 export const UPLOAD_PROTO = "UPLOAD_PROTO";
 export const SEND_PROTO = "SEND_PROTO";
@@ -34,7 +36,7 @@ export interface sendUnaryRequest {
 
 export interface displayUnaryResponse {
   type: typeof DISPLAY_UNARY_RESPONSE;
-  payload: object;
+  payload: typeResponse;
 }
 
 export interface setMessage {
