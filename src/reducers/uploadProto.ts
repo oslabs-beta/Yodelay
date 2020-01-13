@@ -92,17 +92,7 @@ export const uploadProto: (
       return { ...state };
     }
     case DISPLAY_UNARY_RESPONSE: {
-      console.log(
-        "+++++++++",
-        action.payload.message,
-        action.payload.responseTime
-      );
-      return setIn(state, ["responseStream"], action.payload);
-
-      // return {
-      //   ...state,
-      //   responseStream: state.responseStream.push(action.payload)
-      // };
+      return {...state, responseStream: [...state.responseStream, action.payload ]};
     }
   }
 
@@ -123,7 +113,7 @@ export const requestSelector: (state: RootState) => object = state =>
 export const parsedProtoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;
 export const responseSelector: (state: RootState) => object = state =>
-  state.uploadProto.response;
+  state.uploadProto.responseStream;
 
 // selecting all of state for the request saga
 export const stateSelector: (state: RootState) => object = state =>

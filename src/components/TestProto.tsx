@@ -19,7 +19,7 @@ interface TestProtoProps {
   parsedProtoObj: object;
   setMessageAction: typeof setMessageActionCreator;
   data: string;
-  response: typeResponse;
+  response: typeResponse[];
   setServiceAction: typeof setServiceActionCreator;
   service: string;
   setUrlAction: typeof setUrlActionCreator;

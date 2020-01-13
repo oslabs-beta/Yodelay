@@ -34,7 +34,7 @@ interface BodyProps {
   setRequestAction: typeof setRequestActionCreator;
   selectRequest: typeRequest;
   serviceOptions: object;
-  selectResponse: typeResponse;
+  selectResponse: typeResponse[];
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
 }
 

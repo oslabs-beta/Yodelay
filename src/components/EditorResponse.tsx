@@ -9,15 +9,22 @@ import "ace-builds/src-noconflict/theme-pastel_on_dark";
 import "ace-builds/src-noconflict/mode-json";
 
 interface ResponseProps {
-  response: typeResponse;
+  response: typeResponse[];
 }
 
 export const EditorResponse: FunctionComponent<ResponseProps> = props => {
   {
     const defaultKey = `responseTab`;
     const { response } = props;
-    let responseTime = response.responseTime;
 
+    let stringResponse = "";
+    response.forEach( object => {
+      stringResponse += `\n${object.message}\n${object.responseTime}`
+    })
+    console.log('RESPONSE', response)
+    console.log('STRING RESPONSE', stringResponse)
+    // let responseTime = response[0].responseTime;
+    let responseTime = 1
     // if (response.responseTime !== undefined) {
     //   let seconds = response.responseTime[0].toString();
     //   let nanoSeconds = response.responseTime[1].toString();
@@ -37,7 +44,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
             <AceEditor
               mode="json"
               name="requestInput"
-              value={response.message}
+              value={stringResponse}
               width={"100%"}
               height={"250px"}
               theme="monokai"

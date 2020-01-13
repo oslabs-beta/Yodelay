@@ -9,7 +9,7 @@ import { typeResponse } from '../reducers/uploadProto';
 interface editorProps {
   setMessageAction?: typeof setMessageActionCreator;
   data: string;
-  response: typeResponse;
+  response: typeResponse[];
 }
 
 export const Editor: FunctionComponent<editorProps> = props => {
