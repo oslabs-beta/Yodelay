@@ -8,7 +8,8 @@ import {
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
-  sendUnaryRequestActionCreator
+  sendUnaryRequestActionCreator,
+  clearResponseEditorActionCreator
 } from "../actions";
 import {
   messageSelector,
@@ -25,34 +26,36 @@ import { RootState } from "../reducers";
 // sets type for props
 interface BodyProps {
   parsedProtoObj: object;
-  setMessageAction: typeof setMessageActionCreator;
-  selectMessage: string;
-  setServiceAction: typeof setServiceActionCreator;
-  selectService: string;
-  setUrlAction: typeof setUrlActionCreator;
-  selectUrl: string;
-  setRequestAction: typeof setRequestActionCreator;
-  selectRequest: typeRequest;
   serviceOptions: object;
-  selectResponse: typeResponse[];
+  setMessageAction: typeof setMessageActionCreator;
+  setUrlAction: typeof setUrlActionCreator;
+  setRequestAction: typeof setRequestActionCreator;
+  setServiceAction: typeof setServiceActionCreator;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
+  clearResponseEditorAction: typeof clearResponseEditorActionCreator;
+  selectMessage: string;
+  selectService: string;
+  selectUrl: string;
+  selectRequest: typeRequest;
+  selectResponse: typeResponse[];
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
   {
     const {
       parsedProtoObj,
-      setMessageAction,
-      selectMessage,
-      setServiceAction,
-      selectService,
-      setUrlAction,
-      selectUrl,
-      setRequestAction,
-      selectRequest,
       serviceOptions,
+      setMessageAction,
+      setServiceAction,
+      setUrlAction,
+      setRequestAction,
+      sendUnaryRequestAction,
+      clearResponseEditorAction,
+      selectMessage,
+      selectService,
+      selectUrl,
+      selectRequest,
       selectResponse,
-      sendUnaryRequestAction
     } = props;
 
     return (
@@ -60,17 +63,18 @@ export const Body: FunctionComponent<BodyProps> = props => {
         <Route exact path="/">
           <TestProto
             parsedProtoObj={parsedProtoObj}
-            setMessageAction={setMessageAction}
-            data={selectMessage}
-            setServiceAction={setServiceAction}
-            service={selectService}
-            setUrlAction={setUrlAction}
-            url={selectUrl}
-            setRequestAction={setRequestAction}
-            request={selectRequest}
             serviceOptions={serviceOptions}
-            response={selectResponse}
+            setMessageAction={setMessageAction}
+            setRequestAction={setRequestAction}
+            setServiceAction={setServiceAction}
+            setUrlAction={setUrlAction}
             sendUnaryRequestAction={sendUnaryRequestAction}
+            clearResponseEditor={clearResponseEditorAction}
+            url={selectUrl}
+            data={selectMessage}
+            request={selectRequest}
+            response={selectResponse}
+            service={selectService}
           ></TestProto>
         </Route>
         <Route path="/settings">
@@ -100,6 +104,7 @@ export default connect(
     setServiceAction: setServiceActionCreator,
     setUrlAction: setUrlActionCreator,
     setRequestAction: setRequestActionCreator,
-    sendUnaryRequestAction: sendUnaryRequestActionCreator
+    sendUnaryRequestAction: sendUnaryRequestActionCreator,
+    clearResponseEditorAction: clearResponseEditorActionCreator
   }
 )(Body);

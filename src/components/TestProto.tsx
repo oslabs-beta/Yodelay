@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent} from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
@@ -6,7 +6,8 @@ import {
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
-  sendUnaryRequestActionCreator
+  sendUnaryRequestActionCreator,
+  clearResponseEditorActionCreator
 } from "../actions";
 import { Editor } from "./Editor";
 import { typeResponse, typeRequest } from "../reducers/uploadProto";
@@ -17,17 +18,18 @@ import { Button } from "./common/Button";
 // sets type for props
 interface TestProtoProps {
   parsedProtoObj: object;
-  setMessageAction: typeof setMessageActionCreator;
-  data: string;
-  response: typeResponse[];
-  setServiceAction: typeof setServiceActionCreator;
-  service: string;
-  setUrlAction: typeof setUrlActionCreator;
-  url: string;
-  setRequestAction: typeof setRequestActionCreator;
-  request: typeRequest;
   serviceOptions: object;
+  data: string;
+  service: string;
+  url: string;
+  response: typeResponse[];
+  request: typeRequest;
+  setMessageAction: typeof setMessageActionCreator;
+  setServiceAction: typeof setServiceActionCreator;
+  setUrlAction: typeof setUrlActionCreator;
+  setRequestAction: typeof setRequestActionCreator;
   sendUnaryRequestAction: any;
+  clearResponseEditor: typeof clearResponseEditorActionCreator;
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -49,7 +51,8 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       setRequestAction,
       request,
       url,
-      sendUnaryRequestAction
+      sendUnaryRequestAction,
+      clearResponseEditor
     } = props;
 
     const handleUrlChange = (e: any) => {
@@ -57,6 +60,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     };
 
     const handleRequestClick = (e: any) => {
+      clearResponseEditor([]);
       sendUnaryRequestAction("grpc!");
     };
 

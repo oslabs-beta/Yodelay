@@ -11,6 +11,7 @@ export const SET_SERVICE = "SET_SERVICE";
 export const SET_URL = "SET_URL";
 export const SET_REQUEST = "SET_REQUEST";
 export const DISPLAY_UNARY_RESPONSE = "DISPLAY_UNARY_RESPONSE";
+export const CLEAR_RESPONSE_EDITOR = "CLEAR_RESPONSE_EDITOR";
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -64,6 +65,11 @@ export interface uploadProtoFailed {
   payload: string;
 }
 
+export interface clearResponseEditor {
+  type: typeof CLEAR_RESPONSE_EDITOR;
+  payload: typeResponse[];
+}
+
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
 export type uploadProtoAction =
   | uploadProto
@@ -75,7 +81,8 @@ export type uploadProtoAction =
   | setUrl
   | setRequest
   | sendUnaryRequest
-  | displayUnaryResponse;
+  | displayUnaryResponse
+  | clearResponseEditor;
 
 export const uploadProtoActionCreator = (
   payloadObj: string | ArrayBuffer
@@ -157,4 +164,11 @@ export const setRequestActionCreator = (payloadObj: object): setRequest => {
     type: SET_REQUEST,
     payload: payloadObj
   };
+};
+
+export const clearResponseEditorActionCreator = (payloadObj: typeResponse[]): clearResponseEditor => {
+  return {
+    type: CLEAR_RESPONSE_EDITOR,
+    payload: payloadObj
+  }
 };

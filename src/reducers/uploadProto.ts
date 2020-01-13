@@ -8,7 +8,8 @@ import {
   SET_URL,
   SET_REQUEST,
   SEND_UNARY_REQUEST,
-  DISPLAY_UNARY_RESPONSE
+  DISPLAY_UNARY_RESPONSE,
+  CLEAR_RESPONSE_EDITOR
 } from "../actions";
 import { setIn } from "timm";
 import { RootState } from ".";
@@ -93,6 +94,9 @@ export const uploadProto: (
     }
     case DISPLAY_UNARY_RESPONSE: {
       return {...state, responseStream: [...state.responseStream, action.payload ]};
+    }
+    case CLEAR_RESPONSE_EDITOR: {
+      return {...state, responseStream: action.payload}
     }
   }
 
