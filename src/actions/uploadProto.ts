@@ -1,15 +1,18 @@
+import { typeResponse } from "../reducers/uploadProto";
+
 //Define action type
-export const UPLOAD_PROTO = 'UPLOAD_PROTO';
-export const SEND_PROTO = 'SEND_PROTO';
-export const UPLOAD_PROTO_SUCCESSFUL = 'UPLOAD_PROTO_SUCCESSFUL';
-export const UPLOAD_PROTO_FAILED = 'UPLOAD_PROTO_FAILED';
-export const SEND_UNARY_REQUEST = 'SEND_UNARY_REQUEST';
-export const SET_MESSAGE = 'SET_MESSAGE';
-export const SET_SERVICE = 'SET_SERVICE';
-export const SET_URL = 'SET_URL';
-export const SET_REQUEST = 'SET_REQUEST';
-export const DISPLAY_UNARY_RESPONSE = 'DISPLAY_UNARY_RESPONSE';
-export const SHOW_POPUP = 'SHOW_POPUP';
+export const UPLOAD_PROTO = "UPLOAD_PROTO";
+export const SEND_PROTO = "SEND_PROTO";
+export const UPLOAD_PROTO_SUCCESSFUL = "UPLOAD_PROTO_SUCCESSFUL";
+export const UPLOAD_PROTO_FAILED = "UPLOAD_PROTO_FAILED";
+export const SEND_UNARY_REQUEST = "SEND_UNARY_REQUEST";
+export const SET_MESSAGE = "SET_MESSAGE";
+export const SET_SERVICE = "SET_SERVICE";
+export const SET_URL = "SET_URL";
+export const SET_REQUEST = "SET_REQUEST";
+export const DISPLAY_UNARY_RESPONSE = "DISPLAY_UNARY_RESPONSE";
+export const CLEAR_RESPONSE_EDITOR = "CLEAR_RESPONSE_EDITOR";
+export const SHOW_POPUP = "SHOW_POPUP";
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -35,7 +38,7 @@ export interface sendUnaryRequest {
 
 export interface displayUnaryResponse {
   type: typeof DISPLAY_UNARY_RESPONSE;
-  payload: object;
+  payload: typeResponse;
 }
 
 export interface setMessage {
@@ -55,12 +58,17 @@ export interface setUrl {
 
 export interface setRequest {
   type: typeof SET_REQUEST;
-  payload: string;
+  payload: object;
 }
 
 export interface uploadProtoFailed {
   type: typeof UPLOAD_PROTO_FAILED;
   payload: string;
+}
+
+export interface clearResponseEditor {
+  type: typeof CLEAR_RESPONSE_EDITOR;
+  payload: typeResponse[];
 }
 
 export interface showPopup {
@@ -80,6 +88,7 @@ export type uploadProtoAction =
   | setRequest
   | sendUnaryRequest
   | displayUnaryResponse
+  | clearResponseEditor
   | showPopup;
 
 export const uploadProtoActionCreator = (
@@ -158,9 +167,18 @@ export const setUrlActionCreator = (payloadObj: string): setUrl => {
   };
 };
 
-export const setRequestActionCreator = (payloadObj: string): setRequest => {
+export const setRequestActionCreator = (payloadObj: object): setRequest => {
   return {
     type: SET_REQUEST,
+    payload: payloadObj
+  };
+};
+
+export const clearResponseEditorActionCreator = (
+  payloadObj: typeResponse[]
+): clearResponseEditor => {
+  return {
+    type: CLEAR_RESPONSE_EDITOR,
     payload: payloadObj
   };
 };

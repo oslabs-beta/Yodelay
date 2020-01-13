@@ -1,16 +1,17 @@
-import React, { FunctionComponent, useState } from 'react';
-import { connect } from 'react-redux';
-import TestProto from '../components/TestProto';
-import Settings from '../components/Settings';
-import { Route } from 'react-router';
+import React, { FunctionComponent, useState } from "react";
+import { connect } from "react-redux";
+import TestProto from "../components/TestProto";
+import Settings from "../components/Settings";
+import { Route } from "react-router";
 import {
   setMessageActionCreator,
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
+  clearResponseEditorActionCreator,
   showPopupActionCreator
-} from '../actions';
+} from "../actions";
 import {
   messageSelector,
   serviceSelector,
@@ -18,24 +19,28 @@ import {
   requestSelector,
   responseSelector,
   typeResponse,
+  typeRequest,
+  parsedProtoObjSelector,
   protoSelector,
   popupSelector
-} from '../reducers/uploadProto';
-import { RootState } from '../reducers';
+} from "../reducers/uploadProto";
+import { RootState } from "../reducers";
 
 // sets type for props
 interface BodyProps {
-  setMessageAction: typeof setMessageActionCreator;
-  selectMessage: string;
-  setServiceAction: typeof setServiceActionCreator;
-  selectService: string;
-  setUrlAction: typeof setUrlActionCreator;
-  selectUrl: string;
-  setRequestAction: typeof setRequestActionCreator;
-  selectRequest: string;
+  parsedProtoObj: object;
   serviceOptions: object;
-  selectResponse: typeResponse;
+  setMessageAction: typeof setMessageActionCreator;
+  setUrlAction: typeof setUrlActionCreator;
+  setRequestAction: typeof setRequestActionCreator;
+  setServiceAction: typeof setServiceActionCreator;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
+  clearResponseEditorAction: typeof clearResponseEditorActionCreator;
+  selectMessage: string;
+  selectService: string;
+  selectUrl: string;
+  selectRequest: typeRequest;
+  selectResponse: typeResponse[];
   proto: string | ArrayBuffer;
   togglePopup?: typeof showPopupActionCreator;
   popupStatus?: boolean;
@@ -44,17 +49,19 @@ interface BodyProps {
 export const Body: FunctionComponent<BodyProps> = props => {
   {
     const {
-      setMessageAction,
-      selectMessage,
-      setServiceAction,
-      selectService,
-      setUrlAction,
-      selectUrl,
-      setRequestAction,
-      selectRequest,
+      parsedProtoObj,
       serviceOptions,
-      selectResponse,
+      setMessageAction,
+      setServiceAction,
+      setUrlAction,
+      setRequestAction,
       sendUnaryRequestAction,
+      clearResponseEditorAction,
+      selectMessage,
+      selectService,
+      selectUrl,
+      selectRequest,
+      selectResponse,
       togglePopup,
       popupStatus,
       proto
@@ -62,25 +69,25 @@ export const Body: FunctionComponent<BodyProps> = props => {
 
     return (
       <div>
-        
         <Route exact path="/">
           <TestProto
-            setMessageAction={setMessageAction}
-            data={selectMessage}
-            setServiceAction={setServiceAction}
-            service={selectService}
-            setUrlAction={setUrlAction}
-            url={selectUrl}
-            setRequestAction={setRequestAction}
-            request={selectRequest}
+            parsedProtoObj={parsedProtoObj}
             serviceOptions={serviceOptions}
-            response={selectResponse}
+            setMessageAction={setMessageAction}
+            setRequestAction={setRequestAction}
+            setServiceAction={setServiceAction}
+            setUrlAction={setUrlAction}
             sendUnaryRequestAction={sendUnaryRequestAction}
+            clearResponseEditor={clearResponseEditorAction}
+            url={selectUrl}
+            data={selectMessage}
+            request={selectRequest}
+            response={selectResponse}
             togglePopup={togglePopup}
             popupStatus={popupStatus}
             proto={proto}
-          >
-          </TestProto>
+            service={selectService}
+          ></TestProto>
         </Route>
         <Route path="/settings">
           <Settings>Settings</Settings>
@@ -97,6 +104,7 @@ export default connect(
   //     //using selector
 
   (state: RootState) => ({
+    parsedProtoObj: parsedProtoObjSelector(state),
     selectMessage: messageSelector(state),
     selectService: serviceSelector(state),
     selectUrl: urlSelector(state),
@@ -111,6 +119,7 @@ export default connect(
     setUrlAction: setUrlActionCreator,
     setRequestAction: setRequestActionCreator,
     sendUnaryRequestAction: sendUnaryRequestActionCreator,
-    togglePopup: showPopupActionCreator,
+    clearResponseEditorAction: clearResponseEditorActionCreator,
+    togglePopup: showPopupActionCreator
   }
 )(Body);

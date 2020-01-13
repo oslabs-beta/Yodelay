@@ -1,37 +1,43 @@
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { FunctionComponent } from "react";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
   setMessageActionCreator,
   setServiceActionCreator,
   setUrlActionCreator,
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
+  clearResponseEditorActionCreator,
   showPopupActionCreator
-} from '../actions';
-import { Editor } from './Editor';
-import { typeResponse, popupSelector } from '../reducers/uploadProto';
-import { DropdownService } from './DropdownService';
-import { DropdownRequest } from './DropdownRequest';
-import { Button } from './common/Button';
+} from "../actions";
+import { Editor } from "./Editor";
+import {
+  typeResponse,
+  typeRequest,
+  popupSelector
+} from "../reducers/uploadProto";
+import { DropdownService } from "./DropdownService";
+import { DropdownRequest } from "./DropdownRequest";
+import { Button } from "./common/Button";
 
 // sets type for props
 interface TestProtoProps {
-  setMessageAction: typeof setMessageActionCreator;
-  data: string;
-  response: typeResponse;
-  setServiceAction: typeof setServiceActionCreator;
-  service: string;
-  setUrlAction: typeof setUrlActionCreator;
-  url: string;
-  setRequestAction: typeof setRequestActionCreator;
-  request: string;
+  parsedProtoObj: object;
   serviceOptions: object;
+  data: string;
+  service: string;
+  url: string;
+  response: typeResponse[];
+  request: typeRequest;
+  setMessageAction: typeof setMessageActionCreator;
+  setServiceAction: typeof setServiceActionCreator;
+  setUrlAction: typeof setUrlActionCreator;
+  setRequestAction: typeof setRequestActionCreator;
   sendUnaryRequestAction: any;
+  clearResponseEditor: typeof clearResponseEditorActionCreator;
   proto: string | ArrayBuffer;
   togglePopup: typeof showPopupActionCreator;
   popupStatus: boolean;
-
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -42,6 +48,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     //service2: {request2: {message2Options}}
     //}
     const {
+      parsedProtoObj,
       serviceOptions,
       setMessageAction,
       data,
@@ -53,6 +60,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       request,
       url,
       sendUnaryRequestAction,
+      clearResponseEditor,
       proto,
       togglePopup,
       popupStatus
@@ -63,19 +71,20 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     };
 
     const handleRequestClick = (e: any) => {
-      sendUnaryRequestAction('grpc!');
+      clearResponseEditor([]);
+      sendUnaryRequestAction("grpc!");
     };
 
     const handleViewClick = (e: any) => {
-      if (proto === '') {
-        alert("upload proto file")
+      if (proto === "") {
+        alert("upload proto file");
       } else {
         togglePopup(!popupStatus);
       }
     };
 
     return (
-      <div id = "testProto">
+      <div id="testProto">
         Test Your Proto File:
         <div id="menu-and-view-section">
           <div className="menu-options">
@@ -98,23 +107,30 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
               service={service}
               setRequest={setRequestAction}
               value={request}
+              parsedProtoObj={parsedProtoObj}
               setMessageAction={setMessageAction}
             ></DropdownRequest>
 
-            <Button className = "button" text="Send Request" onClick={handleRequestClick} />
+            <Button
+              className="button"
+              text="Send Request"
+              onClick={handleRequestClick}
+            />
           </div>
           <div id="handleViewClick">
-            <Button className = "button" text="View Proto File" onClick={handleViewClick} />
+            <Button
+              className="button"
+              text="View Proto File"
+              onClick={handleViewClick}
+            />
           </div>
         </div>
         <div>
-          <div>
-            <Editor
-              setMessageAction={setMessageAction}
-              data={data}
-              response={response}
-            />
-          </div>
+          <Editor
+            setMessageAction={setMessageAction}
+            data={data}
+            response={response}
+          />
         </div>
       </div>
     );
