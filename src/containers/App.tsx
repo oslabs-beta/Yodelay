@@ -5,10 +5,11 @@ import HeaderContainer, { Header } from './Header'
 import BodyContainer from './Body'
 import FooterContainer from './Footer'
 import NavbarContainer from './Navbar'
+import { Popup } from '../components/Popup'
 import { Button } from '../components/common/Button'
-import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccesfulActionCreator, loadServiceActionCreator } from '../actions';
+import { incrementActionCreator, uploadProtoActionCreator, uploadProtoSuccessfulActionCreator, loadServiceActionCreator, showPopupActionCreator  } from '../actions';
 import { countSelector } from '../reducers/test';
-import { protoSelector, protoObjSelector } from '../reducers/uploadProto'
+import { protoSelector, protoObjSelector, popupSelector } from '../reducers/uploadProto'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import '../scss/index.scss'
 import { serviceMenuSelector } from '../reducers/updateMenu'
@@ -17,10 +18,13 @@ import { serviceMenuSelector } from '../reducers/updateMenu'
 
 // sets type for props
 interface AppProps {
-  incrementAction: typeof incrementActionCreator,
-  uploadProtoSuccessful: typeof uploadProtoSuccesfulActionCreator 
+  incrementAction: typeof incrementActionCreator
+  uploadProtoSuccessful: typeof uploadProtoSuccessfulActionCreator 
   protoObjContents: object
   serviceOptions: object
+  togglePopup: typeof showPopupActionCreator
+  proto: string | ArrayBuffer
+  popupStatus: boolean
   
 }
 export const App: FunctionComponent<AppProps> = props => {
@@ -28,7 +32,10 @@ export const App: FunctionComponent<AppProps> = props => {
     const {
       incrementAction,
       protoObjContents, 
-      serviceOptions
+      serviceOptions,
+      togglePopup,
+      proto,
+      popupStatus
     } = props
 
     // console.log(serviceOptions)
@@ -37,18 +44,21 @@ export const App: FunctionComponent<AppProps> = props => {
       //Wrap everything in Router so that nested containers/components have access to router
       <Router>
         <div id = "main-view">
-            <div id = "navbar">
-              <NavbarContainer></NavbarContainer>
-            </div>
-            
-            <div id = "app-container">
-              <HeaderContainer></HeaderContainer>
-              <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
-              <FooterContainer></FooterContainer>
-            </div>
-            {/* <Button text='enter' onClick={ () => {incrementAction(1)}} >
-            </Button> */}
-       
+          <div id = "navbar">
+            <NavbarContainer></NavbarContainer>
+          </div>
+          
+          <div id = "app-container">
+            <HeaderContainer></HeaderContainer>
+            <BodyContainer serviceOptions = {serviceOptions}></BodyContainer>
+            <FooterContainer></FooterContainer>
+          </div>
+
+          <div>
+            <Popup popup={popupStatus} toggle={togglePopup} proto={proto}></Popup>
+          </div>
+          {/* <Button text='enter' onClick={ () => {incrementAction(1)}} >
+          </Button> */}
         </div>
       </Router>
     )
@@ -61,17 +71,21 @@ export default connect(
   //if using selector
   (state: RootState) => ({
       test: countSelector(state),
+      // Do we ever use protoContents???
       protoContents: protoSelector(state),
       protoObjContents: protoObjSelector(state),
-      serviceOptions: serviceMenuSelector(state)
+      serviceOptions: serviceMenuSelector(state),
+      proto: protoSelector(state),
+      popupStatus: popupSelector(state)
     })
     ,
 
   {
     incrementAction: incrementActionCreator,
     uploadProto: uploadProtoActionCreator,
-    uploadProtoSuccessful: uploadProtoSuccesfulActionCreator,
-    loadServiceOptions:loadServiceActionCreator
+    uploadProtoSuccessful: uploadProtoSuccessfulActionCreator,
+    loadServiceOptions:loadServiceActionCreator,
+    togglePopup: showPopupActionCreator,
   }
 )(App)
 
