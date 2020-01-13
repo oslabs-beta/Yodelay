@@ -1,4 +1,4 @@
-import React, { FunctionComponent} from "react";
+import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
@@ -7,10 +7,15 @@ import {
   setUrlActionCreator,
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
-  clearResponseEditorActionCreator
+  clearResponseEditorActionCreator,
+  showPopupActionCreator
 } from "../actions";
 import { Editor } from "./Editor";
-import { typeResponse, typeRequest } from "../reducers/uploadProto";
+import {
+  typeResponse,
+  typeRequest,
+  popupSelector
+} from "../reducers/uploadProto";
 import { DropdownService } from "./DropdownService";
 import { DropdownRequest } from "./DropdownRequest";
 import { Button } from "./common/Button";
@@ -30,6 +35,9 @@ interface TestProtoProps {
   setRequestAction: typeof setRequestActionCreator;
   sendUnaryRequestAction: any;
   clearResponseEditor: typeof clearResponseEditorActionCreator;
+  proto: string | ArrayBuffer;
+  togglePopup: typeof showPopupActionCreator;
+  popupStatus: boolean;
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -52,7 +60,10 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       request,
       url,
       sendUnaryRequestAction,
-      clearResponseEditor
+      clearResponseEditor,
+      proto,
+      togglePopup,
+      popupStatus
     } = props;
 
     const handleUrlChange = (e: any) => {
@@ -64,37 +75,55 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       sendUnaryRequestAction("grpc!");
     };
 
+    const handleViewClick = (e: any) => {
+      if (proto === "") {
+        alert("upload proto file");
+      } else {
+        togglePopup(!popupStatus);
+      }
+    };
+
     return (
       <div id="testProto">
         Test Your Proto File:
-        <div className="menu-options">
-          <input
-            className="url-input"
-            placeholder="enter server ip address"
-            onChange={handleUrlChange}
-          ></input>
+        <div id="menu-and-view-section">
+          <div className="menu-options">
+            <input
+              className="url-input"
+              placeholder="enter server ip address"
+              onChange={handleUrlChange}
+            ></input>
 
-          <DropdownService
-            className="service-dropdown-menu"
-            menuOptions={serviceOptions}
-            setService={setServiceAction}
-            value={service}
-          ></DropdownService>
+            <DropdownService
+              className="service-dropdown-menu"
+              menuOptions={serviceOptions}
+              setService={setServiceAction}
+              value={service}
+            ></DropdownService>
 
-          <DropdownRequest
-            className="request-dropdown-menu"
-            menuOptions={serviceOptions}
-            service={service}
-            setRequest={setRequestAction}
-            value={request}
-            parsedProtoObj={parsedProtoObj}
-          ></DropdownRequest>
+            <DropdownRequest
+              className="request-dropdown-menu"
+              menuOptions={serviceOptions}
+              service={service}
+              setRequest={setRequestAction}
+              value={request}
+              parsedProtoObj={parsedProtoObj}
+              setMessageAction={setMessageAction}
+            ></DropdownRequest>
 
-          <Button
-            className="button"
-            text="Send Request"
-            onClick={handleRequestClick}
-          />
+            <Button
+              className="button"
+              text="Send Request"
+              onClick={handleRequestClick}
+            />
+          </div>
+          <div id="handleViewClick">
+            <Button
+              className="button"
+              text="View Proto File"
+              onClick={handleViewClick}
+            />
+          </div>
         </div>
         <div>
           <Editor

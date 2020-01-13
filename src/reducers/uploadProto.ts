@@ -9,7 +9,8 @@ import {
   SET_REQUEST,
   SEND_UNARY_REQUEST,
   DISPLAY_UNARY_RESPONSE,
-  CLEAR_RESPONSE_EDITOR
+  CLEAR_RESPONSE_EDITOR,
+  SHOW_POPUP
 } from "../actions";
 import { setIn } from "timm";
 import { RootState } from ".";
@@ -39,7 +40,8 @@ export interface initialProtoStateType {
   //array of response stream
   responseStream: typeResponse[];
   //ignore this
-  proto: any;
+  proto: string | ArrayBuffer;
+  showPopup: boolean;
 }
 
 const initialState: initialProtoStateType = {
@@ -57,7 +59,8 @@ const initialState: initialProtoStateType = {
     responseTime: undefined
   },
   responseStream: [],
-  proto: {}
+  proto: "",
+  showPopup: false
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 };
 
@@ -93,10 +96,17 @@ export const uploadProto: (
       return { ...state };
     }
     case DISPLAY_UNARY_RESPONSE: {
-      return {...state, responseStream: [...state.responseStream, action.payload ]};
+      return {
+        ...state,
+        responseStream: [...state.responseStream, action.payload]
+      };
     }
     case CLEAR_RESPONSE_EDITOR: {
-      return {...state, responseStream: action.payload}
+      return { ...state, responseStream: action.payload };
+    }
+    case SHOW_POPUP: {
+      // return setIn(state, ['showPopup'], action.payload);
+      return { ...state, showPopup: action.payload };
     }
   }
 
@@ -104,8 +114,9 @@ export const uploadProto: (
 };
 
 //makes the proto state and parsedProtosObj state available to connected components
-export const protoSelector: (state: RootState) => object = state =>
-  state.uploadProto.proto;
+export const protoSelector: (
+  state: RootState
+) => string | ArrayBuffer = state => state.uploadProto.proto;
 export const messageSelector: (state: RootState) => string = state =>
   state.uploadProto.messageInput;
 export const serviceSelector: (state: RootState) => string = state =>
@@ -118,6 +129,8 @@ export const parsedProtoObjSelector: (state: RootState) => object = state =>
   state.uploadProto.parsedProtosObj;
 export const responseSelector: (state: RootState) => object = state =>
   state.uploadProto.responseStream;
+export const popupSelector: (state: RootState) => boolean = state =>
+  state.uploadProto.showPopup;
 
 // selecting all of state for the request saga
 export const stateSelector: (state: RootState) => object = state =>

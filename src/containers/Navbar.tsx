@@ -38,7 +38,7 @@ export const Navbar: FunctionComponent<NavbarProps> = props => {
         uploadProto(e.target.result);
       };
 
-      const file = reader.readAsText(protoFile);
+      reader.readAsText(protoFile);
     };
 
     //test buttons - remove later

@@ -4,7 +4,7 @@ import { takeEvery, eventChannel } from "redux-saga";
 import {
   UPLOAD_PROTO,
   uploadProto,
-  uploadProtoSuccesfulActionCreator,
+  uploadProtoSuccessfulActionCreator,
   uploadProtoFailedActionCreator,
   loadServiceActionCreator,
   SEND_UNARY_REQUEST,
@@ -29,7 +29,7 @@ function* sendProto({ payload }: uploadProto) {
     });
     const response = yield data.json();
     //No need to connect() to store; yield put apparently does it for us; that's how we could access the uploadProtoSuccessful action creator -- CHECK
-    yield put(uploadProtoSuccesfulActionCreator(response));
+    yield put(uploadProtoSuccessfulActionCreator(response));
     yield put(loadServiceActionCreator(response.services));
     //services: {
     //service1: {request1: {1messageOptions}}
@@ -56,7 +56,7 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
       protoDescriptor: state.parsedProtosObj.protoDescriptor
     });
     // console.log(
-    //   '-----jsonrequestObj in unaryRequest saga -----',
+    //   '-----json-requestObj in unaryRequest saga -----',
     //   jsonRequestObj
     // );
     const data = yield fetch(`http://localhost:4000/service`, {

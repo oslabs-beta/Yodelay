@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { setRequestActionCreator } from "../actions";
+import { setRequestActionCreator, setMessageActionCreator } from "../actions";
 import { typeRequest } from "../reducers/uploadProto";
 
 interface DropdownRequestProps {
@@ -9,6 +9,7 @@ interface DropdownRequestProps {
   service: string;
   setRequest: typeof setRequestActionCreator;
   value: typeRequest;
+  setMessageAction?: typeof setMessageActionCreator;
 }
 export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props => {
   {
@@ -18,13 +19,21 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
       menuOptions,
       service,
       setRequest,
-      value
+      value,
+      setMessageAction
     } = props;
 
     //create array of requests
     let servicesArr: string[] = [];
+    let servicesObj: {
+      [index: string]: {
+        message: { [nestedIndex: string]: { message: string } };
+      };
+    } = {};
+
     if (service) {
       servicesArr = Object.keys(menuOptions[service]);
+      servicesObj = menuOptions[service];
     }
 
     return (
@@ -33,9 +42,12 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
           onChange={e => {
             if (e.target.value === "Select Request") {
               setRequest({ methodName: "", streamType: "" });
+              setMessageAction("");
             } else {
+              //user selects request method
               let requestSelected = e.target.value;
-              //update state w/ requestSelected and streamType
+
+              //Need to update state w/ requestSelected and streamType
               let streamType =
                 parsedProtoObj["services"][`${service}`][`${requestSelected}`]
                   .type;
@@ -48,6 +60,35 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
                 methodName: requestSelected,
                 streamType: streamType
               });
+
+              //Need to auto populate editor with types
+              const messageFieldsObj: object = Object.values(
+                servicesObj[e.target.value]
+              )[0];
+              const messageFieldsArrayOfTuples: string[][] = Object.entries(
+                messageFieldsObj
+              );
+              let editorDisplay: string = "";
+              for (let [field, type] of messageFieldsArrayOfTuples) {
+                let typeDisplay: any = type;
+                switch (type) {
+                  case "TYPE_STRING": {
+                    typeDisplay = '"Hello"';
+                    break;
+                  }
+                  case "TYPE_INT32": {
+                    typeDisplay = 10;
+                    break;
+                  }
+                }
+                const currentStr: string = `"${field}": ${typeDisplay},\n  `;
+                editorDisplay += currentStr;
+              }
+              editorDisplay =
+                "{\n  " +
+                editorDisplay.slice(0, editorDisplay.length - 4) +
+                "\n}";
+              setMessageAction(editorDisplay);
             }
           }}
         >

@@ -9,7 +9,8 @@ import {
   setUrlActionCreator,
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
-  clearResponseEditorActionCreator
+  clearResponseEditorActionCreator,
+  showPopupActionCreator
 } from "../actions";
 import {
   messageSelector,
@@ -19,7 +20,9 @@ import {
   responseSelector,
   typeResponse,
   typeRequest,
-  parsedProtoObjSelector
+  parsedProtoObjSelector,
+  protoSelector,
+  popupSelector
 } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
 
@@ -38,6 +41,9 @@ interface BodyProps {
   selectUrl: string;
   selectRequest: typeRequest;
   selectResponse: typeResponse[];
+  proto: string | ArrayBuffer;
+  togglePopup?: typeof showPopupActionCreator;
+  popupStatus?: boolean;
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -56,6 +62,9 @@ export const Body: FunctionComponent<BodyProps> = props => {
       selectUrl,
       selectRequest,
       selectResponse,
+      togglePopup,
+      popupStatus,
+      proto
     } = props;
 
     return (
@@ -74,6 +83,9 @@ export const Body: FunctionComponent<BodyProps> = props => {
             data={selectMessage}
             request={selectRequest}
             response={selectResponse}
+            togglePopup={togglePopup}
+            popupStatus={popupStatus}
+            proto={proto}
             service={selectService}
           ></TestProto>
         </Route>
@@ -97,7 +109,9 @@ export default connect(
     selectService: serviceSelector(state),
     selectUrl: urlSelector(state),
     selectRequest: requestSelector(state),
-    selectResponse: responseSelector(state)
+    selectResponse: responseSelector(state),
+    proto: protoSelector(state),
+    popupStatus: popupSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
@@ -105,6 +119,7 @@ export default connect(
     setUrlAction: setUrlActionCreator,
     setRequestAction: setRequestActionCreator,
     sendUnaryRequestAction: sendUnaryRequestActionCreator,
-    clearResponseEditorAction: clearResponseEditorActionCreator
+    clearResponseEditorAction: clearResponseEditorActionCreator,
+    togglePopup: showPopupActionCreator
   }
 )(Body);
