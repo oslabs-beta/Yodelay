@@ -31,12 +31,14 @@ const config = (env: any): webpack.Configuration => {
           }
         },
         {
-          test: /\.(sc|c)ss$/i,
+          test: /\.s[ac]ss$/i,
           use: ['style-loader', 'css-loader', 'sass-loader']
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
-          use: { loader: 'file-loader'}
+          use: [
+            'file-loader',
+          ] 
         },
       ]
     },
