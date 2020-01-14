@@ -1,118 +1,157 @@
 @import "colours";
 
-.button:hover{
-    color: $yellow;
+//NOT AFFECTED BY THEME
+.home-button {
+  height: 37px;
+  width: 37px;
+  background-image: url("dog_logo.png");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
-.button{
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    overflow: hidden;
-    outline:none;
-    color: $disabled;
-    font-family: 'Roboto Mono', monospace;
-    font-weight: 500;
-    font-size: 14px;
-    cursor: pointer;
+.upload-proto-button {
+  height: 37px;
+  width: 37px;
+  background-image: url("upload.png");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
-#menu-and-view-section{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.home-button{
-    height: 37px;
-    width: 37px;  
-    background-image:url("dog_logo.png");
-    background-repeat:no-repeat;
-    background-color: Transparent;
-    border: none;
-    overflow: hidden;
-    outline:none;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.upload-proto-button{
-    height: 37px;
-    width: 37px;  
-    background-image:url("upload.png");
-    background-repeat:no-repeat;
-    background-color: Transparent;
-    border: none;
-    overflow: hidden;
-    outline:none;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-// http://simpleicon.com/wp-content/uploads/cloud-upload-2.png
-
-.settings-button{
-    height: 37px;
-    width: 37px;  
-    background-image:url("settings.png");
-    background-repeat:no-repeat;
-    background-color: Transparent;
-    border: none;
-    overflow: hidden;
-    outline:none;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 10px;
-
-}
-
-.header-button{
-    color: $grey-font;
-    font-weight: 700;
-    font-size: 30px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.header-button:hover{
-    color: $yellow;
+.settings-button {
+  height: 37px;
+  width: 37px;
+  background-image: url("settings.png");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width:100%;
-    height: 100%;
-    // background: rgba(0, 0, 0, 0.6);
-    // background-color: '#fff';
-    // z-index: 99;
-    padding: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // background: rgba(0, 0, 0, 0.6);
+  // background-color: '#fff';
+  // z-index: 99;
+  padding: 50;
 }
-  
+
 .modal-main {
-    position:fixed;
-    background: $black-background;
-    width: 50%;
-    height: 90%;
-    top: 50%;
-    left: 50%;
-    transform: translate(0%,-40%);
-    color: $yellow;
-    overflow-x: auto;
-    z-index: 99;
-    padding: 30;
-    margin: 0 auto;
-    border-radius: 5;
-    max-width: 500;
-    min-height: 300;
+  position: fixed;
+  background: $black-background;
+  width: 50%;
+  height: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(0%, -40%);
+  color: $yellow;
+  overflow-x: auto;
+  z-index: 99;
+  padding: 30;
+  margin: 0 auto;
+  border-radius: 5;
+  max-width: 500;
+  min-height: 300;
 }
-  
+
 .popup-on {
-    display: block;
+  display: block;
 }
 
 .popup-off {
-    display: none;
+  display: none;
+}
+
+//AFFECTED BY THEME
+.button-dark-yellow:hover {
+  color: $yellow;
+}
+
+.button-light-yellow:hover {
+  color: $yellow;
+}
+
+.button-dark-green:hover {
+  color: $green;
+}
+
+.button-dark-blue:hover {
+  color: $blue;
+}
+
+.button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  color: $disabled;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+//NEEDS TO BE BELOW OTHER BUTTON TYPES
+.header-button-dark-yellow {
+  color: $grey-font;
+  font-weight: 700;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.header-button-dark-yellow:hover {
+  color: $yellow;
+}
+
+.header-button-light-yellow {
+  color: $disabled;
+  font-weight: 700;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.header-button-light-yellow:hover {
+  color: $yellow;
+}
+
+.header-button-dark-green {
+  color: $grey-font;
+  font-weight: 700;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.header-button-dark-green:hover {
+  color: $green;
+}
+
+.header-button-dark-blue {
+  color: $grey-font;
+  font-weight: 700;
+  font-size: 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.header-button-dark-blue:hover {
+  color: $blue;
 }
