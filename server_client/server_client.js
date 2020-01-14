@@ -43,30 +43,26 @@ app.use(cookieParser());
 //   next();
 // });
 // Root:
-<<<<<<< HEAD
-app.get("/", (req, res) => res.send("🍻  Yodelay World  🍻"));
-=======
-// app.get('/', (req, res) => res.send('🍻  Yodelay World  🍻'));
-app.get('/', (req, res, next) => {
-  console.log('Attempting to send build/index.html')
-  try {
-    res.sendFile(path.resolve(__dirname, '../build/index.html'));
-  } catch {
-    return next({log: 'Express error handler caught in root/home ("/" endpoint) middleware', message: {err: 'An error occurred sending build/index.html'}})
-  }
-});
+app.get('/', (req, res) => res.send('🍻  Yodelay World  🍻'));
+// app.get('/', (req, res, next) => {
+//   console.log('Attempting to send build/index.html')
+//   try {
+//     res.sendFile(path.resolve(__dirname, '../build/index.html'));
+//   } catch {
+//     return next({log: 'Express error handler caught in root/home ("/" endpoint) middleware', message: {err: 'An error occurred sending build/index.html'}})
+//   }
+// });
 
-app.get('/bundle.js', (req, res, next) => {
-  console.log('bundle')
-  try {
-    res.sendFile(path.resolve(__dirname, '../build/bundle.js'));
-  } catch {
-    return next({message: {err: 'An error occurred sending build/bundle.js'}})
-  }
-}
-);
+// app.get('/bundle.js', (req, res, next) => {
+//   console.log('bundle')
+//   try {
+//     res.sendFile(path.resolve(__dirname, '../build/bundle.js'));
+//   } catch {
+//     return next({message: {err: 'An error occurred sending build/bundle.js'}})
+//   }
+// }
+// );
 
->>>>>>> eb4a19b17a5f3c1c546337d5a538522dbe87ecff
 // * UPLOAD:
 // when we hit the /upload endpoint we take in the request body and pass it as an argument to the helper request function:
 // Input req.body
