@@ -6,7 +6,7 @@ const path = require('path');
 const { grpcRequest, parseProto } = require('./helper_request_func');
 const app = express();
 // changed to port 4000 because react hot module runs on 3000
-const port = 3000;
+const port = 4000;
 // this line hackily solves the CORS errors when sending post requests to /upload
 // refactor eventually
 app.use(cors());
@@ -32,9 +32,9 @@ app.use(cookieParser());
 //   next();
 // });
 // Root:
-app.get('/', (req, res) => res.send(':beers:  Yodelay World  :beers:'));
-// app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../build/index.html')));
-// app.get('/bundle.js', (req, res) => res.sendFile(path.resolve(__dirname, '../build/bundle.js')));
+// app.get('/', (req, res) => res.send(':beers:  Yodelay World  :beers:'));
+app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../build/index.html')));
+app.get('/bundle.js', (req, res) => res.sendFile(path.resolve(__dirname, '../build/bundle.js')));
 // * UPLOAD:
 // when we hit the /upload endpoint we take in the request body and pass it as an argument to the helper request function:
 // Input req.body
