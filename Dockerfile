@@ -9,4 +9,4 @@ RUN npm install
 # open our port to 4000 for the applicaiton to run:
 EXPOSE 3000
 # once everythign is installed into the container we run npm start to start our express server:
-CMD npm run aws
+ENTRYPOINT npm run aws
