@@ -25,7 +25,9 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
 
     //CHANGE THEME
     let toggleTheme =
-      changeTheme === "dark-yellow" || "dark-green" || "dark-blue"
+      changeTheme === "dark-yellow" ||
+      changeTheme === "dark-green" ||
+      changeTheme === "dark-blue"
         ? "monokai"
         : "SQL Server";
 
