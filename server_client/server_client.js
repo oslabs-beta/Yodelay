@@ -32,9 +32,9 @@ app.use(cookieParser());
 //   next();
 // });
 // Root:
-// app.get('/', (req, res) => res.send(':beers:  Yodelay World  :beers:'));
-app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../build/index.html')));
-app.get('/bundle.js', (req, res) => res.sendFile(path.resolve(__dirname, '../build/bundle.js')));
+app.get('/', (req, res) => res.send(':beers:  Yodelay World  :beers:'));
+// app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../build/index.html')));
+// app.get('/bundle.js', (req, res) => res.sendFile(path.resolve(__dirname, '../build/bundle.js')));
 // * UPLOAD:
 // when we hit the /upload endpoint we take in the request body and pass it as an argument to the helper request function:
 // Input req.body
