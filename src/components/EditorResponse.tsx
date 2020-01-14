@@ -18,13 +18,14 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
     const { response } = props;
 
     let stringResponse = "";
-    response.forEach( object => {
-      stringResponse += `\n${object.message}\n${object.responseTime}`
-    })
-    console.log('RESPONSE', response)
-    console.log('STRING RESPONSE', stringResponse)
+    response.forEach((object, i) => {
+      stringResponse += `\n#${i + 1} ${object.message}\n\n`;
+      // stringResponse += `\n${object.message}\n${object.responseTime}`
+    });
+    console.log("RESPONSE", response);
+    console.log("STRING RESPONSE", stringResponse);
     // let responseTime = response[0].responseTime;
-    let responseTime = 1
+    let responseTime = 1;
     // if (response.responseTime !== undefined) {
     //   let seconds = response.responseTime[0].toString();
     //   let nanoSeconds = response.responseTime[1].toString();

@@ -159,9 +159,16 @@ function grpcRequest(serviceParsedReqBody, ws) {
     url,
     grpc.credentials.createInsecure()
   );
+
+  function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  }
+
   // need to figure out if it's unary or streaming
   if (requestInput.streamType === "unary") {
     // UNARY
+    let reqTime = process.hrtime();
     servicePackage[requestInput.methodName](messageInput, function(
       err,
       feature
@@ -170,8 +177,12 @@ function grpcRequest(serviceParsedReqBody, ws) {
         console.log(err);
         ws.send(err);
       } else {
+        let resTime = process.hrtime();
+        let resTimeSec = resTime[0] - reqTime[0];
+        let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
+        let resTimeStr = `Unary Call Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+        feature.message = `${resTimeStr}\n${feature.message}`;
         ws.send(feature.message);
-        console.log(feature.message);
       }
       ws.close();
       ws.onclose = function() {
@@ -180,11 +191,17 @@ function grpcRequest(serviceParsedReqBody, ws) {
     });
   } else if (requestInput.streamType === "serverStreaming") {
     // STREAMING
+    let reqTime = process.hrtime();
     const call = servicePackage[requestInput.methodName](messageInput);
     console.log("msginput", messageInput);
     // call.write({ greet: messageInput })
     call.on("data", function(feature) {
       console.log("feature received ", feature);
+      let resTime = process.hrtime();
+      let resTimeSec = resTime[0] - reqTime[0];
+      let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
+      let resTimeStr = `Server Streaming Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+      feature.result = `${resTimeStr}\n${feature.result}`;
       ws.send(feature.result);
     });
     call.on("end", function() {
