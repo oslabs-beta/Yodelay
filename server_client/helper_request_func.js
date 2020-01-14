@@ -14,7 +14,7 @@ async function parseProto(uploadParsedReqBody) {
   output.protoFile = protoFile;
   // WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
-  fs.writeFileSync("./protos/output.proto", protoFile, "utf8", function(err) {
+  fs.writeFileSync("./protos/output.proto", protoFile, "utf8", function (err) {
     if (err) {
       console.log("An error occurred while writing JSON Object to File.");
       return console.log(err);
@@ -117,7 +117,7 @@ function grpcRequest(serviceParsedReqBody, ws) {
   let output;
   // WRITE TO TEMP .PROTO
   // now let's write our protoObject string to the output.proto file:
-  fs.writeFileSync("./protos/output.proto", protoFile, "utf8", function(err) {
+  fs.writeFileSync("./protos/output.proto", protoFile, "utf8", function (err) {
     if (err) {
       console.log("An error occurred while writing JSON Object to File.");
       return console.log(err);
@@ -169,7 +169,7 @@ function grpcRequest(serviceParsedReqBody, ws) {
   if (requestInput.streamType === "unary") {
     // UNARY
     let reqTime = process.hrtime();
-    servicePackage[requestInput.methodName](messageInput, function(
+    servicePackage[requestInput.methodName](messageInput, function (
       err,
       feature
     ) {
@@ -184,10 +184,10 @@ function grpcRequest(serviceParsedReqBody, ws) {
         feature.message = `${resTimeStr}\n${feature.message}`;
         ws.send(feature.message);
       }
-      ws.close();
-      ws.onclose = function() {
-        console.log(ws.readyState);
-      };
+      // ws.close();
+      // ws.onclose = function() {
+      //   console.log(ws.readyState);
+      // };
     });
   } else if (requestInput.streamType === "serverStreaming") {
     // STREAMING
@@ -195,7 +195,7 @@ function grpcRequest(serviceParsedReqBody, ws) {
     const call = servicePackage[requestInput.methodName](messageInput);
     console.log("msginput", messageInput);
     // call.write({ greet: messageInput })
-    call.on("data", function(feature) {
+    call.on("data", function (feature) {
       console.log("feature received ", feature);
       let resTime = process.hrtime();
       let resTimeSec = resTime[0] - reqTime[0];
@@ -204,19 +204,19 @@ function grpcRequest(serviceParsedReqBody, ws) {
       feature.result = `${resTimeStr}\n${feature.result}`;
       ws.send(feature.result);
     });
-    call.on("end", function() {
+    call.on("end", function () {
       console.log("this server streaming has ended");
-      ws.close();
-      ws.onclose = function() {
-        console.log(ws.readyState);
-      };
+      // ws.close();
+      // ws.onclose = function() {
+      //   console.log(ws.readyState);
+      // };
     });
-    call.on("error", function(e) {
+    call.on("error", function (e) {
       // An error has occurred and the stream has been closed.
-      ws.close();
-      ws.onclose = function() {
-        console.log(ws.readyState);
-      };
+      // ws.close();
+      // ws.onclose = function() {
+      //   console.log(ws.readyState);
+      // };
     });
   }
   // PROMISIFY REQUEST

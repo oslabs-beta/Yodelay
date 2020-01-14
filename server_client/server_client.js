@@ -73,8 +73,8 @@ app.post("/service", async (req, res) => {
 //   res.end();
 // });
 //Listens for messages
-app.ws("/websocket", function(ws, req) {
-  ws.on("message", function(msg) {
+app.ws("/websocket", function (ws, req) {
+  ws.on("message", function (msg) {
     // console.log('app.ws msg: ', msg);
     const parsedReqBody = JSON.parse(msg);
     grpcRequest(parsedReqBody, ws);
@@ -100,7 +100,7 @@ app.use((req, res) => {
   res.status(404).send("Page Not Found");
 });
 // Global error handling:
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   const defaultError = {
     log: "Express error handler caught unknown middleware error",
     status: 400,
