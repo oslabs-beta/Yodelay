@@ -57,7 +57,7 @@ const config = (env: any): webpack.Configuration => {
       new webpack.DefinePlugin({
         'env.API_PORT': API_PORT
           ? JSON.stringify(API_PORT)
-          : JSON.stringify('8000'),
+          : JSON.stringify('8080'),
         'env.API_HOST': API_HOST
           ? JSON.stringify(API_HOST)
           : JSON.stringify('www.yodelay.io'),
