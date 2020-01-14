@@ -184,10 +184,10 @@ function grpcRequest(serviceParsedReqBody, ws) {
         feature.message = `${resTimeStr}\n${feature.message}`;
         ws.send(feature.message);
       }
-      ws.close();
-      ws.onclose = function() {
-        console.log(ws.readyState);
-      };
+      // ws.close();
+      // ws.onclose = function() {
+      //   console.log(ws.readyState);
+      // };
     });
   } else if (requestInput.streamType === "serverStreaming") {
     // STREAMING
