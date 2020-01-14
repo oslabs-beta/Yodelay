@@ -1,6 +1,6 @@
-FROM node:13.5.0
+FROM node:13.6.0
 WORKDIR /usr/src/app
 COPY . .
-RUN npm i
+RUN npm install
 EXPOSE 4000
 CMD ["npm", "start"]
