@@ -66,7 +66,7 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
     //   jsonRequestObj
     // );
 
-    const data = yield fetch(`http://www.yodelay.io/service`, {
+    const data = yield fetch(`http://localhost:4000/service`, {
       method: 'POST',
       headers: {
         Accept: 'text/plain',
