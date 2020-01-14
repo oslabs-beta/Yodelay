@@ -29,34 +29,31 @@ export const Settings: FunctionComponent<SettingsProps> = props => {
       changeThemeAction("dark-blue");
     };
 
-    //should evaluate to button-dark-yellow
-    let toggleThemeName = `button-${changeTheme}`;
-
     return (
       <div>
         ⚡⚙ COMING SOON ⚙⚡
         {/* Dark Yellow Theme */}
         <Button
-          className={toggleThemeName}
-          text={toggleThemeName}
+          className="button-dark-yellow"
+          text="Dark-Yellow"
           onClick={toggleDarkYellow}
         ></Button>
         {/* Light Yellow Theme */}
         <Button
-          className={toggleThemeName}
-          text={toggleThemeName}
+          className="button-light-yellow"
+          text="Light-Yellow"
           onClick={toggleLightYellow}
         ></Button>
         {/* Dark Green Theme */}
         <Button
-          className={toggleThemeName}
-          text={toggleThemeName}
+          className="button-dark-green"
+          text="Dark-Green"
           onClick={toggleDarkGreen}
         ></Button>
         {/* Dark Blue Theme */}
         <Button
-          className={toggleThemeName}
-          text={toggleThemeName}
+          className="button-dark-blue"
+          text="Dark-Blue"
           onClick={toggleDarkBlue}
         ></Button>
       </div>

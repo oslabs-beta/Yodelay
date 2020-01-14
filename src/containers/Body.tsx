@@ -10,7 +10,8 @@ import {
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
   clearResponseEditorActionCreator,
-  showPopupActionCreator
+  showPopupActionCreator,
+  changeThemeActionCreator
 } from "../actions";
 import {
   messageSelector,
@@ -25,6 +26,7 @@ import {
   popupSelector
 } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
+import { themeSelector } from "../reducers/changeTheme";
 
 // sets type for props
 interface BodyProps {
@@ -44,6 +46,8 @@ interface BodyProps {
   proto: string | ArrayBuffer;
   togglePopup?: typeof showPopupActionCreator;
   popupStatus?: boolean;
+  changeThemeAction: typeof changeThemeActionCreator;
+  changeTheme: string;
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -64,7 +68,8 @@ export const Body: FunctionComponent<BodyProps> = props => {
       selectResponse,
       togglePopup,
       popupStatus,
-      proto
+      proto,
+      changeTheme
     } = props;
 
     return (
@@ -87,6 +92,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             popupStatus={popupStatus}
             proto={proto}
             service={selectService}
+            changeTheme={changeTheme}
           ></TestProto>
         </Route>
         <Route path="/settings">
@@ -111,7 +117,8 @@ export default connect(
     selectRequest: requestSelector(state),
     selectResponse: responseSelector(state),
     proto: protoSelector(state),
-    popupStatus: popupSelector(state)
+    popupStatus: popupSelector(state),
+    changeTheme: themeSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
@@ -120,6 +127,7 @@ export default connect(
     setRequestAction: setRequestActionCreator,
     sendUnaryRequestAction: sendUnaryRequestActionCreator,
     clearResponseEditorAction: clearResponseEditorActionCreator,
-    togglePopup: showPopupActionCreator
+    togglePopup: showPopupActionCreator,
+    changeThemeAction: changeThemeActionCreator
   }
 )(Body);

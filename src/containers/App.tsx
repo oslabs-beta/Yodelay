@@ -12,7 +12,8 @@ import {
   uploadProtoActionCreator,
   uploadProtoSuccessfulActionCreator,
   loadServiceActionCreator,
-  showPopupActionCreator
+  showPopupActionCreator,
+  changeThemeActionCreator
 } from "../actions";
 import { countSelector } from "../reducers/test";
 import {
@@ -23,6 +24,7 @@ import {
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "../scss/index.scss";
 import { serviceMenuSelector } from "../reducers/updateMenu";
+import { themeSelector } from "../reducers/changeTheme";
 
 // import { loggedInSelector } from '../reducers/login'
 
@@ -35,6 +37,8 @@ interface AppProps {
   togglePopup: typeof showPopupActionCreator;
   proto: string | ArrayBuffer;
   popupStatus: boolean;
+  changeThemeAction: typeof changeThemeActionCreator;
+  changeTheme: string;
 }
 export const App: FunctionComponent<AppProps> = props => {
   {
@@ -44,16 +48,20 @@ export const App: FunctionComponent<AppProps> = props => {
       protoObjContents,
       togglePopup,
       proto,
-      popupStatus
+      popupStatus,
+      changeTheme
     } = props;
 
-    // console.log(serviceOptions)
+    //CHANGE THEME
+    let toggleThemeMainView = `main-view-${changeTheme}`;
+    let toggleThemeNavBar = `navbar-${changeTheme}`;
 
     return (
       //Wrap everything in Router so that nested containers/components have access to router
       <Router>
-        <div id="main-view">
-          <div id="navbar">
+        {/* main-view */}
+        <div id={toggleThemeMainView}>
+          <div id={toggleThemeNavBar}>
             <NavbarContainer></NavbarContainer>
           </div>
 
@@ -86,14 +94,16 @@ export default connect(
     serviceOptions: serviceMenuSelector(state),
     protoObjContents: parsedProtoObjSelector(state),
     proto: protoSelector(state),
-    popupStatus: popupSelector(state)
+    popupStatus: popupSelector(state),
+    changeTheme: themeSelector(state)
   }),
   {
     incrementAction: incrementActionCreator,
     uploadProto: uploadProtoActionCreator,
     uploadProtoSuccessful: uploadProtoSuccessfulActionCreator,
     loadServiceOptions: loadServiceActionCreator,
-    togglePopup: showPopupActionCreator
+    togglePopup: showPopupActionCreator,
+    changeThemeAction: changeThemeActionCreator
   }
 )(App);
 
