@@ -1,0 +1,27 @@
+@import "colours";
+
+.menu-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.url-input-dark-yellow {
+  background-color: $black-field;
+  color: $grey-font;
+}
+
+.url-input-light-yellow {
+  background-color: $grey-field;
+  color: $grey-font;
+}
+
+.url-input-dark-green {
+  background-color: $black-field;
+  color: $grey-font;
+}
+
+.url-input-dark-blue {
+  background-color: $black-field;
+  color: $grey-font;
+}
