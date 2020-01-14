@@ -25,6 +25,8 @@ export interface typeRequest {
   streamType: string;
 }
 
+
+
 export interface initialProtoStateType {
   //obj containing pased proto file, incl. services, request methods, etc.
   parsedProtosObj: object;
@@ -42,6 +44,7 @@ export interface initialProtoStateType {
   //ignore this
   proto: string | ArrayBuffer;
   showPopup: boolean;
+  wsCommandType: string;
 }
 
 const initialState: initialProtoStateType = {
@@ -60,7 +63,8 @@ const initialState: initialProtoStateType = {
   },
   responseStream: [],
   proto: "",
-  showPopup: false
+  showPopup: false,
+  wsCommandType: 'sendInit'
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 };
 
