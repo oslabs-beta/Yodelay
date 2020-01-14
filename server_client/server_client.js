@@ -6,7 +6,7 @@ const path = require('path');
 const { grpcRequest, parseProto } = require('./helper_request_func');
 const app = express();
 // changed to port 4000 because react hot module runs on 3000
-const port = 4000;
+const port = 3000;
 // this line hackily solves the CORS errors when sending post requests to /upload
 // refactor eventually
 app.use(cors());
