@@ -167,8 +167,9 @@ function grpcRequest(serviceParsedReqBody, ws) {
 
   // need to figure out if it's unary or streaming
   if (requestInput.streamType === "unary") {
-    // UNARY
+    ////////// UNARY //////////
     let reqTime = process.hrtime();
+    //servicePackage[requestInput.methodName] refers to gRPC request method
     servicePackage[requestInput.methodName](messageInput, function(
       err,
       feature
@@ -190,10 +191,10 @@ function grpcRequest(serviceParsedReqBody, ws) {
       };
     });
   } else if (requestInput.streamType === "serverStreaming") {
-    // STREAMING
+    ////////// SERVER STREAMING //////////
     let reqTime = process.hrtime();
     const call = servicePackage[requestInput.methodName](messageInput);
-    console.log("msginput", messageInput);
+    // console.log("msginput", messageInput);
     // call.write({ greet: messageInput })
     call.on("data", function(feature) {
       console.log("feature received ", feature);
@@ -206,6 +207,28 @@ function grpcRequest(serviceParsedReqBody, ws) {
     });
     call.on("end", function() {
       console.log("this server streaming has ended");
+      ws.close();
+      ws.onclose = function() {
+        console.log(ws.readyState);
+      };
+    });
+    call.on("error", function(e) {
+      // An error has occurred and the stream has been closed.
+      ws.close();
+      ws.onclose = function() {
+        console.log(ws.readyState);
+      };
+    });
+  } else if (requestInput.streamType === "clientStreaming") {
+    ////////// CLIENT STREAMING //////////
+    const call = servicePackage[requestInput.methodName](messageInput);
+    //receive data from gRPC demo server (resulting from call.write)
+    call.end();
+    call.on("data", function(greetResponse) {
+      console.log("response received ", greetResponse);
+      ws.send(greetResponse.result);
+    });
+    call.on("end", function() {
       ws.close();
       ws.onclose = function() {
         console.log(ws.readyState);

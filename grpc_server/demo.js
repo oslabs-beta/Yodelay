@@ -53,7 +53,7 @@ function gRPCPermutations(call, callback) {
 }
 // server streaming example
 function greetManyTimes(call, callback) {
-  console.log(call);
+  // console.log(call);
   let first_name = call.request.greeting.first_name;
   // console.log(call.request)
   let count = 0,
@@ -61,7 +61,7 @@ function greetManyTimes(call, callback) {
       // var greetManyTimesResponse = new demo_proto.GreetManyTimesResponse();
       let greetManyTimesResponse = {};
       greetManyTimesResponse.result = first_name;
-      console.log(greetManyTimesResponse.result);
+      // console.log(greetManyTimesResponse.result);
       // setup streaming
       call.write(greetManyTimesResponse);
       if (++count > 9) {
@@ -70,7 +70,34 @@ function greetManyTimes(call, callback) {
       }
     }, 1000);
 }
-// bidi streaming
+
+//Client streaming example
+//In Paulo's example - he uses setInterval to make the client programmatically send requests using setInterval. After all requests are sent, on.end is called which indicates all messages are sent
+//Paulo's server just listens for call.on(end)
+
+//For us --> on client side, message should be sent added to responseStream everytime sendReq button is clicked
+//Upon user clicking end stream button, call.end happens and server sends back response
+//long greet response = "whew that was a long one - you yodeled xxx number of times!"
+
+function longGreet(call, callback) {
+  let greetArr = [];
+  let greet = call.request.greet;
+  //on receiving data, push greeting into array
+  call.on("data", greet => {
+    greetArr.push(greet);
+  });
+
+  //upon ending, return response
+  call.on("end", greet => {
+    let numOfYodel = greetArr.length - 1;
+    let LongGreetResponse = `You Yodeled ${numOfYodel} of times!`;
+    console.log("client streaming has ended");
+    //or should this be ws.send? it needs to go to front end
+    call.write(LongGreetResponse);
+  });
+}
+
+// bidi streaming example
 // async function sleep(interval) {
 //   return new Promise(resolve => {
 //     setTimeout(() => resolve(), interval);
@@ -102,7 +129,8 @@ function main() {
     YodelayWorld,
     toLowerCase,
     gRPCPermutations,
-    greetManyTimes
+    greetManyTimes,
+    longGreet
     // greetEveryone
   });
   server.bind("0.0.0.0:8080", grpc.ServerCredentials.createInsecure());
