@@ -11,15 +11,15 @@ package helloaworld;
 service YodelayAPI {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
-  rpc SayHelloAgain (HelloRequestAGAIN) returns (HelloReplyAGAIN) {}
+  rpc SayHelloAgain (HelloRequestAGAIN) returns (stream HelloReplyAGAIN) {}
   // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
 }
 
 // The SECOND greeting service definition.
 service servTWO {
   // Sends a greeting
-  rpc SayHelloTWO (HelloRequestTWO) returns (HelloReplyTWO) {}
-  rpc SayHelloAgainTWO (HelloRequestTWOagain) returns (HelloReplyTWOagain) {}
+  rpc SayHelloTWO (stream HelloRequestTWO) returns (HelloReplyTWO) {}
+  rpc SayHelloAgainTWO (stream HelloRequestTWOagain) returns (stream HelloReplyTWOagain) {}
   // rpc SayHelloAgainAgain (HelloRequest) returns (HelloReply) {}
 }
 
