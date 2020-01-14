@@ -5,6 +5,7 @@
   "repository": "",
   "main": "index.js",
   "scripts": {
+    "aws": "concurrently --kill-others \"npm run src-dev\" \"npm start\" \"npm run grpc\"",
     "start": "nodemon server_client/server_client.js",
     "grpc": "nodemon grpc_server/demo.js",
     "src-dev": "webpack-dev-server --config webpack.dev.ts",
