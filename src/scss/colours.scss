@@ -1,20 +1,38 @@
 // dark mode
 
-
-//postwoman theme
-$black-background:#202123;
-$black-container: #1d1e1f;
-$black-field: #1a1b1c;
+//yodelay default - yellow - dark- theme
+$black-background: #202123;
 $grey-navbar: #242527;
+$yellow: #f9c132;
 $grey-font: #e8e8e9;
-$green: #50FA7B;
+$disabled: #969696;
+$black-field: #1a1b1c;
 
-//yodelay yellow theme
+//yellow - light mode
+$white-background: #fafafa;
+$yellow: #f9c132; //navbar & font
+$grey-font: #e8e8e9;
+$disabled: #969696;
+$grey-field: #e8e8e9;
+
+//green - dark theme
+$black-background: #202123;
+$grey-navbar: #242527;
+$green: #50fa7b;
+$grey-font: #e8e8e9;
+$disabled: #969696;
+$black-field: #1a1b1c;
+
+//blue - dark theme
+$black-background: #202123;
+$grey-navbar: #242527;
+$blue: #57b5f9;
+$grey-font: #e8e8e9;
+$disabled: #969696;
+$black-field: #1a1b1c;
+
+//misc - not used yet
+$black-container: #1d1e1f;
 $Yblack-background: #181e23;
 $Ygrey-navbar: #232b33;
 $Yblue-font: #a6e0db;
-$yellow: #f9c132;
-
-
-//common
-$disabled: #969696;
