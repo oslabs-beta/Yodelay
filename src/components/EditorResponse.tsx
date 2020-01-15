@@ -3,19 +3,24 @@ import React, { FunctionComponent } from "react";
 import AceEditor from "react-ace";
 import { Tabs } from "antd";
 import { typeResponse } from "../reducers/uploadProto";
+
 import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/theme-merbivore";
+import "ace-builds/src-noconflict/theme-cobalt";
 import "ace-builds/src-noconflict/theme-pastel_on_dark";
 import "ace-builds/src-noconflict/mode-json";
+import "ace-builds/src-noconflict/theme-clouds";
+import "ace-builds/src-noconflict/theme-crimson_editor";
+import "ace-builds/src-noconflict/theme-sqlserver";
 
 interface ResponseProps {
   response: typeResponse[];
+  changeTheme: string;
 }
 
 export const EditorResponse: FunctionComponent<ResponseProps> = props => {
   {
     const defaultKey = `responseTab`;
-    const { response } = props;
+    const { response, changeTheme } = props;
 
     let stringResponse = "";
     response.forEach((object, i) => {
@@ -31,6 +36,14 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
     //   let nanoSeconds = response.responseTime[1].toString();
     //   responseTime = 'Response Time:' + seconds + '.' + nanoSeconds[0] + nanoSeconds[1] + nanoSeconds[2] + 's';
     // }
+
+    //CHANGE THEME
+    let toggleTheme =
+      changeTheme === "dark-yellow" ||
+      changeTheme === "dark-green" ||
+      changeTheme === "dark-blue"
+        ? "monokai"
+        : "SQL Server";
 
     return (
       <>
@@ -48,7 +61,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
               value={stringResponse}
               width={"100%"}
               height={"250px"}
-              theme="monokai"
+              theme={toggleTheme}
               fontSize={12}
               cursorStart={2}
               showGutter

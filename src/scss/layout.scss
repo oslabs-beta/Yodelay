@@ -1,44 +1,144 @@
 @import "colours";
 
-
-
-html, body, #root, #main-view{
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    background-color: $black-background;
-    color: $grey-font;
-    font-weight: 500;
-    font-size: 14px;
-    font-family: 'Roboto Mono', monospace;
-    display: flex;
-    flex-direction: row;
+//NOT AFFECTED BY THEME
+#app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-left: 15px;
 }
 
-#navbar {
-    background-color: $grey-navbar;
-    display: flex;
-    flex-direction: column;
-    width: 50px;
-    height: 100%;
-    padding: 15px;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
+#menu-and-view-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-#app-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    margin-left: 15px
+#footer {
+  font-size: 12px;
 }
 
-#testProto{
-    color: $yellow
+//AFFECTED BY THEME
+//DEFAULT - DARK-YELLOW MODE
+html,
+body,
+#root,
+#main-view-dark-yellow {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $black-background;
+  color: $grey-font;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Roboto Mono", monospace;
+  display: flex;
+  flex-direction: row;
 }
 
-#footer{
-    font-size: 12px;
+#navbar-dark-yellow {
+  background-color: $grey-navbar;
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  height: 100%;
+  padding: 15px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#testProto-dark-yellow {
+  color: $yellow;
+}
+
+//LIGHT-YELLOW MODE
+#main-view-light-yellow {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $white-background;
+  color: $disabled;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Roboto Mono", monospace;
+  display: flex;
+  flex-direction: row;
+}
+
+#navbar-light-yellow {
+  background-color: $yellow;
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  height: 100%;
+  padding: 15px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#testProto-light-yellow {
+  color: $yellow;
+}
+
+//DARK-GREEN MODE
+#main-view-dark-green {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $black-background;
+  color: $grey-font;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Roboto Mono", monospace;
+  display: flex;
+  flex-direction: row;
+}
+
+#navbar-dark-green {
+  background-color: $grey-navbar;
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  height: 100%;
+  padding: 15px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#testProto-green {
+  color: $green;
+}
+
+//DARK-BLUE MODE
+#main-view-dark-blue {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $black-background;
+  color: $grey-font;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Roboto Mono", monospace;
+  display: flex;
+  flex-direction: row;
+}
+
+#navbar-dark-blue {
+  background-color: $grey-navbar;
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  height: 100%;
+  padding: 15px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#testProto-blue {
+  color: $blue;
 }

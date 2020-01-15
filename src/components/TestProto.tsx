@@ -41,6 +41,7 @@ interface TestProtoProps {
   proto: string | ArrayBuffer;
   togglePopup: typeof showPopupActionCreator;
   popupStatus: boolean;
+  changeTheme: string;
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
@@ -62,6 +63,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       wsCommand,
       togglePopup,
       popupStatus,
+      changeTheme,
       setWsCommandAction,
       setMessageAction,
       setServiceAction,
@@ -98,9 +100,15 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
         togglePopup(!popupStatus);
       }
     };
+    //based on state (e.g. "yellow"), pass down
+    const toggle = "yellow";
+
+    //CHANGE THEME
+    let toggleThemeTestProto = `testProto-${changeTheme}`;
+    let toggleThemeSendReqViewProto = `button button-${changeTheme}`;
 
     return (
-      <div id="testProto">
+      <div id={toggleThemeTestProto}>
         Test Your Proto File:
         <div id="menu-and-view-section">
           <div className="menu-options">
@@ -128,7 +136,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             ></DropdownRequest>
 
             <Button
-              className="button"
+              className={toggleThemeSendReqViewProto}
               text="Send Request"
               onClick={handleRequestClick}
             />
@@ -145,7 +153,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
           </div>
           <div id="handleViewClick">
             <Button
-              className="button"
+              className={toggleThemeSendReqViewProto}
               text="View Proto File"
               onClick={handleViewClick}
             />
@@ -156,6 +164,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             setMessageAction={setMessageAction}
             data={data}
             response={response}
+            changeTheme={changeTheme}
           />
         </div>
       </div>

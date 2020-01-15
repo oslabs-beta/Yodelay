@@ -1,45 +1,50 @@
-import React, {FunctionComponent} from 'react'
+import React, { FunctionComponent } from "react";
 // import AceEditor, {Command} from 'react-ace'
-import AceEditor from 'react-ace'
-import { Tabs } from 'antd';
+import AceEditor from "react-ace";
+import { Tabs } from "antd";
 
-import 'ace-builds/src-noconflict/theme-monokai'
-import 'ace-builds/src-noconflict/theme-cobalt'
-import 'ace-builds/src-noconflict/theme-pastel_on_dark'
-
-import 'ace-builds/src-noconflict/mode-json'
-
-
-
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-cobalt";
+import "ace-builds/src-noconflict/theme-pastel_on_dark";
+import "ace-builds/src-noconflict/mode-json";
+import "ace-builds/src-noconflict/theme-clouds";
+import "ace-builds/src-noconflict/theme-crimson_editor";
+import "ace-builds/src-noconflict/theme-sqlserver";
 
 interface RequestProps {
-  data?: string
-  newRequest: (value: string) => void
+  data?: string;
+  newRequest: (value: string) => void;
+  changeTheme: string;
 }
 
 export const EditorRequest: FunctionComponent<RequestProps> = props => {
   {
-    const { 
-      data, 
-      newRequest,
-    } = props
-  
-    const editorTabKey = `editor Tab`; 
-  
+    const { data, newRequest, changeTheme } = props;
+
+    const editorTabKey = `editor Tab`;
+
+    //CHANGE THEME
+    let toggleTheme =
+      changeTheme === "dark-yellow" ||
+      changeTheme === "dark-green" ||
+      changeTheme === "dark-blue"
+        ? "monokai"
+        : "SQL Server";
+
     return (
       <>
         <Tabs
-        defaultActiveKey={editorTabKey}
-        tabPosition={"top"}
-        style={{width: "100%"}}
+          defaultActiveKey={editorTabKey}
+          tabPosition={"top"}
+          style={{ width: "100%" }}
         >
           <Tabs.TabPane tab="Editor" key={editorTabKey}>
             <AceEditor
-              mode='json'
-              name='requestInput'
+              mode="json"
+              name="requestInput"
               value={data}
               onChange={newRequest}
-              theme='monokai'
+              theme={toggleTheme}
               height={"250px"}
               width={"100%"}
               wrapEnabled
@@ -52,11 +57,11 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
               setOptions={{
                 useWorker: true,
                 displayIndentGuides: true
-              }}  
+              }}
             />
           </Tabs.TabPane>
         </Tabs>
       </>
-    )
+    );
   }
-}
+};

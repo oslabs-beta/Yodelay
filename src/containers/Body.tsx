@@ -11,6 +11,7 @@ import {
   sendUnaryRequestActionCreator,
   clearResponseEditorActionCreator,
   showPopupActionCreator,
+  changeThemeActionCreator,
   setWsCommandActionCreator
 } from "../actions";
 import {
@@ -27,6 +28,7 @@ import {
   setWsSelector
 } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
+import { themeSelector } from "../reducers/changeTheme";
 
 // sets type for props
 interface BodyProps {
@@ -48,6 +50,8 @@ interface BodyProps {
   proto: string | ArrayBuffer;
   togglePopup?: typeof showPopupActionCreator;
   popupStatus?: boolean;
+  changeThemeAction: typeof changeThemeActionCreator;
+  changeTheme: string;
 
 }
 
@@ -71,7 +75,8 @@ export const Body: FunctionComponent<BodyProps> = props => {
       selectResponse,
       togglePopup,
       popupStatus,
-      proto
+      proto,
+      changeTheme
     } = props;
 
     return (
@@ -95,6 +100,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             popupStatus={popupStatus}
             proto={proto}
             service={selectService}
+            changeTheme={changeTheme}
             wsCommand={selectWsCommand}
           ></TestProto>
         </Route>
@@ -121,6 +127,7 @@ export default connect(
     selectResponse: responseSelector(state),
     proto: protoSelector(state),
     popupStatus: popupSelector(state),
+    changeTheme: themeSelector(state),
     selectWsCommand: setWsSelector(state)
   }),
   {
@@ -131,6 +138,7 @@ export default connect(
     sendUnaryRequestAction: sendUnaryRequestActionCreator,
     clearResponseEditorAction: clearResponseEditorActionCreator,
     togglePopup: showPopupActionCreator,
+    changeThemeAction: changeThemeActionCreator,
     setWsCommandAction: setWsCommandActionCreator
   }
 )(Body);
