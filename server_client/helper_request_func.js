@@ -97,7 +97,8 @@ function grpcRequest(serviceParsedReqBody) {
   // console.log("grpcRequest input proto object: ", input.protoObject)
   // MESSAGE FIELDS:
   // this is the server where we are sending the gRPC test to:
-  let url = input.url;
+  // let url = input.url;
+  let url = 'grpc.us-east-1.elasticbeanstalk.com';
   // console.log('request url: ', url)
 
   // name of the .proto package:
