@@ -59,7 +59,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
               readOnly={true}
               setOptions={{
                 useWorker: true,
-                displayIndentGuides: false,
+                displayIndentGuides: true,
                 highlightGutterLine: false
               }}
             />

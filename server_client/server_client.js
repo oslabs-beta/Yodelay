@@ -2,9 +2,10 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { grpcRequest, parseProto } = require("./helper_request_func");
+const { parseProto, GrpcRequestClass } = require("./helper_request_func");
 const app = express();
 const expressWs = require("express-ws")(app);
+
 // changed to port 4000 because react hot module runs on 3000
 const port = 4000;
 // this line hackily solves the CORS errors when sending post requests to /upload
@@ -56,16 +57,16 @@ app.post("/upload", async (req, res) => {
 // * SERVICE:
 // * Start GRPC Server Call:
 // front end sends back the request when they hit the /service endpoint.
-app.post("/service", async (req, res) => {
-  console.log("---------SERVICE-------------");
-  const parsedReqBody = JSON.parse(req.body);
-  // to our grpc request function
-  // console.log('/service req.body: ', req.body)
-  let output = await grpcRequest(parsedReqBody).catch();
-  // console.log('/service req.body output: ', output)
-  // then send response with the output that's been jsonified.
-  res.json(output);
-});
+// app.post("/service", async (req, res) => {
+//   console.log("---------SERVICE-------------");
+//   const parsedReqBody = JSON.parse(req.body);
+//   // to our grpc request function
+//   // console.log('/service req.body: ', req.body)
+//   let output = await grpcRequest(parsedReqBody).catch();
+//   // console.log('/service req.body output: ', output)
+//   // then send response with the output that's been jsonified.
+//   res.json(output);
+// });
 // websocket routes for streaming
 // starts client handshake
 // app.get('/websocket', function (req, res, next) {
@@ -73,34 +74,38 @@ app.post("/service", async (req, res) => {
 //   res.end();
 // });
 //Listens for messages
-app.ws("/websocket", function(ws, req) {
-  ws.on("message", function(msg) {
-    // console.log('app.ws msg: ', msg);
+app.ws("/websocket", function (ws, req) {
+
+  const grpcRequestClass = new GrpcRequestClass(ws);
+
+  ws.on("message", function (msg) {
     const parsedReqBody = JSON.parse(msg);
-    grpcRequest(parsedReqBody, ws);
+    
+    if(parsedReqBody.wsCommand === 'sendInit'){
+      console.log('sendInit')
+      grpcRequestClass.sendInit(parsedReqBody);
+    } else if ( parsedReqBody.wsCommand === 'push') {
+      console.log('push')
+      let messageInput = JSON.parse(parsedReqBody.messageInput);
+      console.log('||||||||||||||||PUSH', messageInput)
+      grpcRequestClass._call.write(messageInput);
+    } else if (parsedReqBody.wsCommand === 'end') {
+      if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
+      grpcRequestClass._call.cancel();
+      console.log('Cancel')
+      } else {
+        grpcRequestClass._call.end();
+        console.log('end')
+      }
+    }
   });
-  // setInterval(() => {
-  //   ws.send('I am your server, made of sockets')
-  // }, 1000)
-  // ws.send('I am your server, made of sockets')
-  // console.log('socket', req.testing);
 });
-// *
-// * End GRPC Server Call
-//cedric's upload path (likely to be deleted)
-// app.post('/upload', (req, res) => {
-//   console.log(
-//     'here is the parsed protoFile string sent to /upload',
-//     JSON.parse(req.body)
-//   );
-//   res.json('protoFile uploaded succesfully man');
-// });
-// Unknown Route:
+
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
 });
 // Global error handling:
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   const defaultError = {
     log: "Express error handler caught unknown middleware error",
     status: 400,

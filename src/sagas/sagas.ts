@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select, take } from "redux-saga/effects";
+import { call, put, takeLatest, select, take, fork } from "redux-saga/effects";
 import { takeEvery, eventChannel } from "redux-saga";
 // import moment from 'moment'
 import {
@@ -43,43 +43,157 @@ function* sendProto({ payload }: uploadProto) {
   }
 }
 // payload is not necessary, extract all of state from state selector
-function* unaryRequest({ payload }: sendUnaryRequest) {
-  try {
-    const state = yield select(stateSelector);
-    const jsonRequestObj = JSON.stringify({
-      url: state.urlInput,
-      serviceInput: state.serviceInput,
-      messageInput: state.messageInput,
-      requestInput: state.requestInput,
-      package: state.parsedProtosObj.package,
-      protoFile: state.parsedProtosObj.protoFile,
-      protoDescriptor: state.parsedProtosObj.protoDescriptor
-    });
-    // console.log(
-    //   '-----json-requestObj in unaryRequest saga -----',
-    //   jsonRequestObj
-    // );
-    const data = yield fetch(`http://localhost:4000/service`, {
-      method: "POST",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain"
-      },
-      body: jsonRequestObj
-    });
-    const response = yield data.json();
-    yield put(displayUnaryResponseActionCreator(response));
-    console.log(
-      "here is the respone message returned when a unary request is completed:",
-      response
-    );
-  } catch {
-    console.log("error in unary request");
-  }
-}
+// function* unaryRequest({ payload }: sendUnaryRequest) {
+//   try {
+//     const state = yield select(stateSelector);
+//     const jsonRequestObj = JSON.stringify({
+//       url: state.urlInput,
+//       serviceInput: state.serviceInput,
+//       messageInput: state.messageInput,
+//       requestInput: state.requestInput,
+//       package: state.parsedProtosObj.package,
+//       protoFile: state.parsedProtosObj.protoFile,
+//       protoDescriptor: state.parsedProtosObj.protoDescriptor
+//     });
+//     // console.log(
+//     //   '-----json-requestObj in unaryRequest saga -----',
+//     //   jsonRequestObj
+//     // );
+//     const data = yield fetch(`http://localhost:4000/service`, {
+//       method: "POST",
+//       headers: {
+//         Accept: "text/plain",
+//         "Content-Type": "text/plain"
+//       },
+//       body: jsonRequestObj
+//     });
+//     const response = yield data.json();
+//     yield put(displayUnaryResponseActionCreator(response));
+//     console.log(
+//       "here is the respone message returned when a unary request is completed:",
+//       response
+//     );
+//   } catch {
+//     console.log("error in unary request");
+//   }
+// }
 // Websockets/Streaming
-function* createEventChannel(mySocket?: any) {
-  console.log("this is the typeof mySocket: ", typeof mySocket);
+// function* createEventChannel(mySocket?: any) {
+//   console.log("this is the typeof mySocket: ", typeof mySocket);
+//   const state = yield select(stateSelector);
+//   const jsonRequestObj = JSON.stringify({
+//     url: state.urlInput,
+//     serviceInput: state.serviceInput,
+//     messageInput: state.messageInput,
+//     requestInput: state.requestInput,
+//     package: state.parsedProtosObj.package,
+//     protoFile: state.parsedProtosObj.protoFile
+//     // protoDescriptor: state.parsedProtosObj.protoDescriptor
+//   });
+//   // console.log('jsonRequestObj', jsonRequestObj)
+//   return eventChannel(emit => {
+//     // listen for messages from server
+//     mySocket.onmessage = (message: any) => {
+//       console.log("message, ", message);
+//       emit(message);
+//     };
+//     // when connection is first established
+//     mySocket.onopen = function(event: any) {
+//       ""
+//       mySocket.send(jsonRequestObj);
+//     };
+//     return () => {
+//       mySocket.close();
+//     };
+//   });
+// } 
+
+// function connect() {
+//   const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+//   return mySocket;
+// }
+
+// function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
+  // const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+
+//   function createEventChannel(mySocket?: any) {
+//     console.log("this is the typeof mySocket: ", typeof mySocket);
+//     const state = yield select(stateSelector);
+//     const jsonRequestObj = JSON.stringify({
+//       url: state.urlInput,
+//       serviceInput: state.serviceInput,
+//       messageInput: state.messageInput,
+//       requestInput: state.requestInput,
+//       package: state.parsedProtosObj.package,
+//       protoFile: state.parsedProtosObj.protoFile
+//       // protoDescriptor: state.parsedProtosObj.protoDescriptor
+//     });
+//     // console.log('jsonRequestObj', jsonRequestObj)
+//     return eventChannel(emit => {
+//       // listen for messages from server
+//       mySocket.onmessage = (message: any) => {
+//         console.log("message, ", message);
+//         emit(message);
+//       };
+//       // when connection is first established
+//       mySocket.onopen = function(event: any) {
+//         ""
+//         mySocket.send(jsonRequestObj);
+//       };
+//       return () => {
+//         mySocket.close();
+//       };
+//     });
+//     const response = yield data.json();
+//     yield put(displayUnaryResponseActionCreator(response));
+//     console.log(
+//       "here is the respone message returned when a unary request is completed:",
+//       response
+//     );
+//   } catch {
+//     console.log("error in unary request");
+//   }
+// }
+// // Websockets/Streaming
+// function* createEventChannel(mySocket?: any) {
+//   console.log("this is the typeof mySocket: ", typeof mySocket);
+//   const state = yield select(stateSelector);
+//   const jsonRequestObj = JSON.stringify({
+//     url: state.urlInput,
+//     serviceInput: state.serviceInput,
+//     messageInput: state.messageInput,
+//     requestInput: state.requestInput,
+//     package: state.parsedProtosObj.package,
+//     protoFile: state.parsedProtosObj.protoFile
+//     // protoDescriptor: state.parsedProtosObj.protoDescriptor
+//   });
+//   // console.log('jsonRequestObj', jsonRequestObj)
+//   return eventChannel(emit => {
+//     // listen for messages from server
+//     mySocket.onmessage = (message: any) => {
+//       console.log("message, ", message);
+//       emit(message);
+//     };
+//     // when connection is first established
+//     mySocket.onopen = function (event: any) {
+//       mySocket.send(jsonRequestObj);
+//     };
+//     return () => {
+//       mySocket.close();
+//     };
+//   });
+// }
+
+function connect() {
+  console.log('connect')
+  const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+  console.log('mySocket inside of connect', mySocket)
+  return mySocket
+}
+
+function* subscribe(socket?: any) {
+  console.log('subscribe')
+  const message = yield take(SEND_UNARY_REQUEST)
   const state = yield select(stateSelector);
   const jsonRequestObj = JSON.stringify({
     url: state.urlInput,
@@ -90,28 +204,36 @@ function* createEventChannel(mySocket?: any) {
     protoFile: state.parsedProtosObj.protoFile
     // protoDescriptor: state.parsedProtosObj.protoDescriptor
   });
-  // console.log('jsonRequestObj', jsonRequestObj)
   return eventChannel(emit => {
-    // listen for messages from server
-    mySocket.onmessage = (message: any) => {
-      console.log("message, ", message);
+    console.log('eventChannel')
+
+    // const update = (data: any) => {
+    //   console.log('listened data: ', data)
+    //   return emit(data)
+    // }
+    //listen for messages from server
+    socket.onmessage = (message: any) => {
+      console.log("socket.onmessage, ", message);
       emit(message);
     };
-    // when connection is first established
-    mySocket.onopen = function(event: any) {
-      mySocket.send(jsonRequestObj);
-    };
+    // // when connection is first established
+    // socket.onopen = function (event: any) {
+    //   socket.send(jsonRequestObj);
+    // };
     return () => {
-      mySocket.close();
+      socket.close();
     };
   });
 }
-function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
-  const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
-  const channel = yield call(createEventChannel, mySocket, payload);
+
+
+function* read(socket?: any) {
+  const channel = yield call(subscribe, socket);
+  console.log('read')
+
   while (true) {
     let message = yield take(channel);
-    console.log("-----------", message);
+    console.log("-----------message inside read saga", message);
     // dispatch actions with messages recieved from ws connection with server here
     yield put(
       displayUnaryResponseActionCreator({
@@ -121,11 +243,50 @@ function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
     );
   }
 }
+
+function* write(socket?: any) {
+  while (true) {
+    const message = yield take(SEND_UNARY_REQUEST)
+    const state = yield select(stateSelector);
+    const jsonRequestObj = JSON.stringify({
+      url: state.urlInput,
+      serviceInput: state.serviceInput,
+      messageInput: state.messageInput,
+      requestInput: state.requestInput,
+      package: state.parsedProtosObj.package,
+      protoFile: state.parsedProtosObj.protoFile,
+      wsCommand: state.wsCommand
+      // protoDescriptor: state.parsedProtosObj.protoDescriptor
+    });
+    console.log('write saga message', message)
+    console.log('socket inside write', socket)
+    socket.send(jsonRequestObj)
+  }
+}
+
+// function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
+//   const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+//   const channel = yield call(createEventChannel, mySocket, payload);
+//   while (true) {
+//     let message = yield take(channel);
+//     console.log("-----------", message);
+//     // dispatch actions with messages recieved from ws connection with server here
+//     yield put(
+//       displayUnaryResponseActionCreator({
+//         message: message.data,
+//         responseTime: message.timeStamp
+//       })
+//     );
+//   }
+// }
 function* saga() {
   console.log("saga");
   yield takeLatest(UPLOAD_PROTO, sendProto);
   // this needs refactoring as it is for streaming requests
-  yield takeLatest(SEND_UNARY_REQUEST, initializeWebSocketsChannel);
+  const socket = yield call(connect)
+  yield fork(read, socket)
+  yield fork(write, socket)
+  // yield takeLatest(SEND_UNARY_REQUEST, initializeWebSocketsChannel);
   // yield takeLatest(SEND_UNARY_REQUEST, unaryRequest);
 }
 export default saga;
