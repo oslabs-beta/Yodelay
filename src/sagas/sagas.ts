@@ -255,7 +255,7 @@ function* write(socket?: any) {
       requestInput: state.requestInput,
       package: state.parsedProtosObj.package,
       protoFile: state.parsedProtosObj.protoFile,
-      type: state.wsCommandType
+      wsCommand: state.wsCommand
       // protoDescriptor: state.parsedProtosObj.protoDescriptor
     });
     console.log('write saga message', message)

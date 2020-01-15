@@ -10,7 +10,8 @@ import {
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
   clearResponseEditorActionCreator,
-  showPopupActionCreator
+  showPopupActionCreator,
+  setWsCommandActionCreator
 } from "../actions";
 import {
   messageSelector,
@@ -22,7 +23,8 @@ import {
   typeRequest,
   parsedProtoObjSelector,
   protoSelector,
-  popupSelector
+  popupSelector,
+  setWsSelector
 } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
 
@@ -36,14 +38,17 @@ interface BodyProps {
   setServiceAction: typeof setServiceActionCreator;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
   clearResponseEditorAction: typeof clearResponseEditorActionCreator;
+  setWsCommandAction: typeof setWsCommandActionCreator;
   selectMessage: string;
   selectService: string;
   selectUrl: string;
   selectRequest: typeRequest;
   selectResponse: typeResponse[];
+  selectWsCommand: string;
   proto: string | ArrayBuffer;
   togglePopup?: typeof showPopupActionCreator;
   popupStatus?: boolean;
+
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -55,8 +60,10 @@ export const Body: FunctionComponent<BodyProps> = props => {
       setServiceAction,
       setUrlAction,
       setRequestAction,
+      setWsCommandAction,
       sendUnaryRequestAction,
       clearResponseEditorAction,
+      selectWsCommand,
       selectMessage,
       selectService,
       selectUrl,
@@ -77,6 +84,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             setRequestAction={setRequestAction}
             setServiceAction={setServiceAction}
             setUrlAction={setUrlAction}
+            setWsCommandAction={setWsCommandAction}
             sendUnaryRequestAction={sendUnaryRequestAction}
             clearResponseEditor={clearResponseEditorAction}
             url={selectUrl}
@@ -87,6 +95,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             popupStatus={popupStatus}
             proto={proto}
             service={selectService}
+            wsCommand={selectWsCommand}
           ></TestProto>
         </Route>
         <Route path="/settings">
@@ -111,7 +120,8 @@ export default connect(
     selectRequest: requestSelector(state),
     selectResponse: responseSelector(state),
     proto: protoSelector(state),
-    popupStatus: popupSelector(state)
+    popupStatus: popupSelector(state),
+    selectWsCommand: setWsSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
@@ -120,6 +130,7 @@ export default connect(
     setRequestAction: setRequestActionCreator,
     sendUnaryRequestAction: sendUnaryRequestActionCreator,
     clearResponseEditorAction: clearResponseEditorActionCreator,
-    togglePopup: showPopupActionCreator
+    togglePopup: showPopupActionCreator,
+    setWsCommandAction: setWsCommandActionCreator
   }
 )(Body);

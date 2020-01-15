@@ -80,8 +80,16 @@ app.ws("/websocket", function (ws, req) {
 
   ws.on("message", function (msg) {
     const parsedReqBody = JSON.parse(msg);
-    if(parsedReqBody.type === 'sendInit'){
+    if(parsedReqBody.wsCommand === 'sendInit'){
+      console.log('sendInit')
       grpcRequestClass.sendInit(parsedReqBody);
+    } else if ( parsedReqBody.wsCommand === 'push') {
+      console.log('push')
+      let messageInput = JSON.parse(parsedReqBody.messageInput);
+      grpcRequestClass._call.write(messageInput);
+    } else if (parsedReqBody.wsCommand === 'end') {
+      console.log('end')
+      grpcRequestClass._call.end();
     }
     // console.log('app.ws msg: ', msg);
     // grpcRequestClass.call(parsedReqBody)

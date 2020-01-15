@@ -10,7 +10,8 @@ import {
   SEND_UNARY_REQUEST,
   DISPLAY_UNARY_RESPONSE,
   CLEAR_RESPONSE_EDITOR,
-  SHOW_POPUP
+  SHOW_POPUP,
+  SET_WS_COMMAND,
 } from "../actions";
 import { setIn } from "timm";
 import { RootState } from ".";
@@ -44,7 +45,7 @@ export interface initialProtoStateType {
   //ignore this
   proto: string | ArrayBuffer;
   showPopup: boolean;
-  wsCommandType: string;
+  wsCommand: string;
 }
 
 const initialState: initialProtoStateType = {
@@ -64,7 +65,7 @@ const initialState: initialProtoStateType = {
   responseStream: [],
   proto: "",
   showPopup: false,
-  wsCommandType: 'sendInit'
+  wsCommand: 'sendInit'
   // [{parsedProtoObj1}, {parsedProtoObj2}]
 };
 
@@ -112,6 +113,9 @@ export const uploadProto: (
       // return setIn(state, ['showPopup'], action.payload);
       return { ...state, showPopup: action.payload };
     }
+    case SET_WS_COMMAND: {
+      return { ...state, wsCommand: action.payload };
+    }
   }
 
   return state;
@@ -135,6 +139,8 @@ export const responseSelector: (state: RootState) => object = state =>
   state.uploadProto.responseStream;
 export const popupSelector: (state: RootState) => boolean = state =>
   state.uploadProto.showPopup;
+export const setWsSelector: (state: RootState) => string = state => 
+  state.uploadProto.wsCommand;
 
 // selecting all of state for the request saga
 export const stateSelector: (state: RootState) => object = state =>
