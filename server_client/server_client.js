@@ -80,38 +80,27 @@ app.ws("/websocket", function (ws, req) {
 
   ws.on("message", function (msg) {
     const parsedReqBody = JSON.parse(msg);
+    
     if(parsedReqBody.wsCommand === 'sendInit'){
       console.log('sendInit')
       grpcRequestClass.sendInit(parsedReqBody);
     } else if ( parsedReqBody.wsCommand === 'push') {
       console.log('push')
       let messageInput = JSON.parse(parsedReqBody.messageInput);
+      console.log('||||||||||||||||PUSH', messageInput)
       grpcRequestClass._call.write(messageInput);
     } else if (parsedReqBody.wsCommand === 'end') {
-      console.log('end')
-      grpcRequestClass._call.end();
+      if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
+      grpcRequestClass._call.cancel();
+      console.log('Cancel')
+      } else {
+        grpcRequestClass._call.end();
+        console.log('end')
+      }
     }
-    // console.log('app.ws msg: ', msg);
-    // grpcRequestClass.call(parsedReqBody)
-    // grpcRequest(parsedReqBody, ws);
   });
-  // setInterval(() => {
-  //   ws.send('I am your server, made of sockets')
-  // }, 1000)
-  // ws.send('I am your server, made of sockets')
-  // console.log('socket', req.testing);
 });
-// *
-// * End GRPC Server Call
-//cedric's upload path (likely to be deleted)
-// app.post('/upload', (req, res) => {
-//   console.log(
-//     'here is the parsed protoFile string sent to /upload',
-//     JSON.parse(req.body)
-//   );
-//   res.json('protoFile uploaded succesfully man');
-// });
-// Unknown Route:
+
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
 });
