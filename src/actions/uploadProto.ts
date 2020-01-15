@@ -13,6 +13,7 @@ export const SET_REQUEST = "SET_REQUEST";
 export const DISPLAY_UNARY_RESPONSE = "DISPLAY_UNARY_RESPONSE";
 export const CLEAR_RESPONSE_EDITOR = "CLEAR_RESPONSE_EDITOR";
 export const SHOW_POPUP = "SHOW_POPUP";
+export const SET_WS_COMMAND = "SET_WS_COMMAND";
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -76,6 +77,11 @@ export interface showPopup {
   payload: boolean;
 }
 
+export interface setWsCommand {
+  type: typeof SET_WS_COMMAND;
+  payload: string;
+}
+
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
 export type uploadProtoAction =
   | uploadProto
@@ -89,7 +95,9 @@ export type uploadProtoAction =
   | sendUnaryRequest
   | displayUnaryResponse
   | clearResponseEditor
-  | showPopup;
+  | showPopup
+  | setWsCommand
+
 
 export const uploadProtoActionCreator = (
   payloadObj: string | ArrayBuffer
@@ -186,6 +194,15 @@ export const clearResponseEditorActionCreator = (
 export const showPopupActionCreator = (payloadObj: boolean): showPopup => {
   return {
     type: SHOW_POPUP,
+    payload: payloadObj
+  };
+};
+
+export const setWsCommandActionCreator = (
+  payloadObj: string
+): setWsCommand => {
+  return {
+    type: SET_WS_COMMAND,
     payload: payloadObj
   };
 };

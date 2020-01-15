@@ -8,7 +8,8 @@ import {
   setRequestActionCreator,
   sendUnaryRequestActionCreator,
   clearResponseEditorActionCreator,
-  showPopupActionCreator
+  showPopupActionCreator,
+  setWsCommandActionCreator
 } from "../actions";
 import { Editor } from "./Editor";
 import {
@@ -29,10 +30,12 @@ interface TestProtoProps {
   url: string;
   response: typeResponse[];
   request: typeRequest;
+  wsCommand: string;
   setMessageAction: typeof setMessageActionCreator;
   setServiceAction: typeof setServiceActionCreator;
   setUrlAction: typeof setUrlActionCreator;
   setRequestAction: typeof setRequestActionCreator;
+  setWsCommandAction: typeof setWsCommandActionCreator;
   sendUnaryRequestAction: any;
   clearResponseEditor: typeof clearResponseEditorActionCreator;
   proto: string | ArrayBuffer;
@@ -51,31 +54,44 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     const {
       parsedProtoObj,
       serviceOptions,
-      setMessageAction,
       data,
       response,
-      setServiceAction,
       service,
-      setUrlAction,
-      setRequestAction,
       request,
       url,
-      sendUnaryRequestAction,
-      clearResponseEditor,
       proto,
+      wsCommand,
       togglePopup,
       popupStatus,
-      changeTheme
+      changeTheme,
+      setWsCommandAction,
+      setMessageAction,
+      setServiceAction,
+      setUrlAction,
+      setRequestAction,
+      sendUnaryRequestAction,
+      clearResponseEditor
     } = props;
 
     const handleUrlChange = (e: any) => {
       setUrlAction(e.target.value);
     };
-
+    // function that inovokes the action creator to clear respnse editor, send grpc request information, and start websocket connection
     const handleRequestClick = (e: any) => {
       clearResponseEditor([]);
+      setWsCommandAction('sendInit');
       sendUnaryRequestAction("grpc!");
     };
+    // function that invokes action creator to push messages 
+    const handlePushClick = (e: any) => {
+      setWsCommandAction('push')
+      sendUnaryRequestAction("grpc!");
+    }
+    // function that invokes action creator to end websocket connection
+    const handleEndClick = (e: any) => {
+      setWsCommandAction('end')
+      sendUnaryRequestAction("grpc!");
+    }
 
     const handleViewClick = (e: any) => {
       if (proto === "") {
@@ -123,6 +139,16 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
               className={toggleThemeSendReqViewProto}
               text="Send Request"
               onClick={handleRequestClick}
+            />
+             <Button
+              className="button"
+              text="Push Message"
+              onClick={handlePushClick}
+            />
+             <Button
+              className="button"
+              text="End Streaming"
+              onClick={handleEndClick}
             />
           </div>
           <div id="handleViewClick">

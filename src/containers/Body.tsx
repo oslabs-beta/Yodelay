@@ -11,7 +11,8 @@ import {
   sendUnaryRequestActionCreator,
   clearResponseEditorActionCreator,
   showPopupActionCreator,
-  changeThemeActionCreator
+  changeThemeActionCreator,
+  setWsCommandActionCreator
 } from "../actions";
 import {
   messageSelector,
@@ -23,7 +24,8 @@ import {
   typeRequest,
   parsedProtoObjSelector,
   protoSelector,
-  popupSelector
+  popupSelector,
+  setWsSelector
 } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
 import { themeSelector } from "../reducers/changeTheme";
@@ -38,16 +40,19 @@ interface BodyProps {
   setServiceAction: typeof setServiceActionCreator;
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
   clearResponseEditorAction: typeof clearResponseEditorActionCreator;
+  setWsCommandAction: typeof setWsCommandActionCreator;
   selectMessage: string;
   selectService: string;
   selectUrl: string;
   selectRequest: typeRequest;
   selectResponse: typeResponse[];
+  selectWsCommand: string;
   proto: string | ArrayBuffer;
   togglePopup?: typeof showPopupActionCreator;
   popupStatus?: boolean;
   changeThemeAction: typeof changeThemeActionCreator;
   changeTheme: string;
+
 }
 
 export const Body: FunctionComponent<BodyProps> = props => {
@@ -59,8 +64,10 @@ export const Body: FunctionComponent<BodyProps> = props => {
       setServiceAction,
       setUrlAction,
       setRequestAction,
+      setWsCommandAction,
       sendUnaryRequestAction,
       clearResponseEditorAction,
+      selectWsCommand,
       selectMessage,
       selectService,
       selectUrl,
@@ -82,6 +89,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             setRequestAction={setRequestAction}
             setServiceAction={setServiceAction}
             setUrlAction={setUrlAction}
+            setWsCommandAction={setWsCommandAction}
             sendUnaryRequestAction={sendUnaryRequestAction}
             clearResponseEditor={clearResponseEditorAction}
             url={selectUrl}
@@ -93,6 +101,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             proto={proto}
             service={selectService}
             changeTheme={changeTheme}
+            wsCommand={selectWsCommand}
           ></TestProto>
         </Route>
         <Route path="/settings">
@@ -118,7 +127,8 @@ export default connect(
     selectResponse: responseSelector(state),
     proto: protoSelector(state),
     popupStatus: popupSelector(state),
-    changeTheme: themeSelector(state)
+    changeTheme: themeSelector(state),
+    selectWsCommand: setWsSelector(state)
   }),
   {
     setMessageAction: setMessageActionCreator,
@@ -128,6 +138,7 @@ export default connect(
     sendUnaryRequestAction: sendUnaryRequestActionCreator,
     clearResponseEditorAction: clearResponseEditorActionCreator,
     togglePopup: showPopupActionCreator,
-    changeThemeAction: changeThemeActionCreator
+    changeThemeAction: changeThemeActionCreator,
+    setWsCommandAction: setWsCommandActionCreator
   }
 )(Body);
