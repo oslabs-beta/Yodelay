@@ -45,12 +45,10 @@ async function parseProto(uploadParsedReqBody) {
     protoPackageName
   ];
   output.protoDescriptor = descriptor;
-  // Creating the big-ass services object, which includes the various services, methods, messages, and message fields/types
+  // Creating the services object, which includes the various services, methods, messages, and message fields/types
   const servicesObj = {};
 
   for (let [service, serviceValue] of Object.entries(descriptor)) {
-    // console.log('servicerequestStream: ', serviceValue.service)
-    // console.log('serviceValue', serviceValue)
     if (typeof serviceValue === "function") {
       servicesObj[service] = {};
       for (let [serviceMethodName, serviceMethodValue] of Object.entries(
@@ -69,12 +67,13 @@ async function parseProto(uploadParsedReqBody) {
         if (isMethodRequestStreaming && isMethodResponseStreaming) {
           streamingType = "bidiStreaming";
         }
-        console.log('here///////////////////////////////', streamingType)
+        
         const messageName = serviceMethodValue.requestType.type.name;
         const messageFieldsRawData = serviceMethodValue.requestType.type.field;
         servicesObj[service][serviceMethodName] = {};
         servicesObj[service][serviceMethodName][messageName] = {};
         servicesObj[service][serviceMethodName]["type"] = streamingType;
+
         for (let messageInfo of messageFieldsRawData) {
           const messageField = messageInfo.name;
           const messageFieldType = messageInfo.type;
@@ -133,12 +132,14 @@ class GrpcRequestClass extends EventEmitter {
       defaults: true,
       oneofs: true
     };
+
     const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
     let protoPackageName2 = Object.keys(packageDefinition)[0].split(".")[0];
     let packageDefinitionName = Object.keys(packageDefinition)[0];
     const descriptor = grpc.loadPackageDefinition(packageDefinition)[
       protoPackageName2
     ];
+
     const servicePackage = new descriptor[this.serviceInput](
       this.url,
       grpc.credentials.createInsecure()
@@ -146,6 +147,7 @@ class GrpcRequestClass extends EventEmitter {
 
     function round(value, precision) {
       var multiplier = Math.pow(10, precision || 0);
+
       return Math.round(value * multiplier) / multiplier;
     }
 
@@ -157,6 +159,7 @@ class GrpcRequestClass extends EventEmitter {
     if (streamType === "unary") {
       // UNARY
       let reqTime = process.hrtime();
+
       servicePackage[requestInput.methodName](messageInput, function (
         err,
         feature
@@ -180,6 +183,7 @@ class GrpcRequestClass extends EventEmitter {
           let reqTime = process.hrtime();
           let call = servicePackage[requestInput.methodName](messageInput);
           this._call = call;
+
           call.on("data", function (feature) {
             let resTime = process.hrtime();
             let resTimeSec = resTime[0] - reqTime[0];
@@ -227,8 +231,6 @@ class GrpcRequestClass extends EventEmitter {
       } else if (requestInput.streamType === 'bidiStreaming'){
         let reqTime = process.hrtime();
         let call = servicePackage[requestInput.methodName]();
-
-        // call.write(messageInput);
         this._call = call
 
         call.on("data", function (feature) {
@@ -239,9 +241,11 @@ class GrpcRequestClass extends EventEmitter {
           let message = `${resTimeStr}\n${JSON.stringify(feature)}`;
           ws.send(message);
         });
+
         call.on("end", function () {
           ws.send('server has ended the bidirectional streaming')
         });
+
         call.on("error", function (e) {
           ws.send('the following error occurred in the gRPC server: ', e)
         });
@@ -251,6 +255,5 @@ class GrpcRequestClass extends EventEmitter {
 
 module.exports = {
   GrpcRequestClass,
-  // grpcRequest,
   parseProto
 };
