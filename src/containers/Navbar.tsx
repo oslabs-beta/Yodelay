@@ -5,6 +5,7 @@ import { Button } from "../components/common/Button";
 import { uploadProtoActionCreator } from "../actions";
 import { protoSelector } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
+import { themeSelector } from "../reducers/changeTheme";
 
 // sets type for props
 interface NavbarProps {
@@ -12,13 +13,14 @@ interface NavbarProps {
   showOpenFileDlg?: () => any;
   uploadProto?: typeof uploadProtoActionCreator;
   protoFile?: File;
+  changeTheme: string;
 }
 
 //Upon user clicking upload proto button in navbar, folder dialog window opens. User-selected file is read and its contents are passed as a payload
 
 export const Navbar: FunctionComponent<NavbarProps> = props => {
   {
-    const { uploadProto } = props;
+    const { uploadProto, changeTheme } = props;
 
     //Refs allow us to access DOM nodes or React elements created in the render method
     //Both createRef and useRef hook returns the same result. createRef  returns a new ref on every render while useRef will return the same ref obj each time
@@ -41,14 +43,19 @@ export const Navbar: FunctionComponent<NavbarProps> = props => {
       reader.readAsText(protoFile);
     };
 
-    //test buttons - remove later
-    // const testHomeClick = () =>{
-    //   alert("Clicked home")
-    // }
+    let toggleThemeUploadProto =
+      changeTheme === "dark-yellow" ||
+      changeTheme === "dark-green" ||
+      changeTheme === "dark-blue"
+        ? "upload-proto-button-grey"
+        : "upload-proto-button-light";
 
-    // const testSettingsClick = () =>{
-    //   alert("Clicked settings")
-    // }
+    let toggleThemeSettings =
+      changeTheme === "dark-yellow" ||
+      changeTheme === "dark-green" ||
+      changeTheme === "dark-blue"
+        ? "settings-button-grey"
+        : "settings-button-light";
 
     return (
       <div>
@@ -65,12 +72,12 @@ export const Navbar: FunctionComponent<NavbarProps> = props => {
         />
 
         <Button
-          className="upload-proto-button"
+          className={toggleThemeUploadProto}
           onClick={showOpenFileDlg}
         ></Button>
 
         <Link to="/settings">
-          <Button className="settings-button"></Button>
+          <Button className={toggleThemeSettings}></Button>
         </Link>
       </div>
     );
@@ -80,7 +87,8 @@ export const Navbar: FunctionComponent<NavbarProps> = props => {
 export default connect(
   // gives the navbar component access to specific state and actions from the store
   (state: RootState) => ({
-    protoContents: protoSelector(state)
+    protoContents: protoSelector(state),
+    changeTheme: themeSelector(state)
   }),
   {
     uploadProto: uploadProtoActionCreator

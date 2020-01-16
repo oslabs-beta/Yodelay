@@ -12,7 +12,8 @@ import {
   clearResponseEditorActionCreator,
   showPopupActionCreator,
   changeThemeActionCreator,
-  setWsCommandActionCreator
+  setWsCommandActionCreator,
+  startWebsocketActionCreator
 } from "../actions";
 import {
   messageSelector,
@@ -29,6 +30,7 @@ import {
 } from "../reducers/uploadProto";
 import { RootState } from "../reducers";
 import { themeSelector } from "../reducers/changeTheme";
+import { start } from "repl";
 
 // sets type for props
 interface BodyProps {
@@ -41,6 +43,7 @@ interface BodyProps {
   sendUnaryRequestAction?: typeof sendUnaryRequestActionCreator;
   clearResponseEditorAction: typeof clearResponseEditorActionCreator;
   setWsCommandAction: typeof setWsCommandActionCreator;
+  startWebsocketAction: typeof startWebsocketActionCreator;
   selectMessage: string;
   selectService: string;
   selectUrl: string;
@@ -67,6 +70,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
       setWsCommandAction,
       sendUnaryRequestAction,
       clearResponseEditorAction,
+      startWebsocketAction,
       selectWsCommand,
       selectMessage,
       selectService,
@@ -92,6 +96,7 @@ export const Body: FunctionComponent<BodyProps> = props => {
             setWsCommandAction={setWsCommandAction}
             sendUnaryRequestAction={sendUnaryRequestAction}
             clearResponseEditor={clearResponseEditorAction}
+            startWebsocketAction={startWebsocketAction}
             url={selectUrl}
             data={selectMessage}
             request={selectRequest}
@@ -139,6 +144,7 @@ export default connect(
     clearResponseEditorAction: clearResponseEditorActionCreator,
     togglePopup: showPopupActionCreator,
     changeThemeAction: changeThemeActionCreator,
-    setWsCommandAction: setWsCommandActionCreator
+    setWsCommandAction: setWsCommandActionCreator,
+    startWebsocketAction: startWebsocketActionCreator
   }
 )(Body);

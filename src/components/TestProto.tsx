@@ -9,7 +9,8 @@ import {
   sendUnaryRequestActionCreator,
   clearResponseEditorActionCreator,
   showPopupActionCreator,
-  setWsCommandActionCreator
+  setWsCommandActionCreator,
+  startWebsocketActionCreator
 } from '../actions';
 import { Editor } from './Editor';
 import {
@@ -40,17 +41,13 @@ interface TestProtoProps {
   clearResponseEditor: typeof clearResponseEditorActionCreator;
   proto: string | ArrayBuffer;
   togglePopup: typeof showPopupActionCreator;
+  startWebsocketAction: typeof startWebsocketActionCreator;
   popupStatus: boolean;
   changeTheme: string;
 }
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
   {
-    //menuOptions object holds the following content:
-    //services: {
-    //service1: {request1: {message1Options}}
-    //service2: {request2: {message2Options}}
-    //}
     const {
       parsedProtoObj,
       serviceOptions,
@@ -70,6 +67,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
       setUrlAction,
       setRequestAction,
       sendUnaryRequestAction,
+      startWebsocketAction,
       clearResponseEditor
     } = props;
 
@@ -116,7 +114,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     //CHANGE THEME
     let toggleThemeTestProto = `testProto-${changeTheme}`;
     let toggleThemeInputBox = `url-input-${changeTheme}`;
-    let toggleThemeSendReqViewProto = `button button-${changeTheme}`;
+    let toggleThemeViewProto = `button viewProto-button-${changeTheme}`;
     let pushButton;
     let endButton;
     let requestButton;
@@ -124,16 +122,21 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     let changeThemeBackground;
 
     if (request.streamType === '' || request.streamType === 'unary') {
-      requestButton =  (<Button className='push-button' onClick={handleRequestClick}/>);
+      requestButton =  (<Button className='send-button' onClick={handleRequestClick}/>);
 
     } else if (request.streamType === 'clientStreaming' || request.streamType === 'bidiStreaming') {
-        requestButton =  (<Button className='push-button'  onClick={handleRequestClick}/>);
+      if(wsCommand === '' || wsCommand === 'end') {
+        requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
+      } else {
         pushButton = (<Button className='push-button' onClick={handlePushClick} />);
-        endButton = (<Button className='pause-button' onClick={handleEndClick} />);
-
-      } else if (request.streamType === 'serverStreaming') {
-        requestButton =  (<Button className='push-button'  onClick={handleRequestClick}/>);
+        endButton = (<Button className='pause-button' onClick={handleEndClick} />); 
+      }
+    } else if (request.streamType === 'serverStreaming') {
+      if(wsCommand === '' || wsCommand === 'end') {
+        requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
+      } else {
         endButton = (<Button className='pause-button' onClick={handleEndClick}/>);
+        }
       }
     
 
@@ -171,6 +174,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
               className='service-dropdown-menu'
               menuOptions={serviceOptions}
               setService={setServiceAction}
+              startWebsocket={startWebsocketAction}
               value={service}
             ></DropdownService>
 
@@ -187,11 +191,11 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             {pushButton}
             {endButton}
           </div>
-          <div id='handleViewClick'>
+          <div id="handleViewClick">
             {showStreamingType}
             <Button
-              className={toggleThemeSendReqViewProto}
-              text='View Proto File'
+              className={toggleThemeViewProto}
+              text="View Proto File"
               onClick={handleViewClick}
             />
           </div>

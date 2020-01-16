@@ -5,7 +5,8 @@
   "repository": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server_client/server_client.js",
+    "start": "concurrently --kill-others \"npm run src-dev\" \"npm run start-client\" \"npm run grpc\"",
+    "start-client": "nodemon server_client/server_client.js",
     "grpc": "nodemon grpc_server/demo.js",
     "src-dev": "webpack-dev-server --config webpack.dev.ts",
     "src-local": "webpack-dev-server --config webpack.dev.ts --env.API_PORT=8000 --env.API_HOST=localhost --env.API_PROTOCOL=http",
@@ -39,6 +40,7 @@
     "antd": "^3.26.5",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.0.2",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "css-loader": "^3.0.0",
@@ -100,6 +102,7 @@
     "html-webpack-plugin": "^3.2.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2",
+    "url-loader": "^3.0.0",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"

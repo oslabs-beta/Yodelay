@@ -77,3 +77,20 @@ app.use(function (err, req, res, next) {
 app.listen(port, () =>
   console.log(`  👽  invasion happening on port: ${port} `)
 );
+
+// ws.on("message", function (msg) {
+//   const parsedReqBody = JSON.parse(msg);
+  
+//   if(parsedReqBody.wsCommand === 'sendInit'){
+//     grpcRequestClass.sendInit(parsedReqBody);
+
+//   } else if ( parsedReqBody.wsCommand === 'push') {
+//     let messageInput = JSON.parse(parsedReqBody.messageInput);
+//     grpcRequestClass._call.write(messageInput);
+
+//   } else if (parsedReqBody.wsCommand === 'end') {
+//     if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
+//     grpcRequestClass._call.cancel();
+    
+//     } else {
+//       grpcRequestClass._call.end();

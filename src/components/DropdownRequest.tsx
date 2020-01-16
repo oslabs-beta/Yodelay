@@ -34,6 +34,8 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
     if (service) {
       servicesArr = Object.keys(menuOptions[service]);
       servicesObj = menuOptions[service];
+    } else {
+
     }
 
     return (
@@ -51,11 +53,7 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
               let streamType =
                 parsedProtoObj["services"][`${service}`][`${requestSelected}`]
                   .type;
-
-              // console.log(
-              //   "this is service obj:",
-              //   parsedProtoObj["services"][`${service}`][`${requestSelected}`]
-              // );
+                  
               setRequest({
                 methodName: requestSelected,
                 streamType: streamType

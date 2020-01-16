@@ -65,7 +65,7 @@ const initialState: initialProtoStateType = {
   responseStream: [],
   proto: "",
   showPopup: false,
-  wsCommand: 'sendInit'
+  wsCommand: ''
 };
 
 //uploadProto is a function that takes in state and action as params; it returns an updated state object of type initialProtoStateType

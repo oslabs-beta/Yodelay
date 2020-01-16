@@ -18,12 +18,28 @@ export const Header: FunctionComponent<HeaderProps> = props => {
     // //should evaluate to button-dark-yellow
     let toggleThemeName = `header-button-${changeTheme}`;
 
+    const navToGithub = () => {
+      window.location.href = "https://github.com/oslabs-beta/Yodelay";
+    };
+
+    const navToTwitter = () => {
+      window.location.href = "https://twitter.com/yodelay_io";
+    };
+
     return (
-      <div id="header-container">
+      <div>
         {/* On click, sends user back to home page */}
-        <Link to="/">
-          <Button className={toggleThemeName} text="Yodelay.io"></Button>
-        </Link>
+        <div style={{ display: "block", height: "15px" }}></div>
+        <div id="header-container">
+          <Link to="/">
+            <Button className={toggleThemeName} text="Yodelay.io"></Button>
+          </Link>
+          <div id="social-media">
+            <Button className="github-button" onClick={navToGithub}></Button>
+            <Button className="twitter-button" onClick={navToTwitter}></Button>
+            <div style={{ display: "block", width: "15px" }}></div>
+          </div>
+        </div>
       </div>
     );
   }

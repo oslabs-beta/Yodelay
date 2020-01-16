@@ -17,6 +17,21 @@
 
 #footer {
   font-size: 12px;
+  display: flex;
+  align-items: flex-end;
+}
+
+#header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#social-media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 //AFFECTED BY THEME
