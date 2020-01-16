@@ -84,9 +84,8 @@ async function parseProto(uploadParsedReqBody) {
       }
     }
   }
-  console.log("services Obj", servicesObj);
   output.services = servicesObj;
-  console.log("-----done parsing proto-----");
+  
   return output;
 }
 
@@ -170,8 +169,8 @@ class GrpcRequestClass extends EventEmitter {
           let resTime = process.hrtime();
           let resTimeSec = resTime[0] - reqTime[0];
           let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-          let resTimeStr = `Unary Call Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-          let message = `${resTimeStr}\n${JSON.stringify(feature)}`;
+          let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+          let message = JSON.stringify(feature);
           ws.send(message);
         }
       });
@@ -188,8 +187,8 @@ class GrpcRequestClass extends EventEmitter {
             let resTime = process.hrtime();
             let resTimeSec = resTime[0] - reqTime[0];
             let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-            let resTimeStr = `Server Streaming Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-            let message = `${resTimeStr}\n${JSON.stringify(feature)}`;
+            let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+            let message = JSON.stringify(feature);
             ws.send(message);
           });
           call.on("end", function () {
@@ -219,8 +218,8 @@ class GrpcRequestClass extends EventEmitter {
           let resTime = process.hrtime();
           let resTimeSec = resTime[0] - reqTime[0];
           let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-          let resTimeStr = `Server Streaming Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-          let message = `${resTimeStr}\n${JSON.stringify(feature)}`;
+          let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+          let message = JSON.stringify(feature);
           ws.send(message);
         });
         call.on("end", function() {
@@ -237,8 +236,8 @@ class GrpcRequestClass extends EventEmitter {
           let resTime = process.hrtime();
           let resTimeSec = resTime[0] - reqTime[0];
           let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-          let resTimeStr = `Server Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-          let message = `${resTimeStr}\n${JSON.stringify(feature)}`;
+          let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+          let message = JSON.stringify(feature);
           ws.send(message);
         });
 

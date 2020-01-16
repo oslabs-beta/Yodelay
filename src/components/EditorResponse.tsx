@@ -23,19 +23,23 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
     const { response, changeTheme } = props;
 
     let stringResponse = "";
-    response.forEach((object, i) => {
-      stringResponse += `\n#${i + 1} ${object.message}\n\n`;
-      // stringResponse += `\n${object.message}\n${object.responseTime}`
+    let requestCount = 0;
+    let responseCount = 0;
+    response.forEach((element, i) => {
+      if( i === 0) {
+        responseCount = 0;
+        requestCount = 0;
+      }
+      if (typeof element === 'object') {
+        responseCount += 1;
+        stringResponse += `\nResponse:\n${element.message}\n`;
+      } else {
+        requestCount += 1;
+        stringResponse += `\nRequest:\n${element}\n`;
+      }
     });
-    console.log("RESPONSE", response);
-    console.log("STRING RESPONSE", stringResponse);
-    // let responseTime = response[0].responseTime;
+
     let responseTime = 1;
-    // if (response.responseTime !== undefined) {
-    //   let seconds = response.responseTime[0].toString();
-    //   let nanoSeconds = response.responseTime[1].toString();
-    //   responseTime = 'Response Time:' + seconds + '.' + nanoSeconds[0] + nanoSeconds[1] + nanoSeconds[2] + 's';
-    // }
 
     //CHANGE THEME
     let toggleTheme =
@@ -47,14 +51,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
 
     return (
       <>
-        {/* <p>{`This is how long it took for a response ${response.responseTime}s`} </p> */}
-        <Tabs
-          defaultActiveKey={defaultKey}
-          tabPosition={"top"}
-          style={{ width: "100%", height: "height: calc(100vh - 181px)" }}
-          // tabBarExtraContent={`${responseTime}`}
-        >
-          <Tabs.TabPane tab={`${responseTime}`} key={"unaryResponse"}>
+         <div> Log
             <AceEditor
               mode="json"
               name="requestInput"
@@ -76,8 +73,7 @@ export const EditorResponse: FunctionComponent<ResponseProps> = props => {
                 highlightGutterLine: false
               }}
             />
-          </Tabs.TabPane>
-        </Tabs>
+          </div>
       </>
     );
   }

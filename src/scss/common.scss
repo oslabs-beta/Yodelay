@@ -39,6 +39,30 @@
   margin-top: 20px;
 }
 
+.push-button {
+  height: 23px;
+  width: 23px;
+  background-image: url("play_circle_filled_white_white_24x24.png");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.pause-button {
+  height: 23px;
+  width: 23px;
+  background-image: url("pause_circle_filled_white_24x24.png");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -59,7 +83,7 @@
   top: 50%;
   left: 50%;
   transform: translate(0%, -40%);
-  color: $yellow;
+  color: $white-field;
   overflow-x: auto;
   z-index: 99;
   padding: 30;
