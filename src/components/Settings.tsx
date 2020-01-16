@@ -31,31 +31,25 @@ export const Settings: FunctionComponent<SettingsProps> = props => {
 
     return (
       <div>
-        ⚡⚙ COMING SOON ⚙⚡
+        <div>⚡⚙ Choose Your Theme ⚙⚡</div>
+
         {/* Dark Yellow Theme */}
         <Button
           className="button-dark-yellow"
-          text="Dark-Yellow"
           onClick={toggleDarkYellow}
         ></Button>
         {/* Light Yellow Theme */}
         <Button
           className="button-light-yellow"
-          text="Light-Yellow"
           onClick={toggleLightYellow}
         ></Button>
         {/* Dark Green Theme */}
         <Button
           className="button-dark-green"
-          text="Dark-Green"
           onClick={toggleDarkGreen}
         ></Button>
         {/* Dark Blue Theme */}
-        <Button
-          className="button-dark-blue"
-          text="Dark-Blue"
-          onClick={toggleDarkBlue}
-        ></Button>
+        <Button className="button-dark-blue" onClick={toggleDarkBlue}></Button>
       </div>
     );
   }

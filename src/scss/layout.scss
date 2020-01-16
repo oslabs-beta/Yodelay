@@ -1,4 +1,4 @@
-@import 'colours';
+@import "colours";
 
 //NOT AFFECTED BY THEME
 #app-container {
@@ -17,6 +17,21 @@
 
 #footer {
   font-size: 12px;
+  display: flex;
+  align-items: flex-end;
+}
+
+#header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#social-media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 //AFFECTED BY THEME
@@ -32,7 +47,7 @@ body,
   color: $grey-font;
   font-weight: 500;
   font-size: 14px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   display: flex;
   flex-direction: row;
 }
@@ -62,7 +77,7 @@ body,
   color: $disabled;
   font-weight: 500;
   font-size: 14px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   display: flex;
   flex-direction: row;
 }
@@ -92,7 +107,7 @@ body,
   color: $grey-font;
   font-weight: 500;
   font-size: 14px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   display: flex;
   flex-direction: row;
 }
@@ -122,7 +137,7 @@ body,
   color: $grey-font;
   font-weight: 500;
   font-size: 14px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   display: flex;
   flex-direction: row;
 }
