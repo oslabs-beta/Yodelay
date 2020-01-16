@@ -135,29 +135,6 @@
   margin-left: 5px;
 }
 
-.push-button {
-  height: 23px;
-  width: 23px;
-  background-image: url('play_circle_filled_white_white_24x24.png');
-  background-repeat: no-repeat;
-  background-color: Transparent;
-  border: none;
-  overflow: hidden;
-  outline: none;
-  cursor: pointer;
-}
-
-.pause-button {
-  height: 23px;
-  width: 23px;
-  background-image: url('pause_circle_filled_white_24x24.png');
-  background-repeat: no-repeat;
-  background-color: Transparent;
-  border: none;
-  overflow: hidden;
-  outline: none;
-  cursor: pointer;
-}
 
 .modal {
   position: fixed;
