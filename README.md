@@ -1,12 +1,31 @@
-# Yodelay.io
+<p align="center">
+  <img src="./src/assets/logo_gif.gif" />
+</p>
+<h1 align="center">Yodelay.io </h1>
 
-Your preferred gRPC endpoint testing tool. Yodelay is a browser based testing tool for all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming.
+<p align="center">Your preferred gRPC endpoint testing tool 🗣️📣 </p>
 
-## Getting Started
+<p align="center">Inspired by <b>Postwoman</b> <br/>
+  <b>Yodelay.io </b> is a browser-based testing tool that supports all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming, and aims to provide a beautiful interface and intuitive developer experience
+</p>
+
+## Core Features ✨
+* Unary Calls and Server Side Streaming Support
+* Client side and Bi-directional Streaming
+* Automatic gRPC Service & Method recognition
+* Request Cancellation
+
+## Planned Features 🚧
+- [ ] Web Version with gRPC-WEB
+- [ ] Persistent Workspace
+- [ ] Electron App
+- [ ] Search History
+ 
+## Getting Started 🚀
 
 For an overview of gRPC in general, checkout the official [DOCS](https://grpc.io/docs/) here. There are clear and simple walkthroughs for each of the 12 programming languages supported by gRPC. Butter, Yodelay’s furry mascot, recommends choosing your preferred language, uploading the .proto file into yodelay and then using those examples to walk through this readme.
 
-## Installation
+## Installation ⚙
 
 Fork and clone this repo:
 ```sh
@@ -18,7 +37,7 @@ cd Yodelay
  ```sh
 npm install
 ```
-### Test your endpoints locally:
+### Test your endpoints locally ☄
 
 Navigate to the Yodelay folder in your terminal and run the following command:
 ```sh
@@ -46,26 +65,12 @@ Edit your input message so it matches the gRPC server fields:
 Click on the Send Request button and see the results from your gRPC call!
 
 
-## Contributing
+## Contributing ✏️👩‍💻👨‍💻📓
 
 We have an open door policy - all ideas, feedback, and contributions are always welcome!
 Note - When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
-
-
-## Core Features
-* Unary Calls and Server Side Streaming Support
-* Client side and Bi-directional Streaming
-* Automatic gRPC Service & Method recognition
-* Request Cancellation
-
-## Planned Features:
-- [ ] Web Version with gRPC-WEB
-- [ ] Persistent Workspace
-- [ ] Electron App
-- [ ] Search History
-
-## Built with amazing technologies:
+## Built with amazing technologies ⚛ 🐳🚢
 - React
 - Redux
 - Node.js
@@ -75,9 +80,20 @@ Note - When contributing to this repository, please first discuss the change you
 - Docker
 - AWS
 
+## Built with 💛
+Cedric Theofanous - @CedricTheofanous
+Jamie Highsmith - @JamesHighsmith
+German Rovati - @grovati
+Tammy Tan - @tammytan95
+Davey Yedid
+
 <p float="left">
-  <!-- <img src="./src/assets/" width="100"/>
+  <img src="./src/assets/" width="100"/>
   <img src="./src/assets/" width="120" />
-  <img src="./src/assets/" width="160" /> -->
+  <img src="./src/assets/" width="160" />
 </p>
+
+## License 
+This project is licensed under the MIT License - see the LICENSE.md file for details.
+
 
