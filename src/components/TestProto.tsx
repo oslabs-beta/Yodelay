@@ -90,6 +90,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
         sendUnaryRequestAction(data);
       }
     };
+
     // function that invokes action creator to push messages
     const handlePushClick = (e: any) => {
       setWsCommandAction('push');
@@ -175,6 +176,8 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
               menuOptions={serviceOptions}
               setService={setServiceAction}
               startWebsocket={startWebsocketAction}
+              setWsCommandAction={setWsCommandAction}
+              clearResponseEditor={clearResponseEditor}
               value={service}
             ></DropdownService>
 
@@ -183,6 +186,8 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
               menuOptions={serviceOptions}
               service={service}
               setRequest={setRequestAction}
+              setWsCommandAction={setWsCommandAction}
+              clearResponseEditor={clearResponseEditor}
               value={request}
               parsedProtoObj={parsedProtoObj}
               setMessageAction={setMessageAction}

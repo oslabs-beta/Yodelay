@@ -1,64 +1,59 @@
 syntax = "proto3";
 
-package calculator;
+package greet;
 
 
+service GreetService {
 
-service CalculatorService {
-    //Unary API
-    rpc Sum (SumRequest) returns (SumResponse) {};
-
-    // Streaming API
-    rpc PrimeNumberDecomposition (PrimeNumberDecompositionRequest) returns ( stream PrimeNumberDecompositionResponse) {};
-
-    rpc ComputeAverage (stream ComputeAverageRequest) returns (ComputeAverageResponse){};
-
-    rpc FindMaximum (stream FindMaximumRequest) returns (stream FindMaximumResponse);
-
-    // error handling
-    // this RPC wil throw an exception if the sent number is negative: -1
-    rpc SquareRoot (SquareRootRequest) returns (SquareRootResponse) {};
+    //unary API
+    rpc Greet (GreetRequest) returns (GreetResponse) {};
     
-}
+    //Server streaming API
+    rpc GreetManyTimes (GreetManyTimesRequest) returns ( stream GreetManyTimesResponse) {};
 
-message SquareRootRequest {
-    int32 number= 1;
-}
-message SquareRootResponse {
-     double number_root = 1;
-}
+    // Client Streaming
+    rpc LongGreet (stream LongGreetRequest) returns (LongGreetResponse) {};
 
-message FindMaximumRequest {
-    int32 number = 1;
-}
+    // BiDi Streaming
+    rpc GreetEveryone (stream GreetEveryoneRequest) returns ( stream GreetEveryoneResponse) {};
 
-message FindMaximumResponse {
-    int32 maximum = 1; 
-}
 
-message ComputeAverageResponse {
-    double average = 1;
-}
-message ComputeAverageRequest {
-    int32 number = 1;
 }
 
 
-
-message PrimeNumberDecompositionRequest {
-     int32 number = 1;
+message GreetEveryoneRequest {
+    Greeting greet = 1;
 }
 
-message PrimeNumberDecompositionResponse {
-     int32 prime_factor = 1;
+message GreetEveryoneResponse { 
+    string result = 1;
+}
+message LongGreetRequest {
+    Greeting greet = 1;
 }
 
-message SumRequest {
-    int32 first_number = 1;
-    int32 second_number = 2;
-
+message LongGreetResponse {
+    string result = 1;
 }
 
-message SumResponse {
-    int32 sum_result = 1;
+message GreetManyTimesRequest {
+    Greeting greeting = 1;
+}
+
+message GreetManyTimesResponse {
+     string result = 1;
+}
+
+
+message Greeting {
+    string first_name = 1;
+    string last_name = 2;
+}
+
+message GreetRequest {
+    Greeting greeting = 1;
+}
+
+message GreetResponse {
+    string result = 1;
 }
