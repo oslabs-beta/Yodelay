@@ -87,14 +87,6 @@ Note - When contributing to this repository, please first discuss the change you
 
 ## Developed using amazing technologies ⚛ 🐳🚢
 
-- React
-- Redux
-- Node.js
-- GRPC
-- TypeScript
-- Redux-Saga
-- Docker
-- AWS
   <p float="left">
     <img src="./src/assets/technologies.png" width="600"/>
   </p>
