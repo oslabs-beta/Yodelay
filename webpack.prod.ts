@@ -31,14 +31,18 @@ const config = (env: any): webpack.Configuration => {
           }
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s*)css$/i,
           use: ['style-loader', 'css-loader', 'sass-loader']
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
-          use: [
-            'file-loader',
-          ] 
+          use: [{
+            loader: 'url-loader',
+            options: { 
+                limit: 8000, // Convert images < 8kb to base64 strings
+                name: './src/scss/[hash]-[name].[ext]'
+            } 
+        }]
         },
       ]
     },
@@ -53,7 +57,7 @@ const config = (env: any): webpack.Configuration => {
           : JSON.stringify('8000'),
         'env.API_HOST': API_HOST
           ? JSON.stringify(API_HOST)
-          : JSON.stringify('localhost'),
+          : JSON.stringify('yodelay.us-east-1.elasticbeanstalk.com'),
         'env.API_PROTOCOL': API_PROTOCOL
           ? JSON.stringify(API_PROTOCOL)
           : JSON.stringify('http'),

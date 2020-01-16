@@ -49,6 +49,7 @@
     "express-http-to-https": "^1.1.4",
     "express-pino-logger": "^4.0.0",
     "express-ws": "^4.0.0",
+    "file-loader": "^5.0.2",
     "google-protobuf": "^3.11.2",
     "grpc": "^1.24.2",
     "grpc-promise": "^1.4.0",
@@ -80,6 +81,7 @@
     "timm": "^1.6.1",
     "ts-jest": "^24.2.0",
     "ts-node-dev": "^1.0.0-pre.40",
+    "url-loader": "^3.0.0",
     "uuidv4": "^4.0.0",
     "ws": "^7.2.1"
   },
@@ -96,7 +98,6 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
-    "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2",

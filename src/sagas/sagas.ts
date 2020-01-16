@@ -19,7 +19,7 @@ function* sendProto({ payload }: uploadProto) {
   try {
     // console.log('payload:', payload, 'typeof payload', typeof payload);
     const jsonProtoFile = JSON.stringify(payload);
-    const data = yield fetch(`http://localhost:4000/upload`, {
+    const data = yield fetch(`http://yodelay.us-east-1.elasticbeanstalk.com/upload`, {
       method: "POST",
       headers: {
         Accept: "text/plain",
@@ -59,7 +59,7 @@ function* unaryRequest({ payload }: sendUnaryRequest) {
     //   '-----json-requestObj in unaryRequest saga -----',
     //   jsonRequestObj
     // );
-    const data = yield fetch(`http://localhost:4000/service`, {
+    const data = yield fetch(`http://yodelay.us-east-1.elasticbeanstalk.com/service`, {
       method: "POST",
       headers: {
         Accept: "text/plain",
@@ -107,7 +107,7 @@ function* createEventChannel(mySocket?: any) {
   });
 }
 function* initializeWebSocketsChannel({ payload }: sendUnaryRequest) {
-  const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+  const mySocket = new WebSocket("ws://yodelay.us-east-1.elasticbeanstalk.com/websocket", "protocol");
   const channel = yield call(createEventChannel, mySocket, payload);
   while (true) {
     let message = yield take(channel);

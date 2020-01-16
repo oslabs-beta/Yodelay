@@ -20,8 +20,6 @@ FunctionComponent<ButtonProps> = props => {
       icon
     } = props
 
-    console.log(icon)
-  
   return (
     <button className={className} onClick={onClick} value={value}>{text}</button>
     ) 
