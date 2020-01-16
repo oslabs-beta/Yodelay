@@ -33,12 +33,7 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
 
     return (
       <>
-        <Tabs
-          defaultActiveKey={editorTabKey}
-          tabPosition={"top"}
-          style={{ width: "100%" }}
-        >
-          <Tabs.TabPane tab="Editor" key={editorTabKey}>
+       <div>Editor
             <AceEditor
               mode="json"
               name="requestInput"
@@ -59,8 +54,7 @@ export const EditorRequest: FunctionComponent<RequestProps> = props => {
                 displayIndentGuides: true
               }}
             />
-          </Tabs.TabPane>
-        </Tabs>
+         </div>
       </>
     );
   }

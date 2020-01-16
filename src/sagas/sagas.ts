@@ -32,7 +32,7 @@ function* sendProto({ payload }: uploadProto) {
     yield put(loadServiceActionCreator(response.services));
   
   } catch ({ error, status }) {
-    //error message not working right now
+
     const errorMessage = "error in upload saga";
     yield put(uploadProtoFailedActionCreator(errorMessage));
     
@@ -58,10 +58,7 @@ function* subscribe(socket?: any) {
   });
 
   return eventChannel(emit => {
-    console.log('eventChannel')
-
     socket.onmessage = (message: any) => {
-      console.log("socket.onmessage, ", message);
       emit(message);
     };
 
@@ -77,7 +74,6 @@ function* read(socket?: any) {
 
   while (true) {
     let message = yield take(channel);
-    console.log("-----------message inside read saga", message);
     // dispatch actions with messages recieved from ws connection with server here
     yield put(
       displayUnaryResponseActionCreator({

@@ -71,22 +71,32 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     const handleUrlChange = (e: any) => {
       setUrlAction(e.target.value);
     };
-    // function that inovokes the action creator to clear respnse editor, send grpc request information, and start websocket connection
+    // function that inovokes the action creator to clear response editor, sends grpc request information, and starts websocket connection
     const handleRequestClick = (e: any) => {
-      clearResponseEditor([]);
-      setWsCommandAction('sendInit');
-      sendUnaryRequestAction("grpc!");
+      if (url.length === 0) {
+        let value = prompt("Please enter IP address");
+
+        if (!value) {
+          setUrlAction("");
+        } else {
+          setUrlAction(value);
+        }
+      } else {
+        clearResponseEditor([]);
+        setWsCommandAction("sendInit");
+        sendUnaryRequestAction(data);
+      }
     };
-    // function that invokes action creator to push messages 
+    // function that invokes action creator to push messages
     const handlePushClick = (e: any) => {
-      setWsCommandAction('push')
-      sendUnaryRequestAction("grpc!");
-    }
+      setWsCommandAction("push");
+      sendUnaryRequestAction(data);
+    };
     // function that invokes action creator to end websocket connection
     const handleEndClick = (e: any) => {
-      setWsCommandAction('end')
-      sendUnaryRequestAction("grpc!");
-    }
+      setWsCommandAction("end");
+      sendUnaryRequestAction("End stream");
+    };
 
     const handleViewClick = (e: any) => {
       if (proto === "") {
@@ -100,7 +110,49 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
 
     //CHANGE THEME
     let toggleThemeTestProto = `testProto-${changeTheme}`;
-    let toggleThemeSendReqViewProto = `button button-${changeTheme}`;
+    let toggleThemeInputBox = `url-input-${changeTheme}`;
+    let toggleThemeViewProto = `button viewProto-button-${changeTheme}`;
+    let pushButton;
+    let endButton;
+    let requestButton;
+    let showStreamingType;
+    let changeThemeBackground;
+
+    if (request.streamType === "" || request.streamType === "unary") {
+      requestButton = (
+        <Button className="send-button" onClick={handleRequestClick} />
+      );
+    } else if (
+      request.streamType === "clientStreaming" ||
+      request.streamType === "bidiStreaming"
+    ) {
+      requestButton = (
+        <Button className="send-button" onClick={handleRequestClick} />
+      );
+      pushButton = <Button className="push-button" onClick={handlePushClick} />;
+      endButton = <Button className="pause-button" onClick={handleEndClick} />;
+    } else if (request.streamType === "serverStreaming") {
+      requestButton = (
+        <Button className="push-button" onClick={handleRequestClick} />
+      );
+      endButton = <Button className="pause-button" onClick={handleEndClick} />;
+    }
+
+    if (changeTheme === "dark-yellow" || changeTheme === "light-yellow") {
+      changeThemeBackground = "#f9c132";
+    } else if (changeTheme === "dark-green") {
+      changeThemeBackground = "#50fa7b";
+    } else if (changeTheme === "dark-blue") {
+      changeThemeBackground = "#57b5f9";
+    }
+    if (request.streamType) {
+      showStreamingType = (
+        <em style={{ backgroundColor: changeThemeBackground, color: "black" }}>
+          {" "}
+          {`Type: ${request.streamType}`}
+        </em>
+      );
+    }
 
     return (
       <div id={toggleThemeTestProto}>
@@ -108,9 +160,10 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
         <div id="menu-and-view-section">
           <div className="menu-options">
             <input
-              className="url-input"
-              placeholder="enter server ip address"
+              className={toggleThemeInputBox}
+              placeholder=" IP address"
               onChange={handleUrlChange}
+              value={url}
             ></input>
 
             <DropdownService
@@ -129,26 +182,14 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
               parsedProtoObj={parsedProtoObj}
               setMessageAction={setMessageAction}
             ></DropdownRequest>
-
-            <Button
-              className={toggleThemeSendReqViewProto}
-              text="Send Request"
-              onClick={handleRequestClick}
-            />
-             <Button
-              className="button"
-              text="Push Message"
-              onClick={handlePushClick}
-            />
-             <Button
-              className="button"
-              text="End Streaming"
-              onClick={handleEndClick}
-            />
+            {requestButton}
+            {pushButton}
+            {endButton}
           </div>
           <div id="handleViewClick">
+            {showStreamingType}
             <Button
-              className={toggleThemeSendReqViewProto}
+              className={toggleThemeViewProto}
               text="View Proto File"
               onClick={handleViewClick}
             />
