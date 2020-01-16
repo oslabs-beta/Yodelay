@@ -3,9 +3,7 @@
 </p>
 <h1 align="center">Yodelay.io </h1>
 
-<p align="center">Your preferred gRPC endpoint testing tool 🗣️📣 </p>
-
-<p align="center">Inspired by <b>Postwoman</b> <br/>
+<p align="center">
   <b>Yodelay.io </b> is a browser-based testing tool that supports all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming, and aims to provide a beautiful interface and intuitive developer experience
 </p>
 
