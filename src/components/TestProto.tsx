@@ -46,11 +46,6 @@ interface TestProtoProps {
 
 export const TestProto: FunctionComponent<TestProtoProps> = props => {
   {
-    //menuOptions object holds the following content:
-    //services: {
-    //service1: {request1: {message1Options}}
-    //service2: {request2: {message2Options}}
-    //}
     const {
       parsedProtoObj,
       serviceOptions,
