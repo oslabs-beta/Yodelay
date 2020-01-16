@@ -21,31 +21,43 @@ app.post("/upload", async (req, res) => {
 });
 
 //Listens for messages
-app.ws("/websocket", function (ws, req) {
+app.ws("/websocket", function(ws, req) {
 
   const grpcRequestClass = new GrpcRequestClass(ws);
-
-  ws.on("message", function (msg) {
-    const parsedReqBody = JSON.parse(msg);
-    
-    if(parsedReqBody.wsCommand === 'sendInit'){
-      console.log('sendInit')
-      grpcRequestClass.sendInit(parsedReqBody);
-    } else if ( parsedReqBody.wsCommand === 'push') {
-      console.log('push')
-      let messageInput = JSON.parse(parsedReqBody.messageInput);
-      console.log('||||||||||||||||PUSH', messageInput)
-      grpcRequestClass._call.write(messageInput);
-    } else if (parsedReqBody.wsCommand === 'end') {
-      if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
-      grpcRequestClass._call.cancel();
-      console.log('Cancel')
-      } else {
-        grpcRequestClass._call.end();
-        console.log('end')
+  try {
+    ws.on("message", function (msg) {
+      let parsedReqBody;
+      try {
+        parsedReqBody = JSON.parse(msg);
+      } catch {
+        ws.send("message", 'error parsing JSON in ws.on message')
       }
-    }
-  });
+      if (parsedReqBody.wsCommand === 'sendInit') {
+        console.log('sendInit')
+        grpcRequestClass.sendInit(parsedReqBody);
+      } else if (parsedReqBody.wsCommand === 'push') {
+        console.log('push')
+        let messageInput;
+        try {
+          messageInput = JSON.parse(parsedReqBody.messageInput);
+        } catch {
+          console.log('error parsing messageInput in ws-router - "push"')
+        }
+        console.log('||||||||||||||||PUSH', messageInput)
+        grpcRequestClass._call.write(messageInput);
+      } else if (parsedReqBody.wsCommand === 'end') {
+        if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
+        grpcRequestClass._call.cancel();
+        console.log('Cancel')
+        } else {
+          grpcRequestClass._call.end();
+          console.log('end')
+        }
+      }
+    });
+  } catch {
+    console.log('error in ws')
+  }
 });
 
 app.use((req, res) => {

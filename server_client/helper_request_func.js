@@ -36,14 +36,15 @@ async function parseProto(uploadParsedReqBody) {
   // now that the file is written we want to create our package definition:
   const packageDefinition = protoLoader.loadSync(PROTO_PATH, CONFIG_OBJECT);
   output.definition = packageDefinition;
-  // this is how you grab the .proto file package name:
-  const protoPackageService = Object.keys(packageDefinition)[0];
-  const protoPackageName = protoPackageService.split(".")[0];
-  output.package = protoPackageName;
+
+  
   // let's use the package definintion to create our descriptor:
-  const descriptor = grpc.loadPackageDefinition(packageDefinition)[
-    protoPackageName
-  ];
+  
+  const descriptorPre = grpc.loadPackageDefinition(packageDefinition);
+  // this is how you grab the .proto file package name:
+  const protoPackageName = Object.keys(descriptorPre)[0];
+  const descriptor = descriptorPre[protoPackageName];
+  output.package = protoPackageName;
   output.protoDescriptor = descriptor;
   // Creating the services object, which includes the various services, methods, messages, and message fields/types
   const servicesObj = {};
@@ -75,8 +76,14 @@ async function parseProto(uploadParsedReqBody) {
         servicesObj[service][serviceMethodName]["type"] = streamingType;
 
         for (let messageInfo of messageFieldsRawData) {
+          console.log('messageInfo:: ', messageInfo)
           const messageField = messageInfo.name;
-          const messageFieldType = messageInfo.type;
+          let messageFieldType;
+          if (messageInfo.typeName !== '') {
+            messageFieldType = messageInfo.typeName;
+          } else {
+            messageFieldType = messageInfo.type;
+          }
           servicesObj[service][serviceMethodName][messageName][
             messageField
           ] = messageFieldType;
@@ -90,9 +97,9 @@ async function parseProto(uploadParsedReqBody) {
 }
 
 class GrpcRequestClass extends EventEmitter {
-  constructor(ws) {
+  constructor(websocket) {
     super();
-    this.ws = ws;
+    this.ws = websocket;
     this.url = undefined
     this.serviceInput =  undefined;
     this.messageInput = undefined;
@@ -138,20 +145,29 @@ class GrpcRequestClass extends EventEmitter {
     const descriptor = grpc.loadPackageDefinition(packageDefinition)[
       protoPackageName2
     ];
+    let servicePackage;
 
-    const servicePackage = new descriptor[this.serviceInput](
-      this.url,
-      grpc.credentials.createInsecure()
-    );
+    try {
+      servicePackage = new descriptor[this.serviceInput](
+        this.url,
+        grpc.credentials.createInsecure()
+      );
+    } catch {
+      console.log('error creating servicePackage (descriptor) in sendInit func.')
+    }
 
     function round(value, precision) {
       var multiplier = Math.pow(10, precision || 0);
-
       return Math.round(value * multiplier) / multiplier;
     }
 
-    let ws = this.ws; 
-    let messageInput = JSON.parse(this.messageInput)
+    let ws = this.ws;
+    let messageInput;
+    try {
+      messageInput = JSON.parse(this.messageInput)
+    } catch {
+      console.log('error JSON parsing messageInput in sendInit')
+    }
     let requestInput = this.requestInput;
     let streamType = this.streamType;
 
@@ -159,46 +175,67 @@ class GrpcRequestClass extends EventEmitter {
       // UNARY
       let reqTime = process.hrtime();
 
-      servicePackage[requestInput.methodName](messageInput, function (
-        err,
-        feature
-      ) {
-        if (err) {
-          ws.send(err);
-        } else {
-          let resTime = process.hrtime();
-          let resTimeSec = resTime[0] - reqTime[0];
-          let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-          let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-          let message = JSON.stringify(feature);
-          ws.send(message);
-        }
-      });
-
+      try {
+        servicePackage[requestInput.methodName](messageInput, function (
+          err,
+          feature
+        ) {
+          if (err) {
+            let unaryError = JSON.stringify(err)
+            console.log(unaryError)
+            ws.send(unaryError);
+          } else {
+            let resTime = process.hrtime();
+            let resTimeSec = resTime[0] - reqTime[0];
+            let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
+            let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+            let message = '';
+            try {
+              message = JSON.stringify(feature);
+              ws.send(message);
+            } catch {
+              console.log('error JSON parsing unary gRPC response');
+              ws.send('error JSON parsing unary gRPC response');
+            }
+          }
+        });
+      } catch {
+        console.log('error in streamType === "unary"')
+      }
       return this;
     } else if (requestInput.streamType === "serverStreaming") {
           // STREAMING
           
           let reqTime = process.hrtime();
-          let call = servicePackage[requestInput.methodName](messageInput);
+          let call; 
+          try {
+            call = servicePackage[requestInput.methodName](messageInput);
+          } catch {
+            console.log('error creating call - servicePackage')
+          }
           this._call = call;
-
-          call.on("data", function (feature) {
-            let resTime = process.hrtime();
-            let resTimeSec = resTime[0] - reqTime[0];
-            let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-            let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-            let message = JSON.stringify(feature);
-            ws.send(message);
-          });
-          call.on("end", function () {
-            ws.send('server streaming has ended')
-          });
-          call.on("error", function (e) {
-            () => {
-              ws.send('server streaming ending')
-            }
-          });
+          try {
+            call.on("data", function (feature) {
+              let resTime = process.hrtime();
+              let resTimeSec = resTime[0] - reqTime[0];
+              let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
+              let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+              let message = JSON.stringify(feature);
+              ws.send(message);
+            });
+  
+            call.on("end", function () {
+              ws.send('server streaming has ended')
+            });
+            call.on("error", function (e) {
+              () => {
+                ws.send('server streaming ending')
+              }
+            });
+          } catch {
+            console.log('server streaming ERROR')
+            ws.send('server streaming ERROR')
+          }
       } else if (requestInput.streamType === "clientStreaming") {
             //////// CLIENT STREAMING //////////
         //receive data from gRPC demo server (resulting from call.write)
@@ -206,31 +243,43 @@ class GrpcRequestClass extends EventEmitter {
         let reqTime = process.hrtime();
         const call = servicePackage[requestInput.methodName](function (error, feature) {
           if(error) {
-            console.log(error)
+            let clientStreamingError = JSON.stringify(error)
+            console.log(clientStreamingError)
+            ws.send(clientStreamingError);
           } 
           ws.send(JSON.stringify(feature))
         });
 
-        call.write(messageInput)
-        this._call = call;
+        try {
 
-        call.on("data", function(feature) {
-          let resTime = process.hrtime();
-          let resTimeSec = resTime[0] - reqTime[0];
-          let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
-          let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
-          let message = JSON.stringify(feature);
-          ws.send(message);
-        });
-        call.on("end", function() {
-        });
-        call.on("error", function(e) {
-          // An error has occurred and the stream has been closed.
-        });
+          call.write(messageInput)
+          this._call = call;
+  
+          call.on("data", function(feature) {
+            let resTime = process.hrtime();
+            let resTimeSec = resTime[0] - reqTime[0];
+            let resTimeMs = round(resTime[1] / 1000000 - reqTime[1] / 1000000, 2);
+            let resTimeStr = `Response Time: ${resTimeSec}s ${resTimeMs}ms`;
+            let message = JSON.stringify(feature);
+            ws.send(message);
+          });
+          call.on("end", function() {
+            ws.send('server has ended the client streaming')
+          });
+          call.on("error", function(e) {
+            // An error has occurred and the stream has been closed.
+            let clientStreamError = JSON.stringify(e)
+            ws.send('the following error occurred in the gRPC server: ', clientStreamError)
+          });
+        } catch {
+          console.log('Error in client-streaming')
+          ws.send('Error in client-streaming')
+        }
+
       } else if (requestInput.streamType === 'bidiStreaming'){
         let reqTime = process.hrtime();
         let call = servicePackage[requestInput.methodName]();
-        this._call = call
+        this._call = call;
 
         call.on("data", function (feature) {
           let resTime = process.hrtime();
@@ -246,7 +295,8 @@ class GrpcRequestClass extends EventEmitter {
         });
 
         call.on("error", function (e) {
-          ws.send('the following error occurred in the gRPC server: ', e)
+          let bidiError = JSON.stringify(e)
+          ws.send('the following error occurred in the gRPC server: ', bidiError)
         });
       }
   } 
