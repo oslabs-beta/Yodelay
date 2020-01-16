@@ -78,7 +78,16 @@ Click on the Send Request button and see the results from your gRPC call!
 We have an open door policy - all ideas, feedback, and contributions are always welcome!
 Note - When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
-## Built with amazing technologies ⚛ 🐳🚢
+## Built with 💛
+
+- Cedric Theofanous - <a href="https://github.com/
+- Davey Yedid
+- CedricTheofanous">@CedricTheofanous</a>
+- Jamie Highsmith - <a href="https://github.com/JamesHighsmith">@JamesHighsmith</a>
+- German Rovati - <a href="https://github.com/grovati">@grovati</a>
+- Tammy Tan - <a href="https://github.com/tammytan95">@tammytan95</a>
+
+## Developed using amazing technologies ⚛ 🐳🚢
 
 - React
 - Redux
@@ -88,18 +97,9 @@ Note - When contributing to this repository, please first discuss the change you
 - Redux-Saga
 - Docker
 - AWS
-
-## Built with 💛
-
-- Cedric Theofanous - @CedricTheofanous
-- Jamie Highsmith - @JamesHighsmith
-- German Rovati - @grovati
-- Tammy Tan - @tammytan95
-- Davey Yedid
-
-<p float="left">
-  <img src="./src/assets/technologies.png" width="800"/>
-</p>
+  <p float="left">
+    <img src="./src/assets/technologies.png" width="600"/>
+  </p>
 
 ## License
 
