@@ -29,20 +29,18 @@ app.ws("/websocket", function (ws, req) {
     const parsedReqBody = JSON.parse(msg);
     
     if(parsedReqBody.wsCommand === 'sendInit'){
-      console.log('sendInit')
       grpcRequestClass.sendInit(parsedReqBody);
+
     } else if ( parsedReqBody.wsCommand === 'push') {
-      console.log('push')
       let messageInput = JSON.parse(parsedReqBody.messageInput);
-      console.log('||||||||||||||||PUSH', messageInput)
       grpcRequestClass._call.write(messageInput);
+
     } else if (parsedReqBody.wsCommand === 'end') {
       if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
       grpcRequestClass._call.cancel();
-      console.log('Cancel')
+      
       } else {
         grpcRequestClass._call.end();
-        console.log('end')
       }
     }
   });

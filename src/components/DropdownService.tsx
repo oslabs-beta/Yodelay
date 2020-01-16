@@ -1,14 +1,15 @@
 import React, { FunctionComponent } from 'react';
-import { setServiceActionCreator } from '../actions';
+import { setServiceActionCreator, startWebsocketActionCreator } from '../actions';
 interface DropdownServiceProps {
   className?: string;
   menuOptions?: object;
   setService: typeof setServiceActionCreator;
   value: string;
+  startWebsocket: typeof startWebsocketActionCreator;
 }
 export const DropdownService: FunctionComponent< DropdownServiceProps> = props => {
   {
-    const { className, menuOptions, setService, value } = props;
+    const { className, menuOptions, setService, startWebsocket, value } = props;
 
     //create array of services
     const servicesArr = Object.keys(menuOptions);
@@ -21,6 +22,7 @@ export const DropdownService: FunctionComponent< DropdownServiceProps> = props =
               setService('');
             } else {
               setService(e.target.value);
+              startWebsocket('string')
             }
           }}
         >

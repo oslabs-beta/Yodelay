@@ -27,12 +27,18 @@ const config = (env: any): webpack.Configuration => {
           loader: 'awesome-typescript-loader'
         },
         {
-          test: /\.(sc|c)ss$/i,
+          test: /\.(s*)css$/i,
           use: ['style-loader', 'css-loader', 'sass-loader']
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
-          use: { loader: 'file-loader'}
+          use: [{
+            loader: 'url-loader',
+            options: {
+              limit: 8000,
+              name: './src/scss/[hash]-[name].[ext]'
+            }
+          }]
         },
       ]
     },
