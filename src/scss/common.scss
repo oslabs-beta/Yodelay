@@ -1,10 +1,10 @@
-@import "colours";
+@import 'colours';
 
 //NOT AFFECTED BY THEME
 .home-button {
   height: 37px;
   width: 37px;
-  background-image: url("dog_logo.png");
+  background-image: url('dog_logo.png');
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
@@ -18,7 +18,7 @@
 .upload-proto-button {
   height: 37px;
   width: 37px;
-  background-image: url("upload.png");
+  background-image: url('upload.png');
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
@@ -32,7 +32,7 @@
 .settings-button {
   height: 37px;
   width: 37px;
-  background-image: url("settings.png");
+  background-image: url('settings.png');
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
@@ -41,6 +41,30 @@
   cursor: pointer;
   margin-top: 10px;
   margin-left: 10px;
+}
+
+.push-button {
+  height: 23px;
+  width: 23px;
+  background-image: url('play_circle_filled_white_white_24x24.png');
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.pause-button {
+  height: 23px;
+  width: 23px;
+  background-image: url('pause_circle_filled_white_24x24.png');
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
 }
 
 .modal {
@@ -63,7 +87,7 @@
   top: 50%;
   left: 50%;
   transform: translate(0%, -40%);
-  color: $yellow;
+  color: $white-field;
   overflow-x: auto;
   z-index: 99;
   padding: 30;
@@ -105,7 +129,7 @@
   overflow: hidden;
   outline: none;
   color: $disabled;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
@@ -116,7 +140,7 @@
   color: $grey-font;
   font-weight: 700;
   font-size: 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -132,7 +156,7 @@
   color: $disabled;
   font-weight: 700;
   font-size: 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -148,7 +172,7 @@
   color: $grey-font;
   font-weight: 700;
   font-size: 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
@@ -164,7 +188,7 @@
   color: $grey-font;
   font-weight: 700;
   font-size: 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;

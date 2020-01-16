@@ -65,8 +65,7 @@ const initialState: initialProtoStateType = {
   responseStream: [],
   proto: "",
   showPopup: false,
-  wsCommand: 'sendInit'
-  // [{parsedProtoObj1}, {parsedProtoObj2}]
+  wsCommand: ''
 };
 
 //uploadProto is a function that takes in state and action as params; it returns an updated state object of type initialProtoStateType
@@ -98,7 +97,7 @@ export const uploadProto: (
       return setIn(state, ["parsedProtosObj"], action.payload);
     }
     case SEND_UNARY_REQUEST: {
-      return { ...state };
+      return { ...state, responseStream: [...state.responseStream, action.payload] };
     }
     case DISPLAY_UNARY_RESPONSE: {
       return {

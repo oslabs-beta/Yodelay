@@ -1,4 +1,4 @@
-@import "colours";
+@import 'colours';
 
 //NOT AFFECTED BY THEME
 #app-container {
@@ -32,7 +32,7 @@ body,
   color: $grey-font;
   font-weight: 500;
   font-size: 14px;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   display: flex;
   flex-direction: row;
 }
@@ -62,7 +62,7 @@ body,
   color: $disabled;
   font-weight: 500;
   font-size: 14px;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   display: flex;
   flex-direction: row;
 }
@@ -92,7 +92,7 @@ body,
   color: $grey-font;
   font-weight: 500;
   font-size: 14px;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   display: flex;
   flex-direction: row;
 }
@@ -109,7 +109,7 @@ body,
   top: 0;
 }
 
-#testProto-green {
+#testProto-dark-green {
   color: $green;
 }
 
@@ -122,7 +122,7 @@ body,
   color: $grey-font;
   font-weight: 500;
   font-size: 14px;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   display: flex;
   flex-direction: row;
 }
@@ -139,6 +139,6 @@ body,
   top: 0;
 }
 
-#testProto-blue {
+#testProto-dark-blue {
   color: $blue;
 }

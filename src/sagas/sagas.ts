@@ -10,7 +10,8 @@ import {
   SEND_UNARY_REQUEST,
   sendUnaryRequest,
   setMessageActionCreator,
-  displayUnaryResponseActionCreator
+  displayUnaryResponseActionCreator,
+  START_WEBSOCKET
 } from "../actions/index";
 import { json } from "body-parser";
 import { stateSelector } from "../reducers/uploadProto";
@@ -30,17 +31,23 @@ function* sendProto({ payload }: uploadProto) {
     //No need to connect() to store; yield put apparently does it for us; that's how we could access the uploadProtoSuccessful action creator -- CHECK
     yield put(uploadProtoSuccessfulActionCreator(response));
     yield put(loadServiceActionCreator(response.services));
-  
   } catch ({ error, status }) {
-    //error message not working right now
+
     const errorMessage = "error in upload saga";
     yield put(uploadProtoFailedActionCreator(errorMessage));
-    
   }
 }
 
-function connect() {
-  const mySocket = new WebSocket("ws://localhost:4000/websocket", "protocol");
+function* startWebsocket () {
+
+  const socket = yield call(connect)
+  yield fork(read, socket)
+  yield fork(write, socket)
+  console.log(socket)
+}
+
+function* connect() {
+  const mySocket = yield new WebSocket("ws://localhost:4000/websocket", "protocol");
 
   return mySocket
 }
@@ -58,10 +65,8 @@ function* subscribe(socket?: any) {
   });
 
   return eventChannel(emit => {
-    console.log('eventChannel')
-
+    //listen for messages from server
     socket.onmessage = (message: any) => {
-      console.log("socket.onmessage, ", message);
       emit(message);
     };
 
@@ -73,11 +78,9 @@ function* subscribe(socket?: any) {
 
 function* read(socket?: any) {
   const channel = yield call(subscribe, socket);
-  console.log('read')
 
   while (true) {
     let message = yield take(channel);
-    console.log("-----------message inside read saga", message);
     // dispatch actions with messages recieved from ws connection with server here
     yield put(
       displayUnaryResponseActionCreator({
@@ -107,12 +110,11 @@ function* write(socket?: any) {
 }
 
 function* saga() {
-  console.log('iniside saga')
- 
+  console.log('hello saga')
   yield takeLatest(UPLOAD_PROTO, sendProto);
- 
-  const socket = yield call(connect)
-  yield fork(read, socket)
-  yield fork(write, socket)
+  yield takeLatest(START_WEBSOCKET, startWebsocket);
+  // const socket = yield call(connect)
+  // yield fork(read, socket)
+  // yield fork(write, socket)
 }
 export default saga;

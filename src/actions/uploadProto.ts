@@ -14,6 +14,7 @@ export const DISPLAY_UNARY_RESPONSE = "DISPLAY_UNARY_RESPONSE";
 export const CLEAR_RESPONSE_EDITOR = "CLEAR_RESPONSE_EDITOR";
 export const SHOW_POPUP = "SHOW_POPUP";
 export const SET_WS_COMMAND = "SET_WS_COMMAND";
+export const START_WEBSOCKET = "START_WEBSOCKET";
 
 //Define shape of action type
 //Arraybuffer is an array of bytes, representing a generic, fixed-length raw binary data buffer
@@ -82,6 +83,11 @@ export interface setWsCommand {
   payload: string;
 }
 
+export interface startWebsocket {
+  type: typeof START_WEBSOCKET;
+  payload: string;
+}
+
 //Groups all action types so that they can be referenced in the reducer files via one umbrella type --  basically, we're trying to make sure that any given reducer can only accept certain action types in the switch/case statement
 export type uploadProtoAction =
   | uploadProto
@@ -97,6 +103,7 @@ export type uploadProtoAction =
   | clearResponseEditor
   | showPopup
   | setWsCommand
+  | startWebsocket
 
 
 export const uploadProtoActionCreator = (
@@ -206,3 +213,12 @@ export const setWsCommandActionCreator = (
     payload: payloadObj
   };
 };
+
+export const startWebsocketActionCreator = (
+  payloadObj: string
+): startWebsocket => {
+  return {
+    type: START_WEBSOCKET,
+    payload: payloadObj
+  }
+}
