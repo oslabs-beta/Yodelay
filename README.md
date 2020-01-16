@@ -67,8 +67,8 @@ Note - When contributing to this repository, please first discuss the change you
 
 ## Built with amazing technologies:
 <p float="left">
-  <img src="./src/assets/" width="100"/>
+  <!-- <img src="./src/assets/" width="100"/>
   <img src="./src/assets/" width="120" />
-  <img src="./src/assets/" width="160" />
+  <img src="./src/assets/" width="160" /> -->
 </p>
 
