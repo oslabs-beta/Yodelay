@@ -1,7 +1,6 @@
 <p align="center">
   <img src="./src/assets/logo_gif.gif" />
 </p>
-<h1 align="center">Yodelay.io </h1>
 
 <p align="center">
   <b>Yodelay.io </b> is a browser-based testing tool that supports all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming, and aims to provide a beautiful interface and intuitive developer experience
@@ -80,9 +79,8 @@ Note - When contributing to this repository, please first discuss the change you
 
 ## Built with 💛
 
-- Cedric Theofanous - <a href="https://github.com/
-- Davey Yedid
-- CedricTheofanous">@CedricTheofanous</a>
+- Cedric Theofanous - <a href="https://github.com/CedricTheofanous">@CedricTheofanous</a>
+- Davey Yedid - <a href="https://github.com/dYedid">@dYedid</a>
 - Jamie Highsmith - <a href="https://github.com/JamesHighsmith">@JamesHighsmith</a>
 - German Rovati - <a href="https://github.com/grovati">@grovati</a>
 - Tammy Tan - <a href="https://github.com/tammytan95">@tammytan95</a>
