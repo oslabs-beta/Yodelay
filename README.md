@@ -66,6 +66,15 @@ Note - When contributing to this repository, please first discuss the change you
 - [ ] Search History
 
 ## Built with amazing technologies:
+-React
+-Redux
+-Node.js
+-GRPC
+-TypeScript
+-Redux-Saga
+-Docker
+-AWS
+
 <p float="left">
   <!-- <img src="./src/assets/" width="100"/>
   <img src="./src/assets/" width="120" />
