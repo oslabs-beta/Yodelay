@@ -86,7 +86,6 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
         }
       } else {
         clearResponseEditor([]);
-        
         setWsCommandAction('sendInit');
         sendUnaryRequestAction(data);
       }
@@ -115,7 +114,7 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     //CHANGE THEME
     let toggleThemeTestProto = `testProto-${changeTheme}`;
     let toggleThemeInputBox = `url-input-${changeTheme}`;
-    let toggleThemeSendReqViewProto = `button button-${changeTheme}`;
+    let toggleThemeViewProto = `button viewProto-button-${changeTheme}`;
     let pushButton;
     let endButton;
     let requestButton;
@@ -123,18 +122,18 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
     let changeThemeBackground;
 
     if (request.streamType === '' || request.streamType === 'unary') {
-      requestButton =  (<Button className='push-button' onClick={handleRequestClick}/>);
+      requestButton =  (<Button className='send-button' onClick={handleRequestClick}/>);
 
     } else if (request.streamType === 'clientStreaming' || request.streamType === 'bidiStreaming') {
       if(wsCommand === '' || wsCommand === 'end') {
-        requestButton =  (<Button className='push-button'  onClick={handleRequestClick}/>);
+        requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
       } else {
         pushButton = (<Button className='push-button' onClick={handlePushClick} />);
         endButton = (<Button className='pause-button' onClick={handleEndClick} />); 
       }
     } else if (request.streamType === 'serverStreaming') {
       if(wsCommand === '' || wsCommand === 'end') {
-        requestButton =  (<Button className='push-button'  onClick={handleRequestClick}/>);
+        requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
       } else {
         endButton = (<Button className='pause-button' onClick={handleEndClick}/>);
         }
@@ -192,11 +191,11 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
             {pushButton}
             {endButton}
           </div>
-          <div id='handleViewClick'>
+          <div id="handleViewClick">
             {showStreamingType}
             <Button
-              className={toggleThemeSendReqViewProto}
-              text='View Proto File'
+              className={toggleThemeViewProto}
+              text="View Proto File"
               onClick={handleViewClick}
             />
           </div>

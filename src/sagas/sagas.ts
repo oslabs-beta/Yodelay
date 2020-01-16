@@ -65,7 +65,6 @@ function* subscribe(socket?: any) {
   });
 
   return eventChannel(emit => {
-    //listen for messages from server
     socket.onmessage = (message: any) => {
       emit(message);
     };
