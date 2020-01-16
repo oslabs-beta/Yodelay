@@ -68,10 +68,21 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
               );
               let editorDisplay: string = "";
               for (let [field, type] of messageFieldsArrayOfTuples) {
+                // if (Array.isArray(type)) {
+                //   let [definedMessageType, definedMessageName] = type;
+                //   let definedMessageString =  
+
+                // } else {
+
+                // }
                 let typeDisplay: any = type;
                 switch (type) {
                   case "TYPE_STRING": {
                     typeDisplay = '"Hello"';
+                    break;
+                  }
+                  case "TYPE_INT32": {
+                    typeDisplay = 10;
                     break;
                   }
                   case "TYPE_INT32": {
