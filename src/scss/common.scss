@@ -1,38 +1,79 @@
-@import 'colours';
+@import "colours";
 
 //NOT AFFECTED BY THEME
 .home-button {
-  height: 37px;
-  width: 37px;
-  background-image: url('dog_logo.png');
+  height: 70px;
+  width: 70px;
+  background-image: url("dog_vector.svg");
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
   overflow: hidden;
   outline: none;
   cursor: pointer;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-bottom: 20px;
 }
 
-.upload-proto-button {
-  height: 37px;
-  width: 37px;
-  background-image: url('upload.png');
+.upload-proto-button-grey {
+  height: 50px;
+  width: 50px;
+  background-image: url("upload_grey.svg");
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
   overflow: hidden;
   outline: none;
   cursor: pointer;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-top: 20px;
+  margin-left: 5px;
 }
 
-.settings-button {
-  height: 37px;
-  width: 37px;
-  background-image: url('settings.png');
+.upload-proto-button-light {
+  height: 50px;
+  width: 50px;
+  background-image: url("upload_light.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.settings-button-grey {
+  height: 50px;
+  width: 50px;
+  background-image: url("settings_grey.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.settings-button-light {
+  height: 50px;
+  width: 50px;
+  background-image: url("settings_light.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.github-button {
+  height: 50px;
+  width: 50px;
+  background-image: url("github_grey.svg");
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
@@ -40,31 +81,58 @@
   outline: none;
   cursor: pointer;
   margin-top: 10px;
-  margin-left: 10px;
+}
+
+.twitter-button {
+  height: 50px;
+  width: 50px;
+  background-image: url("twitter_grey.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.send-button {
+  height: 24px;
+  width: 24px;
+  background-image: url("sendreq_grey.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  margin-left: 15px;
 }
 
 .push-button {
-  height: 23px;
-  width: 23px;
-  background-image: url('play_circle_filled_white_white_24x24.png');
+  height: 25px;
+  width: 25px;
+  background-image: url("adddata2_grey.svg");
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
   overflow: hidden;
   outline: none;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 .pause-button {
-  height: 23px;
-  width: 23px;
-  background-image: url('pause_circle_filled_white_24x24.png');
+  height: 24px;
+  width: 24px;
+  background-image: url("endstream_grey.svg");
   background-repeat: no-repeat;
   background-color: Transparent;
   border: none;
   overflow: hidden;
   outline: none;
   cursor: pointer;
+  margin-left: 5px;
 }
 
 .modal {
@@ -106,20 +174,68 @@
 }
 
 //AFFECTED BY THEME
-.button-dark-yellow:hover {
+.viewProto-button-dark-yellow:hover {
   color: $yellow;
 }
 
-.button-light-yellow:hover {
+.viewProto-button-light-yellow:hover {
   color: $yellow;
 }
 
-.button-dark-green:hover {
+.viewProto-button-dark-green:hover {
   color: $green;
 }
 
-.button-dark-blue:hover {
+.viewProto-button-dark-blue:hover {
   color: $blue;
+}
+
+.button-dark-yellow {
+  height: 40px;
+  width: 40px;
+  background-image: url("theme-dark-yellow.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.button-light-yellow {
+  height: 40px;
+  width: 40px;
+  background-image: url("theme-light-yellow.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.button-dark-green {
+  height: 40px;
+  width: 40px;
+  background-image: url("theme-dark-green.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.button-dark-blue {
+  height: 40px;
+  width: 40px;
+  background-image: url("theme-dark-blue.svg");
+  background-repeat: no-repeat;
+  background-color: Transparent;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
 }
 
 .button {
@@ -129,7 +245,7 @@
   overflow: hidden;
   outline: none;
   color: $disabled;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
@@ -140,12 +256,13 @@
   color: $grey-font;
   font-weight: 700;
   font-size: 30px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
   overflow: hidden;
   outline: none;
+  cursor: pointer;
 }
 
 .header-button-dark-yellow:hover {
@@ -156,12 +273,13 @@
   color: $disabled;
   font-weight: 700;
   font-size: 30px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
   overflow: hidden;
   outline: none;
+  cursor: pointer;
 }
 
 .header-button-light-yellow:hover {
@@ -172,12 +290,13 @@
   color: $grey-font;
   font-weight: 700;
   font-size: 30px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
   overflow: hidden;
   outline: none;
+  cursor: pointer;
 }
 
 .header-button-dark-green:hover {
@@ -188,12 +307,13 @@
   color: $grey-font;
   font-weight: 700;
   font-size: 30px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: Transparent;
   background-repeat: no-repeat;
   border: none;
   overflow: hidden;
   outline: none;
+  cursor: pointer;
 }
 
 .header-button-dark-blue:hover {
