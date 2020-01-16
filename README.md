@@ -39,6 +39,9 @@ cd Yodelay
 ```sh
 npm install
 ```
+<p align="center">
+  <img src="https://media.giphy.com/media/kBSlhxKc4xkSQcGk3x/giphy.gif" />
+</p>
 
 ### Test your endpoints locally ☄
 
@@ -49,7 +52,9 @@ npm start
 ```
 
 NPM start will build the bundle, make it available in your browser at localhost:3000, start the client server on port 4000, and start a demo grpc server at localhost:8080
-
+<p align="center">
+  <img src="https://media.giphy.com/media/hU4Vzx4IbuIo8ps6A8/giphy.gif" />
+</p>
 Go to your browser and enter the URL:
 
 ```sh
@@ -71,6 +76,10 @@ Select Request from the drop down menu you want to test:
 Edit your input message so it matches the gRPC server fields:
 
 Click on the Send Request button and see the results from your gRPC call!
+
+<p align="center">
+  <img src="https://media.giphy.com/media/hW9ui8UcGlfVXI31hY/giphy.gif" />
+</p>
 
 ## Contributing ✏️👩‍💻👨‍💻📓
 
