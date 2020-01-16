@@ -31,7 +31,7 @@ export const Settings: FunctionComponent<SettingsProps> = props => {
 
     return (
       <div>
-        <div>⚡⚙ Choose Your Theme ⚙⚡</div>
+        <div>⚡⚙ Select A Theme ⚙⚡</div>
 
         {/* Dark Yellow Theme */}
         <Button
