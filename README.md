@@ -93,14 +93,14 @@ Note - When contributing to this repository, please first discuss the change you
 
 ## Built with 💛
 
-Cedric Theofanous - @CedricTheofanous
-Jamie Highsmith - @JamesHighsmith
-German Rovati - @grovati
-Tammy Tan - @tammytan95
-Davey Yedid
+- Cedric Theofanous - @CedricTheofanous
+- Jamie Highsmith - @JamesHighsmith
+- German Rovati - @grovati
+- Tammy Tan - @tammytan95
+- Davey Yedid
 
 <p float="left">
-  <img src="./src/assets/technologies.png" width="300"/>
+  <img src="./src/assets/technologies.png" width="800"/>
 </p>
 
 ## License
