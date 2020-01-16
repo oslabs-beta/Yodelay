@@ -1,5 +1,9 @@
 import React, { FunctionComponent } from "react";
-import { setRequestActionCreator, setMessageActionCreator } from "../actions";
+import { setRequestActionCreator, 
+  setMessageActionCreator, 
+  clearResponseEditorActionCreator,
+  setWsCommandActionCreator
+} from "../actions";
 import { typeRequest } from "../reducers/uploadProto";
 
 interface DropdownRequestProps {
@@ -7,9 +11,11 @@ interface DropdownRequestProps {
   className: string;
   menuOptions: any;
   service: string;
-  setRequest: typeof setRequestActionCreator;
   value: typeRequest;
+  setRequest: typeof setRequestActionCreator;
   setMessageAction?: typeof setMessageActionCreator;
+  setWsCommandAction: typeof setWsCommandActionCreator;
+  clearResponseEditor: typeof clearResponseEditorActionCreator;
 }
 export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props => {
   {
@@ -20,7 +26,9 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
       service,
       setRequest,
       value,
-      setMessageAction
+      setMessageAction,
+      setWsCommandAction,
+      clearResponseEditor
     } = props;
 
     //create array of requests
@@ -53,7 +61,10 @@ export const DropdownRequest: FunctionComponent<DropdownRequestProps> = props =>
               let streamType =
                 parsedProtoObj["services"][`${service}`][`${requestSelected}`]
                   .type;
-                  
+
+              clearResponseEditor([])
+              setWsCommandAction('');
+              
               setRequest({
                 methodName: requestSelected,
                 streamType: streamType
