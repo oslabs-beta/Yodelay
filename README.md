@@ -1,6 +1,6 @@
-# Yodelay.io,
+# Yodelay.io
 
-your preferred gRPC endpoint testing tool. Yodelay is a browser based testing tool for all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming.
+Your preferred gRPC endpoint testing tool. Yodelay is a browser based testing tool for all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming.
 
 ## Getting Started
 
@@ -11,8 +11,12 @@ For an overview of gRPC in general, checkout the official [DOCS](https://grpc.io
 Fork and clone this repo:
 ```sh
 git clone https://github.com/<yourgithubhandle>/Yodelay.git
- cd Yodelay
- npm install
+```
+```sh
+cd Yodelay
+ ```
+ ```sh
+npm install
 ```
 ### Test your endpoints locally:
 
@@ -20,8 +24,13 @@ Navigate to the Yodelay folder in your terminal and run the following command:
 ```sh
 npm start
 ``` 
-This will: build the site, make it available in your browser at localhost:3000, start the client server on port:4000, and start a demo grpc server at localhost:8080
+NPM start will build the bundle, make it available in your browser at localhost:3000, start the client server on port 4000, and start a demo grpc server at localhost:8080
  
+Go to your browser and enter the URL: 
+```sh
+0.0.0.0:8080
+``` 
+
 To test our demo proto file, upload the demo.proto file in the /protos folder
  
 Input the server ip address:
