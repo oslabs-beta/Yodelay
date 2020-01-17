@@ -124,22 +124,40 @@ export const TestProto: FunctionComponent<TestProtoProps> = props => {
 
     if (request.streamType === '' || request.streamType === 'unary') {
       requestButton =  (<Button className='send-button' onClick={handleRequestClick}/>);
-
+      
     } else if (request.streamType === 'clientStreaming' || request.streamType === 'bidiStreaming') {
+      
       if(wsCommand === '' || wsCommand === 'end') {
         requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
-      } else {
+
+      } else if (!response[1]){
         pushButton = (<Button className='push-button' onClick={handlePushClick} />);
         endButton = (<Button className='pause-button' onClick={handleEndClick} />); 
-      }
+
+       } else if (response[1]) {
+         if(response[1].message === 'Server error: check input') {
+          requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
+
+         } else {
+          pushButton = (<Button className='push-button' onClick={handlePushClick} />);
+          endButton = (<Button className='pause-button' onClick={handleEndClick} />); 
+          
+        }
+      } 
     } else if (request.streamType === 'serverStreaming') {
+
       if(wsCommand === '' || wsCommand === 'end') {
         requestButton =  (<Button className='send-button'  onClick={handleRequestClick}/>);
-      } else {
-        endButton = (<Button className='pause-button' onClick={handleEndClick}/>);
-        }
+
+      } else if (response[1]) {
+        if (response[1].message === 'Server error: check input') {
+          requestButton =  (<Button className='send-button' onClick={handleRequestClick}/>);
+
+         } else {
+          endButton = (<Button className='pause-button' onClick={handleEndClick}/>);
+         }
       }
-    
+    }
 
     if (changeTheme === 'dark-yellow' || changeTheme === 'light-yellow') {
       changeThemeBackground = '#f9c132';

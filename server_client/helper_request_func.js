@@ -229,12 +229,12 @@ class GrpcRequestClass extends EventEmitter {
             });
             call.on("error", function (e) {
               () => {
-                ws.send('server streaming ending')
+                ws.send('Server error: check input')
               }
             });
           } catch {
             console.log('server streaming ERROR')
-            ws.send('server streaming ERROR')
+            ws.send('Server error: check input')
           }
       } else if (requestInput.streamType === "clientStreaming") {
             //////// CLIENT STREAMING //////////
@@ -269,11 +269,11 @@ class GrpcRequestClass extends EventEmitter {
           call.on("error", function(e) {
             // An error has occurred and the stream has been closed.
             let clientStreamError = JSON.stringify(e)
-            ws.send('the following error occurred in the gRPC server: ', clientStreamError)
+            ws.send('Server error: check input', clientStreamError)
           });
         } catch {
           console.log('Error in client-streaming')
-          ws.send('Error in client-streaming')
+          ws.send('Server error: check input')
         }
 
       } else if (requestInput.streamType === 'bidiStreaming'){
@@ -296,7 +296,7 @@ class GrpcRequestClass extends EventEmitter {
 
         call.on("error", function (e) {
           let bidiError = JSON.stringify(e)
-          ws.send('the following error occurred in the gRPC server: ', bidiError)
+          ws.send('Server error: check input', bidiError)
         });
       }
   } 

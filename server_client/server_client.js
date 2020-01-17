@@ -43,7 +43,6 @@ app.ws("/websocket", function(ws, req) {
         } catch {
           console.log('error parsing messageInput in ws-router - "push"')
         }
-        console.log('||||||||||||||||PUSH', messageInput)
         grpcRequestClass._call.write(messageInput);
       } else if (parsedReqBody.wsCommand === 'end') {
         if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
