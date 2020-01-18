@@ -12,7 +12,9 @@ app.use(cors());
 app.use(bodyParser.text());
 app.use(cookieParser());
 
-app.get("/", (req, res) => res.send("🍻  Yodelay World  🍻"));
+app.use(express.static("build"));
+
+// app.get("/", (req, res) => res.send("🍻  Yodelay World  🍻"));
 // * UPLOAD:
 app.post("/upload", async (req, res) => {
   const parsedReqBody = JSON.parse(req.body);
@@ -22,41 +24,40 @@ app.post("/upload", async (req, res) => {
 
 //Listens for messages
 app.ws("/websocket", function(ws, req) {
-
   const grpcRequestClass = new GrpcRequestClass(ws);
   try {
-    ws.on("message", function (msg) {
+    ws.on("message", function(msg) {
       let parsedReqBody;
       try {
         parsedReqBody = JSON.parse(msg);
       } catch {
-        ws.send("message", 'error parsing JSON in ws.on message')
+        ws.send("message", "error parsing JSON in ws.on message");
       }
-      if (parsedReqBody.wsCommand === 'sendInit') {
-        console.log('sendInit')
+      if (parsedReqBody.wsCommand === "sendInit") {
+        console.log("sendInit");
         grpcRequestClass.sendInit(parsedReqBody);
-      } else if (parsedReqBody.wsCommand === 'push') {
-        console.log('push')
+      } else if (parsedReqBody.wsCommand === "push") {
+        console.log("push");
         let messageInput;
         try {
           messageInput = JSON.parse(parsedReqBody.messageInput);
         } catch {
-          console.log('error parsing messageInput in ws-router - "push"')
+          console.log('error parsing messageInput in ws-router - "push"');
         }
-        console.log('||||||||||||||||PUSH', messageInput)
+        console.log("||||||||||||||||PUSH", messageInput);
         grpcRequestClass._call.write(messageInput);
-      } else if (parsedReqBody.wsCommand === 'end') {
-        if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
-        grpcRequestClass._call.cancel();
-        console.log('Cancel')
+      } else if (parsedReqBody.wsCommand === "end") {
+        if (parsedReqBody.requestInput.streamType === "serverStreaming") {
+          grpcRequestClass._call.cancel();
+          console.log("Cancel");
         } else {
           grpcRequestClass._call.end();
-          console.log('end')
+          console.log("end");
         }
       }
     });
   } catch {
-    console.log('error in ws')
+    console.log("error in ws");
   }
 });
 
@@ -64,7 +65,7 @@ app.use((req, res) => {
   res.status(404).send("Page Not Found");
 });
 // Global error handling:
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   const defaultError = {
     log: "Express error handler caught unknown middleware error",
     status: 400,
@@ -80,7 +81,7 @@ app.listen(port, () =>
 
 // ws.on("message", function (msg) {
 //   const parsedReqBody = JSON.parse(msg);
-  
+
 //   if(parsedReqBody.wsCommand === 'sendInit'){
 //     grpcRequestClass.sendInit(parsedReqBody);
 
@@ -91,6 +92,6 @@ app.listen(port, () =>
 //   } else if (parsedReqBody.wsCommand === 'end') {
 //     if(parsedReqBody.requestInput.streamType === 'serverStreaming') {
 //     grpcRequestClass._call.cancel();
-    
+
 //     } else {
 //       grpcRequestClass._call.end();
