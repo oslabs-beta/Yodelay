@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently --kill-others \"npm run src-dev\" \"npm run start-client\" \"npm run grpc\"",
-    "start-client": "nodemon server_client/server_client.js",
+    "start-client": "INSECURE_PORT=4000 nodemon server_client/server_client.js",
     "grpc": "nodemon grpc_server/demo.js",
     "src-dev": "webpack-dev-server --config webpack.dev.ts --env.API_PORT=4000 --env.API_HOST=localhost --env.API_PROTOCOL=http",
     "src-build": "webpack --config webpack.prod.ts",
