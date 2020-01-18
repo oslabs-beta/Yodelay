@@ -16,44 +16,59 @@ import {
 import { json } from "body-parser";
 import { stateSelector } from "../reducers/uploadProto";
 //Used payload from uploadProto action as an input for the sendProto saga middleware, enabling us to POST the file string to the express server
+
+// @ts-ignore
+const API_PORT = env.API_PORT;
+// @ts-ignore
+const API_HOST = env.API_HOST;
+// @ts-ignore
+const API_PROTOCOL = env.API_PROTOCOL;
+// @ts-ignore
+const NODE_ENV = env.NODE_ENV;
+console.log(API_PORT, API_HOST, API_PROTOCOL, NODE_ENV);
+
 function* sendProto({ payload }: uploadProto) {
   try {
     const jsonProtoFile = JSON.stringify(payload);
-    const data = yield fetch(`http://localhost:4000/upload`, {
-      method: "POST",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain"
-      },
-      body: jsonProtoFile
-    });
+    const data = yield fetch(
+      `${API_PROTOCOL}://${API_HOST}:${API_PORT}/upload`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "text/plain",
+          "Content-Type": "text/plain"
+        },
+        body: jsonProtoFile
+      }
+    );
     const response = yield data.json();
     //No need to connect() to store; yield put apparently does it for us; that's how we could access the uploadProtoSuccessful action creator -- CHECK
     yield put(uploadProtoSuccessfulActionCreator(response));
     yield put(loadServiceActionCreator(response.services));
   } catch ({ error, status }) {
-
     const errorMessage = "error in upload saga";
     yield put(uploadProtoFailedActionCreator(errorMessage));
   }
 }
 
-function* startWebsocket () {
-
-  const socket = yield call(connect)
-  yield fork(read, socket)
-  yield fork(write, socket)
-  console.log(socket)
+function* startWebsocket() {
+  const socket = yield call(connect);
+  yield fork(read, socket);
+  yield fork(write, socket);
+  console.log(socket);
 }
 
 function* connect() {
-  const mySocket = yield new WebSocket("ws://localhost:4000/websocket", "protocol");
+  const mySocket = yield new WebSocket(
+    `ws://${API_HOST}:${API_PORT}/websocket`,
+    "protocol"
+  );
 
-  return mySocket
+  return mySocket;
 }
 
 function* subscribe(socket?: any) {
-  const message = yield take(SEND_UNARY_REQUEST)
+  const message = yield take(SEND_UNARY_REQUEST);
   const state = yield select(stateSelector);
   const jsonRequestObj = JSON.stringify({
     url: state.urlInput,
@@ -92,7 +107,7 @@ function* read(socket?: any) {
 
 function* write(socket?: any) {
   while (true) {
-    const message = yield take(SEND_UNARY_REQUEST)
+    const message = yield take(SEND_UNARY_REQUEST);
     const state = yield select(stateSelector);
     const jsonRequestObj = JSON.stringify({
       url: state.urlInput,
@@ -103,13 +118,13 @@ function* write(socket?: any) {
       protoFile: state.parsedProtosObj.protoFile,
       wsCommand: state.wsCommand
     });
-  
-    socket.send(jsonRequestObj)
+
+    socket.send(jsonRequestObj);
   }
 }
 
 function* saga() {
-  console.log('hello saga')
+  console.log("hello saga");
   yield takeLatest(UPLOAD_PROTO, sendProto);
   yield takeLatest(START_WEBSOCKET, startWebsocket);
   // const socket = yield call(connect)
