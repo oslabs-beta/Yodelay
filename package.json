@@ -84,7 +84,7 @@
     "ts-jest": "^24.2.0",
     "ts-node-dev": "^1.0.0-pre.40",
     "uuidv4": "^4.0.0",
-    "ws": "^7.2.1"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
