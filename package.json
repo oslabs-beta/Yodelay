@@ -47,7 +47,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "esm": "^3.2.25",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-http-to-https": "^1.1.4",
     "express-pino-logger": "^4.0.0",
     "express-ws": "^4.0.0",
