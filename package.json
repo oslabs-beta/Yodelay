@@ -7,8 +7,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "start": "concurrently -k \"npm run dev:web\" \"npm run dev:grpc\"",
+    "start": "concurrently -k \"npm run dev:web\" \"npm run dev:proxy\" \"npm run dev:grpc\"",
     "dev:web": "vite",
+    "dev:proxy": "node server_client/server_client.js",
     "dev:grpc": "node grpc_server/demo.js",
     "test": "node --test ./test/*.test.js",
     "audit:ci": "npm audit --audit-level=moderate"
