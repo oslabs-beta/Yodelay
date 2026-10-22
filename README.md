@@ -1,105 +1,43 @@
-<p align="center">
-  <img src="./src/assets/logo_gif.gif" />
-</p>
+# Yodelay
 
-<p align="center">
-  <b>Yodelay.io </b> is a browser-based testing tool that supports all types of gRPC calls: unary, server streaming, client streaming and bi-directional streaming, and aims to provide a beautiful interface and intuitive developer experience
-</p>
+Yodelay is a browser for trying a gRPC server on your machine. The page talks to a local proxy, and the proxy speaks gRPC. Unary, server streaming, client streaming, and bidirectional calls are all supported.
 
-## Core Features ✨
+## Install
 
-- Unary Calls and Server Side Streaming Support
-- Client side and Bi-directional Streaming
-- Automatic gRPC Service & Method recognition
-- Request Cancellation
-
-## Planned Features 🚧
-
-- [ ] Web Version with gRPC-WEB
-- [ ] Persistent Workspace
-- [ ] Electron App
-- [ ] Search History
-
-## Getting Started 🚀
-
-For an overview of gRPC in general, checkout the official [DOCS](https://grpc.io/docs/) here. There are clear and simple walkthroughs for each of the 12 programming languages supported by gRPC. Butter, Yodelay’s furry mascot, recommends choosing your preferred language, uploading the .proto file into yodelay and then using those examples to walk through this readme.
-
-## Installation ⚙
-
-Fork and clone this repo:
-
-```sh
-git clone https://github.com/<yourgithubhandle>/Yodelay.git
-```
-
-```sh
-cd Yodelay
-```
+Node.js 20 or newer.
 
 ```sh
 npm install
 ```
-<p align="center">
-  <img src="https://media.giphy.com/media/kBSlhxKc4xkSQcGk3x/giphy.gif" />
-</p>
 
-### Test your endpoints locally ☄
-
-Navigate to the Yodelay folder in your terminal and run the following command:
+## Run
 
 ```sh
 npm start
 ```
 
-NPM start will build the bundle, make it available in your browser at localhost:3000, start the client server on port 4000, and start a demo grpc server at localhost:8080
-<p align="center">
-  <img src="https://media.giphy.com/media/hU4Vzx4IbuIo8ps6A8/giphy.gif" />
-</p>
-Go to your browser and enter the URL:
+That starts three processes:
 
-```sh
-0.0.0.0:8080
+- the page on [http://localhost:3000](http://localhost:3000)
+- the proxy on `127.0.0.1:4000`
+- a demo gRPC server on port `8080`
+
+Open the page, upload `protos/demo.proto`, and set the server address to:
+
+```text
+localhost:8080
 ```
 
-To test our demo proto file, upload the demo.proto file in the /protos folder
+Pick a service and a method. The request body is filled with JSON you can edit, then send.
 
-Input the server ip address:
+`npm test` runs the Node test suite. `npm run audit:ci` fails if `npm audit` reports a moderate or higher finding.
 
-```sh
-0.0.0.0:8080
-```
+## What the page keeps
 
-Select Service from the drop down you want to test:
+Proto files, the entry file, the server address, TLS material, metadata, the selected method, the request body, the theme, and the last 50 calls are stored in this browser under `localStorage`. Refreshing the page uploads those proto files again, because the proxy only keeps them in memory.
 
-Select Request from the drop down menu you want to test:
+Certificate and key PEMs stay in browser storage on this machine. They are not written into the repository. Leave TLS off for the demo server.
 
-Edit your input message so it matches the gRPC server fields:
+## TLS, metadata, and deadlines
 
-Click on the Send Request button and see the results from your gRPC call!
-
-<p align="center">
-  <img src="https://media.giphy.com/media/hW9ui8UcGlfVXI31hY/giphy.gif" />
-</p>
-
-## Contributing ✏️👩‍💻👨‍💻📓
-
-We have an open door policy - all ideas, feedback, and contributions are always welcome!
-Note - When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
-
-## Built with 💛
-
-- Cedric Theofanous - <a href="https://github.com/CedricTheofanous">@CedricTheofanous</a>
-- Davey Yedid - <a href="https://github.com/dYedid">@dYedid</a>
-- Jamie Highsmith - <a href="https://github.com/JamesHighsmith">@JamesHighsmith</a>
-- German Rovati - <a href="https://github.com/grovati">@grovati</a>
-- Tammy Tan - <a href="https://github.com/tammytan95">@tammytan95</a>
-
-## Developed using amazing technologies ⚛ 🐳🚢
-
-  <p float="left">
-    <img src="./src/assets/technologies.png" width="600"/>
-  </p>
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+Turn TLS on to send a server name, a CA PEM, and an optional client certificate and key. Metadata rows are sent as gRPC metadata. A timeout becomes the call deadline. Each response frame includes how many milliseconds have passed since the call started.
